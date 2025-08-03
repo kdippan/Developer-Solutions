@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Solutions | 3D CSS Transform Playground</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+  <style>
+    .transform-container {
+      perspective: 1000px;
+    }
+    .transform-element {
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+    .face {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+    .control-panel {
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f1f5f9;
+    }
+    .control-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+    .control-panel::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .control-panel::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div class="flex items-center mb-4 md:mb-0">
+        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-12 w-12 mr-3 hover:rotate-12 transition-transform">
+        <h1 class="text-2xl font-bold text-gray-800">Developer <span class="text-blue-600">Solutions</span></h1>
+      </div>
+      <nav class="flex space-x-4">
+        <a href="#" class="px-3 py-2 rounded-lg bg-blue-600 text-white flex items-center">
+          <i class="fas fa-cube mr-2"></i> 3D Transform
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-image mr-2"></i> Image Converter
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-film mr-2"></i> Animation Maker
+        </a>
+      </nav>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- 3D Preview -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-2">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-eye mr-2 text-blue-500"></i> 3D Preview
+        </h2>
+        
+        <div class="transform-container w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+          <div id="transformElement" class="transform-element relative w-32 h-32">
+            <!-- Front Face -->
+            <div class="face front bg-blue-500 w-full h-full" style="transform: translateZ(50px);">FRONT</div>
+            <!-- Back Face -->
+            <div class="face back bg-green-500 w-full h-full" style="transform: rotateY(180deg) translateZ(50px);">BACK</div>
+            <!-- Right Face -->
+            <div class="face right bg-red-500 w-full h-full" style="transform: rotateY(90deg) translateZ(50px);">RIGHT</div>
+            <!-- Left Face -->
+            <div class="face left bg-yellow-500 w-full h-full" style="transform: rotateY(-90deg) translateZ(50px);">LEFT</div>
+            <!-- Top Face -->
+            <div class="face top bg-purple-500 w-full h-full" style="transform: rotateX(90deg) translateZ(50px);">TOP</div>
+            <!-- Bottom Face -->
+            <div class="face bottom bg-pink-500 w-full h-full" style="transform: rotateX(-90deg) translateZ(50px);">BOTTOM</div>
+          </div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Perspective</label>
+            <input type="range" id="perspectiveRange" min="500" max="2000" value="1000" class="w-full">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>500px</span>
+              <span id="perspectiveValue">1000px</span>
+              <span>2000px</span>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Element Size</label>
+            <input type="range" id="sizeRange" min="50" max="200" value="100" class="w-full">
+            <div class="flex justify-between text-xs text-gray-500">
+              <span>50px</span>
+              <span id="sizeValue">100px</span>
+              <span>200px</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls Panel -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1 control-panel overflow-y-auto max-h-[600px]">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-sliders-h mr-2 text-blue-500"></i> Transform Controls
+        </h2>
+        
+        <!-- Transform Origin -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Transform Origin</label>
+          <div class="grid grid-cols-3 gap-2">
+            <select id="originX" class="col-span-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="left">left</option>
+              <option value="center" selected>center</option>
+              <option value="right">right</option>
+            </select>
+            <select id="originY" class="col-span-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="top">top</option>
+              <option value="center" selected>center</option>
+              <option value="bottom">bottom</option>
+            </select>
+            <select id="originZ" class="col-span-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="0" selected>0px</option>
+              <option value="50px">50px</option>
+              <option value="-50px">-50px</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Translate -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Translate (px)</label>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">X</label>
+              <input type="range" id="translateX" min="-200" max="200" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>-200</span>
+                <span id="translateXValue">0</span>
+                <span>200</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Y</label>
+              <input type="range" id="translateY" min="-200" max="200" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>-200</span>
+                <span id="translateYValue">0</span>
+                <span>200</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Z</label>
+              <input type="range" id="translateZ" min="-500" max="500" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>-500</span>
+                <span id="translateZValue">0</span>
+                <span>500</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotate -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Rotate (deg)</label>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">X</label>
+              <input type="range" id="rotateX" min="0" max="360" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="rotateXValue">0</span>
+                <span>360</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Y</label>
+              <input type="range" id="rotateY" min="0" max="360" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="rotateYValue">0</span>
+                <span>360</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Z</label>
+              <input type="range" id="rotateZ" min="0" max="360" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="rotateZValue">0</span>
+                <span>360</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scale -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Scale</label>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">X</label>
+              <input type="range" id="scaleX" min="0" max="3" step="0.1" value="1" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="scaleXValue">1</span>
+                <span>3</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Y</label>
+              <input type="range" id="scaleY" min="0" max="3" step="0.1" value="1" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="scaleYValue">1</span>
+                <span>3</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Z</label>
+              <input type="range" id="scaleZ" min="0" max="3" step="0.1" value="1" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>0</span>
+                <span id="scaleZValue">1</span>
+                <span>3</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skew -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Skew (deg)</label>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">X</label>
+              <input type="range" id="skewX" min="-45" max="45" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>-45</span>
+                <span id="skewXValue">0</span>
+                <span>45</span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Y</label>
+              <input type="range" id="skewY" min="-45" max="45" value="0" class="w-full">
+              <div class="flex justify-between text-xs text-gray-500">
+                <span>-45</span>
+                <span id="skewYValue">0</span>
+                <span>45</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preset Buttons -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Presets</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button class="preset-btn bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-sm" data-preset="rotate3d">Rotate 3D</button>
+            <button class="preset-btn bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-sm" data-preset="flip">Flip</button>
+            <button class="preset-btn bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-sm" data-preset="zoom">Zoom</button>
+            <button class="preset-btn bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-sm" data-preset="skew">Skew</button>
+            <button class="preset-btn bg-blue-100 hover:bg-blue-200 text-blue-800 py-1 px-2 rounded text-sm" data-preset="reset">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Output -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-3">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-code mr-2 text-blue-500"></i> Generated CSS
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Transform CSS -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Transform Code</label>
+            <pre id="transformCode" class="bg-gray-100 p-3 rounded-md text-sm overflow-x-auto h-40"><code>.transform-element {
+  transform: translate3d(0px, 0px, 0px) 
+             rotateX(0deg) rotateY(0deg) rotateZ(0deg) 
+             scale3d(1, 1, 1) 
+             skew(0deg, 0deg);
+  transform-origin: center center 0px;
+}</code></pre>
+            <button id="copyTransformBtn" class="mt-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition flex items-center justify-center w-full">
+              <i class="fas fa-copy mr-2"></i> Copy Transform CSS
+            </button>
+          </div>
+          
+          <!-- Perspective CSS -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Perspective Code</label>
+            <pre id="perspectiveCode" class="bg-gray-100 p-3 rounded-md text-sm overflow-x-auto h-40"><code>.transform-container {
+  perspective: 1000px;
+}</code></pre>
+            <button id="copyPerspectiveBtn" class="mt-2 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition flex items-center justify-center w-full">
+              <i class="fas fa-copy mr-2"></i> Copy Perspective CSS
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const transformElement = document.getElementById('transformElement');
+      const transformContainer = document.querySelector('.transform-container');
+      
+      // Range inputs
+      const perspectiveRange = document.getElementById('perspectiveRange');
+      const perspectiveValue = document.getElementById('perspectiveValue');
+      const sizeRange = document.getElementById('sizeRange');
+      const sizeValue = document.getElementById('sizeValue');
+      
+      // Transform origin
+      const originX = document.getElementById('originX');
+      const originY = document.getElementById('originY');
+      const originZ = document.getElementById('originZ');
+      
+      // Translate
+      const translateX = document.getElementById('translateX');
+      const translateXValue = document.getElementById('translateXValue');
+      const translateY = document.getElementById('translateY');
+      const translateYValue = document.getElementById('translateYValue');
+      const translateZ = document.getElementById('translateZ');
+      const translateZValue = document.getElementById('translateZValue');
+      
+      // Rotate
+      const rotateX = document.getElementById('rotateX');
+      const rotateXValue = document.getElementById('rotateXValue');
+      const rotateY = document.getElementById('rotateY');
+      const rotateYValue = document.getElementById('rotateYValue');
+      const rotateZ = document.getElementById('rotateZ');
+      const rotateZValue = document.getElementById('rotateZValue');
+      
+      // Scale
+      const scaleX = document.getElementById('scaleX');
+      const scaleXValue = document.getElementById('scaleXValue');
+      const scaleY = document.getElementById('scaleY');
+      const scaleYValue = document.getElementById('scaleYValue');
+      const scaleZ = document.getElementById('scaleZ');
+      const scaleZValue = document.getElementById('scaleZValue');
+      
+      // Skew
+      const skewX = document.getElementById('skewX');
+      const skewXValue = document.getElementById('skewXValue');
+      const skewY = document.getElementById('skewY');
+      const skewYValue = document.getElementById('skewYValue');
+      
+      // Code outputs
+      const transformCode = document.getElementById('transformCode');
+      const perspectiveCode = document.getElementById('perspectiveCode');
+      const copyTransformBtn = document.getElementById('copyTransformBtn');
+      const copyPerspectiveBtn = document.getElementById('copyPerspectiveBtn');
+      
+      // Preset buttons
+      const presetButtons = document.querySelectorAll('.preset-btn');
+      
+      // Initialize values
+      updatePerspective();
+      updateSize();
+      updateTransform();
+      
+      // Event listeners
+      perspectiveRange.addEventListener('input', updatePerspective);
+      sizeRange.addEventListener('input', updateSize);
+      
+      originX.addEventListener('change', updateTransform);
+      originY.addEventListener('change', updateTransform);
+      originZ.addEventListener('change', updateTransform);
+      
+      translateX.addEventListener('input', function() {
+        translateXValue.textContent = this.value;
+        updateTransform();
+      });
+      translateY.addEventListener('input', function() {
+        translateYValue.textContent = this.value;
+        updateTransform();
+      });
+      translateZ.addEventListener('input', function() {
+        translateZValue.textContent = this.value;
+        updateTransform();
+      });
+      
+      rotateX.addEventListener('input', function() {
+        rotateXValue.textContent = this.value;
+        updateTransform();
+      });
+      rotateY.addEventListener('input', function() {
+        rotateYValue.textContent = this.value;
+        updateTransform();
+      });
+      rotateZ.addEventListener('input', function() {
+        rotateZValue.textContent = this.value;
+        updateTransform();
+      });
+      
+      scaleX.addEventListener('input', function() {
+        scaleXValue.textContent = this.value;
+        updateTransform();
+      });
+      scaleY.addEventListener('input', function() {
+        scaleYValue.textContent = this.value;
+        updateTransform();
+      });
+      scaleZ.addEventListener('input', function() {
+        scaleZValue.textContent = this.value;
+        updateTransform();
+      });
+      
+      skewX.addEventListener('input', function() {
+        skewXValue.textContent = this.value;
+        updateTransform();
+      });
+      skewY.addEventListener('input', function() {
+        skewYValue.textContent = this.value;
+        updateTransform();
+      });
+      
+      // Copy buttons
+      copyTransformBtn.addEventListener('click', copyTransformCode);
+      copyPerspectiveBtn.addEventListener('click', copyPerspectiveCode);
+      
+      // Preset buttons
+      presetButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          applyPreset(this.dataset.preset);
+        });
+      });
+      
+      // Functions
+      function updatePerspective() {
+        const value = perspectiveRange.value;
+        perspectiveValue.textContent = `${value}px`;
+        transformContainer.style.perspective = `${value}px`;
+        updatePerspectiveCode();
+      }
+      
+      function updateSize() {
+        const value = sizeRange.value;
+        sizeValue.textContent = `${value}px`;
+        transformElement.style.width = `${value}px`;
+        transformElement.style.height = `${value}px`;
+      }
+      
+      function updateTransform() {
+        const transformOrigin = `${originX.value} ${originY.value} ${originZ.value}`;
+        const transform = `
+          translate3d(${translateX.value}px, ${translateY.value}px, ${translateZ.value}px)
+          rotateX(${rotateX.value}deg) rotateY(${rotateY.value}deg) rotateZ(${rotateZ.value}deg)
+          scale3d(${scaleX.value}, ${scaleY.value}, ${scaleZ.value})
+          skew(${skewX.value}deg, ${skewY.value}deg)
+        `.replace(/\s+/g, ' ').trim();
+        
+        transformElement.style.transformOrigin = transformOrigin;
+        transformElement.style.transform = transform;
+        
+        updateTransformCode();
+      }
+      
+      function updateTransformCode() {
+        const transformOrigin = `${originX.value} ${originY.value} ${originZ.value}`;
+        const transform = `translate3d(${translateX.value}px, ${translateY.value}px, ${translateZ.value}px) 
+             rotateX(${rotateX.value}deg) rotateY(${rotateY.value}deg) rotateZ(${rotateZ.value}deg) 
+             scale3d(${scaleX.value}, ${scaleY.value}, ${scaleZ.value}) 
+             skew(${skewX.value}deg, ${skewY.value}deg)`;
+        
+        transformCode.querySelector('code').textContent = `.transform-element {
+  transform: ${transform};
+  transform-origin: ${transformOrigin};
+}`;
+      }
+      
+      function updatePerspectiveCode() {
+        perspectiveCode.querySelector('code').textContent = `.transform-container {
+  perspective: ${perspectiveRange.value}px;
+}`;
+      }
+      
+      function copyTransformCode() {
+        const text = transformCode.querySelector('code').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = copyTransformBtn.innerHTML;
+          copyTransformBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
+          setTimeout(() => {
+            copyTransformBtn.innerHTML = originalText;
+          }, 2000);
+        });
+      }
+      
+      function copyPerspectiveCode() {
+        const text = perspectiveCode.querySelector('code').textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          const originalText = copyPerspectiveBtn.innerHTML;
+          copyPerspectiveBtn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
+          setTimeout(() => {
+            copyPerspectiveBtn.innerHTML = originalText;
+          }, 2000);
+        });
+      }
+      
+      function applyPreset(preset) {
+        switch(preset) {
+          case 'rotate3d':
+            rotateX.value = 45;
+            rotateY.value = 45;
+            rotateZ.value = 0;
+            translateZ.value = 100;
+            break;
+          case 'flip':
+            rotateY.value = 180;
+            translateZ.value = 0;
+            break;
+          case 'zoom':
+            scaleX.value = 1.5;
+            scaleY.value = 1.5;
+            scaleZ.value = 1.5;
+            break;
+          case 'skew':
+            skewX.value = 20;
+            skewY.value = 10;
+            break;
+          case 'reset':
+            // Reset all values
+            perspectiveRange.value = 1000;
+            sizeRange.value = 100;
+            originX.value = 'center';
+            originY.value = 'center';
+            originZ.value = '0';
+            translateX.value = 0;
+            translateY.value = 0;
+            translateZ.value = 0;
+            rotateX.value = 0;
+            rotateY.value = 0;
+            rotateZ.value = 0;
+            scaleX.value = 1;
+            scaleY.value = 1;
+            scaleZ.value = 1;
+            skewX.value = 0;
+            skewY.value = 0;
+            break;
+        }
+        
+        // Update displayed values
+        perspectiveValue.textContent = `${perspectiveRange.value}px`;
+        sizeValue.textContent = `${sizeRange.value}px`;
+        translateXValue.textContent = translateX.value;
+        translateYValue.textContent = translateY.value;
+        translateZValue.textContent = translateZ.value;
+        rotateXValue.textContent = rotateX.value;
+        rotateYValue.textContent = rotateY.value;
+        rotateZValue.textContent = rotateZ.value;
+        scaleXValue.textContent = scaleX.value;
+        scaleYValue.textContent = scaleY.value;
+        scaleZValue.textContent = scaleZ.value;
+        skewXValue.textContent = skewX.value;
+        skewYValue.textContent = skewY.value;
+        
+        // Update transforms
+        updatePerspective();
+        updateSize();
+        updateTransform();
+      }
+    });
+  </script>
+</body>
+</html>
