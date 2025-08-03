@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Developer Solutions | Image ↔ Base64 Converter</title>
+  <title>Developer Solutions | Advanced Image ↔ Base64 Converter</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome -->
@@ -19,12 +19,21 @@
       border-color: #3b82f6;
       background-color: #f0f7ff;
     }
-    #imagePreview {
+    #imagePreview, #base64ImageOutput {
       max-height: 300px;
       max-width: 100%;
     }
     #base64Output {
       min-height: 200px;
+    }
+    .loading-spinner {
+      display: none;
+    }
+    .loading .loading-spinner {
+      display: inline-block;
+    }
+    .loading .loading-text {
+      display: none;
     }
   </style>
 </head>
@@ -75,30 +84,32 @@
           </div>
         </div>
 
-        <!-- Options -->
-        <div class="grid grid-cols-2 gap-4 mb-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Image Quality</label>
-            <select id="qualitySelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-              <option value="1.0">High (100%)</option>
-              <option value="0.8" selected>Medium (80%)</option>
-              <option value="0.6">Low (60%)</option>
-              <option value="0.4">Very Low (40%)</option>
-            </select>
+        <!-- Upload Progress -->
+        <div id="uploadProgress" class="mb-4 hidden">
+          <div class="flex justify-between text-sm text-gray-600 mb-1">
+            <span>Uploading...</span>
+            <span id="uploadPercent">0%</span>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Output Format</label>
-            <select id="formatSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-              <option value="jpeg">JPEG</option>
-              <option value="png" selected>PNG</option>
-              <option value="webp">WEBP</option>
-            </select>
+          <div class="w-full bg-gray-200 rounded-full h-2.5">
+            <div id="uploadProgressBar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- Image URL (after upload) -->
+        <div id="imageUrlContainer" class="mb-4 hidden">
+          <label class="block text-sm font-medium text-gray-700 mb-1">Image URL</label>
+          <div class="flex items-center">
+            <input id="imageUrl" type="text" readonly class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md bg-gray-50 text-sm truncate">
+            <button id="copyUrlBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded-r-md border border-l-0 border-gray-300">
+              <i class="fas fa-copy"></i>
+            </button>
           </div>
         </div>
 
         <!-- Convert Button -->
         <button id="convertToBase64Btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center">
-          <i class="fas fa-exchange-alt mr-2"></i> Convert to Base64
+          <span class="loading-spinner"><i class="fas fa-spinner fa-spin mr-2"></i></span>
+          <span class="loading-text"><i class="fas fa-exchange-alt mr-2"></i> Convert to Base64</span>
         </button>
       </div>
 
@@ -172,6 +183,9 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // ImgBB API Key
+      const IMGBB_API_KEY = '6e0324c4c96e42d562b67dc04dae946a';
+      
       // Elements
       const dropzone = document.getElementById('dropzone');
       const fileInput = document.getElementById('fileInput');
@@ -186,14 +200,19 @@
       const noBase64OutputText = document.getElementById('noBase64OutputText');
       const convertToImageBtn = document.getElementById('convertToImageBtn');
       const downloadImageBtn = document.getElementById('downloadImageBtn');
-      const qualitySelect = document.getElementById('qualitySelect');
-      const formatSelect = document.getElementById('formatSelect');
       const outputFormatSelect = document.getElementById('outputFormatSelect');
       const fileNameInput = document.getElementById('fileNameInput');
+      const uploadProgress = document.getElementById('uploadProgress');
+      const uploadPercent = document.getElementById('uploadPercent');
+      const uploadProgressBar = document.getElementById('uploadProgressBar');
+      const imageUrlContainer = document.getElementById('imageUrlContainer');
+      const imageUrl = document.getElementById('imageUrl');
+      const copyUrlBtn = document.getElementById('copyUrlBtn');
       
       // Current image data
       let currentFile = null;
       let currentBase64Image = null;
+      let uploadedImageUrl = null;
 
       // Dropzone events
       dropzone.addEventListener('click', () => fileInput.click());
@@ -224,16 +243,21 @@
       });
       
       // Convert buttons
-      convertToBase64Btn.addEventListener('click', convertToBase64);
+      convertToBase64Btn.addEventListener('click', uploadAndConvertToBase64);
       convertToImageBtn.addEventListener('click', convertToImage);
       
       // Other buttons
       copyBase64Btn.addEventListener('click', copyBase64);
       clearBase64Btn.addEventListener('click', clearBase64);
       downloadImageBtn.addEventListener('click', downloadImage);
+      copyUrlBtn.addEventListener('click', copyImageUrl);
       
       // Functions
       function handleFileSelect(file) {
+        // Reset previous upload
+        uploadedImageUrl = null;
+        imageUrlContainer.classList.add('hidden');
+        
         // Check file size (max 5MB)
         if (file.size > 5 * 1024 * 1024) {
           alert('File size exceeds 5MB limit');
@@ -258,50 +282,81 @@
         reader.readAsDataURL(file);
       }
       
-      function convertToBase64() {
+      function uploadAndConvertToBase64() {
         if (!currentFile) {
           alert('Please select an image first');
           return;
         }
         
-        const quality = parseFloat(qualitySelect.value);
-        const format = formatSelect.value;
+        // Show loading state
+        convertToBase64Btn.classList.add('loading');
+        uploadProgress.classList.remove('hidden');
         
-        // For PNG, quality doesn't affect the output
-        if (format === 'png') {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            base64Output.value = e.target.result;
-            currentBase64Image = e.target.result;
+        // Prepare form data
+        const formData = new FormData();
+        formData.append('image', currentFile);
+        
+        // Upload to ImgBB
+        fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+          method: 'POST',
+          body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            uploadedImageUrl = data.data.url;
+            imageUrl.value = uploadedImageUrl;
+            imageUrlContainer.classList.remove('hidden');
+            
+            // Now convert the image URL to Base64
+            return convertImageUrlToBase64(uploadedImageUrl);
+          } else {
+            throw new Error(data.error?.message || 'Failed to upload image');
+          }
+        })
+        .then(base64String => {
+          base64Output.value = base64String;
+          currentBase64Image = base64String;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error uploading image: ' + error.message);
+        })
+        .finally(() => {
+          convertToBase64Btn.classList.remove('loading');
+          uploadProgress.classList.add('hidden');
+        });
+      }
+      
+      function convertImageUrlToBase64(imageUrl) {
+        return new Promise((resolve, reject) => {
+          // Show upload progress
+          uploadPercent.textContent = 'Processing...';
+          uploadProgressBar.style.width = '100%';
+          
+          // Create an image element
+          const img = new Image();
+          img.crossOrigin = 'Anonymous';
+          
+          img.onload = function() {
+            // Create canvas
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+            
+            // Convert to Base64
+            const base64 = canvas.toDataURL('image/png');
+            resolve(base64);
           };
-          reader.readAsDataURL(currentFile);
-        } else {
-          // For other formats, we can control quality
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const img = new Image();
-            img.onload = function() {
-              const canvas = document.createElement('canvas');
-              canvas.width = img.width;
-              canvas.height = img.height;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0);
-              
-              let mimeType;
-              switch(format) {
-                case 'jpeg': mimeType = 'image/jpeg'; break;
-                case 'webp': mimeType = 'image/webp'; break;
-                default: mimeType = 'image/png';
-              }
-              
-              const base64 = canvas.toDataURL(mimeType, quality);
-              base64Output.value = base64;
-              currentBase64Image = base64;
-            };
-            img.src = e.target.result;
+          
+          img.onerror = function() {
+            reject(new Error('Failed to load image from URL'));
           };
-          reader.readAsDataURL(currentFile);
-        }
+          
+          img.src = imageUrl;
+        });
       }
       
       function convertToImage() {
@@ -343,6 +398,23 @@
         copyBase64Btn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
         setTimeout(() => {
           copyBase64Btn.innerHTML = originalText;
+        }, 2000);
+      }
+      
+      function copyImageUrl() {
+        if (!imageUrl.value) {
+          alert('No URL to copy');
+          return;
+        }
+        
+        imageUrl.select();
+        document.execCommand('copy');
+        
+        // Show feedback
+        const originalText = copyUrlBtn.innerHTML;
+        copyUrlBtn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => {
+          copyUrlBtn.innerHTML = originalText;
         }, 2000);
       }
       
