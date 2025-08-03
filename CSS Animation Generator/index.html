@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation Generator | Developer Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        main {
+            padding: 3rem 0;
+        }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .tool-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .tool-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+        }
+        
+        .tool-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .animation-selector {
+            margin-bottom: 2rem;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .animation-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+        }
+        
+        .preview-box {
+            width: 100%;
+            height: 200px;
+            background-color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .code-container-wrapper {
+            background: #282c34;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .code-container {
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            overflow-x: auto;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        /* Syntax highlighting */
+        .selector {
+            color: #c678dd;
+        }
+        .property {
+            color: #56b6c2;
+        }
+        .value {
+            color: #98c379;
+        }
+        .punctuation {
+            color: #abb2bf;
+        }
+        .keyword {
+            color: #e06c75;
+        }
+        .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+                <span class="logo-text">Developer Solutions</span>
+            </div>
+            <nav>
+                <a href="#" style="color: white; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> Back to Tools
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="tool-header">
+            <h1>CSS Animation Generator</h1>
+            <p>Create beautiful CSS animations with this easy-to-use generator. Customize and preview animations in real-time.</p>
+        </section>
+        
+        <section class="tool-container">
+            <div class="tool-box">
+                <div class="tool-title">
+                    <i class="fas fa-sliders-h"></i>
+                    <h2>Animation Controls</h2>
+                </div>
+                
+                <div class="animation-selector">
+                    <label for="animation-type">Select Animation:</label>
+                    <select id="animation-type">
+                        <option value="bounce">Bounce</option>
+                        <option value="fade">Fade</option>
+                        <option value="slide">Slide</option>
+                        <option value="rotate">Rotate</option>
+                        <option value="flip">Flip</option>
+                        <option value="pulse">Pulse</option>
+                        <option value="shake">Shake</option>
+                        <option value="swing">Swing</option>
+                        <option value="zoom">Zoom</option>
+                        <option value="flash">Flash</option>
+                        <option value="jello">Jello</option>
+                        <option value="wobble">Wobble</option>
+                        <option value="tada">Tada</option>
+                        <option value="rubberBand">Rubber Band</option>
+                        <option value="lightSpeedIn">Light Speed</option>
+                    </select>
+                </div>
+                
+                <div class="animation-controls">
+                    <div class="control-group">
+                        <label for="duration">Duration (seconds)</label>
+                        <input type="number" id="duration" min="0.1" max="5" step="0.1" value="1">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="delay">Delay (seconds)</label>
+                        <input type="number" id="delay" min="0" max="5" step="0.1" value="0">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="iteration">Iteration Count</label>
+                        <select id="iteration">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="infinite">Infinite</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="timing">Timing Function</label>
+                        <select id="timing">
+                            <option value="ease">Ease</option>
+                            <option value="ease-in">Ease-in</option>
+                            <option value="ease-out">Ease-out</option>
+                            <option value="ease-in-out">Ease-in-out</option>
+                            <option value="linear">Linear</option>
+                            <option value="step-start">Step-start</option>
+                            <option value="step-end">Step-end</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="tool-title">
+                    <i class="fas fa-eye"></i>
+                    <h2>Animation Preview</h2>
+                </div>
+                
+                <div class="preview-box" id="animation-preview">
+                    Animate Me!
+                </div>
+            </div>
+            
+            <div class="tool-box">
+                <div class="tool-title">
+                    <i class="fas fa-code"></i>
+                    <h2>Generated CSS</h2>
+                </div>
+                
+                <div class="code-container-wrapper">
+                    <div class="code-header">
+                        <span>CSS Animation Code</span>
+                        <button class="copy-btn" id="copy-css-btn">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                    <div class="code-container" id="css-output"><code>/* Select an animation to generate CSS */</code></div>
+                </div>
+                
+                <div style="margin-top: 1.5rem;">
+                    <p><strong>How to use:</strong></p>
+                    <ol style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Copy the generated CSS</li>
+                        <li>Add it to your stylesheet</li>
+                        <li>Apply the animation class to your element</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Developer Solutions is open source on GitHub</p>
+            <div class="social-links">
+                <a href="https://github.com/kdippan/Developer-Solutions" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">&copy; 2023 Developer Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const animationType = document.getElementById('animation-type');
+        const durationInput = document.getElementById('duration');
+        const delayInput = document.getElementById('delay');
+        const iterationSelect = document.getElementById('iteration');
+        const timingSelect = document.getElementById('timing');
+        const animationPreview = document.getElementById('animation-preview');
+        const cssOutput = document.getElementById('css-output');
+        const copyCssBtn = document.getElementById('copy-css-btn');
+        
+        // Animation definitions
+        const animations = {
+            bounce: `@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-30px); }
+  60% { transform: translateY(-15px); }
+}`,
+            fade: `@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}`,
+            slide: `@keyframes slide {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}`,
+            rotate: `@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}`,
+            flip: `@keyframes flip {
+  0% { transform: perspective(400px) rotateY(0); }
+  40% { transform: perspective(400px) rotateY(80deg); }
+  60% { transform: perspective(400px) rotateY(60deg); }
+  80% { transform: perspective(400px) rotateY(20deg); }
+  100% { transform: perspective(400px) rotateY(0); }
+}`,
+            pulse: `@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}`,
+            shake: `@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}`,
+            swing: `@keyframes swing {
+  20% { transform: rotate(15deg); }
+  40% { transform: rotate(-10deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}`,
+            zoom: `@keyframes zoom {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}`,
+            flash: `@keyframes flash {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}`,
+            jello: `@keyframes jello {
+  0%, 100% { transform: scale3d(1, 1, 1); }
+  30% { transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+}`,
+            wobble: `@keyframes wobble {
+  0% { transform: translateX(0%); }
+  15% { transform: translateX(-25%) rotate(-5deg); }
+  30% { transform: translateX(20%) rotate(3deg); }
+  45% { transform: translateX(-15%) rotate(-3deg); }
+  60% { transform: translateX(10%) rotate(2deg); }
+  75% { transform: translateX(-5%) rotate(-1deg); }
+  100% { transform: translateX(0%); }
+}`,
+            tada: `@keyframes tada {
+  0% { transform: scale(1); }
+  10%, 20% { transform: scale(0.9) rotate(-3deg); }
+  30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg); }
+  40%, 60%, 80% { transform: scale(1.1) rotate(-3deg); }
+  100% { transform: scale(1) rotate(0); }
+}`,
+            rubberBand: `@keyframes rubberBand {
+  0% { transform: scale(1); }
+  30% { transform: scaleX(1.25) scaleY(0.75); }
+  40% { transform: scaleX(0.75) scaleY(1.25); }
+  60% { transform: scaleX(1.15) scaleY(0.85); }
+  100% { transform: scale(1); }
+}`,
+            lightSpeedIn: `@keyframes lightSpeedIn {
+  0% { transform: translateX(100%) skewX(-30deg); opacity: 0; }
+  60% { transform: translateX(-20%) skewX(30deg); opacity: 1; }
+  80% { transform: translateX(0%) skewX(-15deg); opacity: 1; }
+  100% { transform: translateX(0%) skewX(0deg); opacity: 1; }
+}`
+        };
+
+        // Update animation preview
+        function updateAnimation() {
+            const duration = durationInput.value;
+            const delay = delayInput.value;
+            const iterationCount = iterationSelect.value;
+            const timingFunction = timingSelect.value;
+            const selectedAnimation = animationType.value;
+            
+            // Apply animation to preview
+            animationPreview.style.animation = 
+                `${selectedAnimation} ${duration}s ${timingFunction} ${delay}s ${iterationCount}`;
+            
+            // Generate CSS code
+            const cssCode = `${animations[selectedAnimation]}
+
+.${selectedAnimation}-animate {
+  animation: ${selectedAnimation} ${duration}s ${timingFunction} ${delay}s ${iterationCount};
+}`;
+            
+            // Apply syntax highlighting
+            cssOutput.innerHTML = syntaxHighlight(cssCode);
+        }
+
+        // Simple syntax highlighting
+        function syntaxHighlight(code) {
+            return code
+                .replace(/@keyframes\s+\w+/g, '<span class="keyword">$&</span>')
+                .replace(/animation:\s*[^;]+;/g, '<span class="property">$&</span>')
+                .replace(/\.[a-zA-Z-]+\s*\{/g, '<span class="selector">$&</span>')
+                .replace(/(transform|opacity|scale|rotate|translate[XY]?|skew[XY]?)/g, '<span class="property">$1</span>')
+                .replace(/([\d.]+s|infinite)/g, '<span class="value">$&</span>')
+                .replace(/(ease|ease-in|ease-out|ease-in-out|linear|step-start|step-end)/g, '<span class="value">$&</span>')
+                .replace(/([{}:;])/g, '<span class="punctuation">$1</span>')
+                .replace(/\/\*[\s\S]*?\*\//g, '<span class="comment">$&</span>');
+        }
+
+        // Copy CSS to clipboard
+        function copyCssToClipboard() {
+            const textToCopy = cssOutput.textContent;
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    copyCssBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => {
+                        copyCssBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                    copyCssBtn.innerHTML = '<i class="fas fa-times"></i> Error';
+                    setTimeout(() => {
+                        copyCssBtn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+                    }, 2000);
+                });
+        }
+
+        // Event listeners
+        animationType.addEventListener('change', updateAnimation);
+        durationInput.addEventListener('input', updateAnimation);
+        delayInput.addEventListener('input', updateAnimation);
+        iterationSelect.addEventListener('change', updateAnimation);
+        timingSelect.addEventListener('change', updateAnimation);
+        copyCssBtn.addEventListener('click', copyCssToClipboard);
+
+        // Initialize
+        updateAnimation();
+    </script>
+</body>
+</html>
