@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions | JSON/CSV Converter</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lottie Animations -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+</head>
+<body>
+    <div class="loading-screen">
+        <div class="loader">
+            <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_raiw2hpe.json" background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></lottie-player>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+            <h1>Developer <span>Solutions</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-exchange-alt"></i> JSON/CSV</a></li>
+                <li><a href="#"><i class="fas fa-code"></i> Formatters</a></li>
+                <li><a href="#"><i class="fas fa-tools"></i> Generators</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="converter-section">
+            <div class="converter-tabs">
+                <button class="tab-btn active" data-tab="json-to-csv">
+                    <i class="fas fa-arrow-right"></i> JSON to CSV
+                </button>
+                <button class="tab-btn" data-tab="csv-to-json">
+                    <i class="fas fa-arrow-left"></i> CSV to JSON
+                </button>
+            </div>
+
+            <div class="converter-content">
+                <!-- JSON to CSV Converter -->
+                <div id="json-to-csv" class="tab-pane active">
+                    <div class="input-section">
+                        <div class="toolbar">
+                            <h3><i class="fas fa-file-code"></i> JSON Input</h3>
+                            <div class="actions">
+                                <button class="btn sample-btn" data-type="json">
+                                    <i class="fas fa-magic"></i> Load Sample
+                                </button>
+                                <button class="btn clear-btn">
+                                    <i class="fas fa-trash"></i> Clear
+                                </button>
+                                <button class="btn copy-btn" data-target="json-input">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="btn format-btn" data-target="json-input">
+                                    <i class="fas fa-indent"></i> Format
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="json-input" class="input-text" placeholder='Paste your JSON here or click "Load Sample"...'></textarea>
+                    </div>
+
+                    <div class="controls">
+                        <div class="options">
+                            <label>
+                                <input type="checkbox" id="json-header" checked>
+                                Include Header Row
+                            </label>
+                            <label>
+                                <input type="checkbox" id="json-quotes">
+                                Wrap Values in Quotes
+                            </label>
+                            <div class="delimiter-option">
+                                <span>Delimiter:</span>
+                                <select id="json-delimiter">
+                                    <option value="," selected>Comma (,)</option>
+                                    <option value=";">Semicolon (;)</option>
+                                    <option value="\t">Tab (\t)</option>
+                                    <option value="|">Pipe (|)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="json-convert-btn" class="convert-btn">
+                            <i class="fas fa-arrow-down"></i> Convert to CSV
+                        </button>
+                    </div>
+
+                    <div class="output-section">
+                        <div class="toolbar">
+                            <h3><i class="fas fa-file-csv"></i> CSV Output</h3>
+                            <div class="actions">
+                                <button class="btn download-btn" data-target="csv-output">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="btn copy-btn" data-target="csv-output">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="csv-output" class="output-text" readonly placeholder="Your CSV output will appear here..."></textarea>
+                    </div>
+                </div>
+
+                <!-- CSV to JSON Converter -->
+                <div id="csv-to-json" class="tab-pane">
+                    <div class="input-section">
+                        <div class="toolbar">
+                            <h3><i class="fas fa-file-csv"></i> CSV Input</h3>
+                            <div class="actions">
+                                <button class="btn sample-btn" data-type="csv">
+                                    <i class="fas fa-magic"></i> Load Sample
+                                </button>
+                                <button class="btn clear-btn">
+                                    <i class="fas fa-trash"></i> Clear
+                                </button>
+                                <button class="btn copy-btn" data-target="csv-input">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="csv-input" class="input-text" placeholder='Paste your CSV here or click "Load Sample"...'></textarea>
+                    </div>
+
+                    <div class="controls">
+                        <div class="options">
+                            <label>
+                                <input type="checkbox" id="csv-header" checked>
+                                First row is header
+                            </label>
+                            <div class="delimiter-option">
+                                <span>Delimiter:</span>
+                                <select id="csv-delimiter">
+                                    <option value="," selected>Comma (,)</option>
+                                    <option value=";">Semicolon (;)</option>
+                                    <option value="\t">Tab (\t)</option>
+                                    <option value="|">Pipe (|)</option>
+                                </select>
+                            </div>
+                            <div class="output-format">
+                                <span>Output format:</span>
+                                <select id="json-format">
+                                    <option value="array" selected>Array of Objects</option>
+                                    <option value="object">Object with Keys</option>
+                                    <option value="minified">Minified JSON</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="csv-convert-btn" class="convert-btn">
+                            <i class="fas fa-arrow-up"></i> Convert to JSON
+                        </button>
+                    </div>
+
+                    <div class="output-section">
+                        <div class="toolbar">
+                            <h3><i class="fas fa-file-code"></i> JSON Output</h3>
+                            <div class="actions">
+                                <button class="btn download-btn" data-target="json-output">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="btn copy-btn" data-target="json-output">
+                                    <i class="fas fa-copy"></i> Copy
+                                </button>
+                                <button class="btn format-btn" data-target="json-output">
+                                    <i class="fas fa-indent"></i> Format
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="json-output" class="output-text" readonly placeholder="Your JSON output will appear here..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2><i class="fas fa-star"></i> Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_2znx98yf.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Bidirectional Conversion</h3>
+                    <p>Easily convert between JSON and CSV formats in both directions with a simple interface.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_5tkzkblw.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Customizable Options</h3>
+                    <p>Choose delimiters, handle headers, and select output formats to match your needs.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_5tkzkblw.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Sample Data</h3>
+                    <p>Quickly load sample data to test the converter or understand the expected format.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_ckcn4hvm.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Download & Copy</h3>
+                    <p>Download your converted files or copy to clipboard with a single click.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+                <h2>Developer <span>Solutions</span></h2>
+                <p>Making developer's life easier with powerful tools</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-exchange-alt"></i> JSON/CSV Converter</a></li>
+                    <li><a href="#"><i class="fas fa-code"></i> Code Formatters</a></li>
+                    <li><a href="#"><i class="fas fa-tools"></i> Generators</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Developer Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <style>
+      :root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #4cc9f0;
+    --warning-color: #f72585;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7ff;
+    color: var(--dark-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    text-align: center;
+}
+
+header {
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+h1 span {
+    color: var(--secondary-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+nav a.active {
+    color: white;
+    background-color: var(--primary-color);
+}
+
+nav a i {
+    font-size: 0.9rem;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.converter-section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.converter-tabs {
+    display: flex;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: var(--dark-color);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.tab-btn:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.converter-content {
+    padding: 1.5rem;
+}
+
+.tab-pane {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.input-section, .output-section {
+    margin-bottom: 1.5rem;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.toolbar h3 {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: #e9ecef;
+    color: var(--dark-color);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background-color: #dee2e6;
+}
+
+.btn i {
+    font-size: 0.8rem;
+}
+
+.sample-btn {
+    background-color: rgba(73, 80, 87, 0.1);
+    color: #495057;
+}
+
+.sample-btn:hover {
+    background-color: rgba(73, 80, 87, 0.2);
+}
+
+.clear-btn {
+    background-color: rgba(247, 37, 133, 0.1);
+    color: var(--warning-color);
+}
+
+.clear-btn:hover {
+    background-color: rgba(247, 37, 133, 0.2);
+}
+
+.copy-btn {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+}
+
+.copy-btn:hover {
+    background-color: rgba(67, 97, 238, 0.2);
+}
+
+.format-btn {
+    background-color: rgba(76, 201, 240, 0.1);
+    color: var(--success-color);
+}
+
+.format-btn:hover {
+    background-color: rgba(76, 201, 240, 0.2);
+}
+
+.download-btn {
+    background-color: rgba(72, 149, 239, 0.1);
+    color: var(--accent-color);
+}
+
+.download-btn:hover {
+    background-color: rgba(72, 149, 239, 0.2);
+}
+
+.input-text, .output-text {
+    width: 100%;
+    min-height: 200px;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    resize: vertical;
+    transition: var(--transition);
+}
+
+.input-text:focus, .output-text:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.output-text {
+    background-color: #f8f9fa;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.options input[type="checkbox"] {
+    accent-color: var(--primary-color);
+    width: 1.1em;
+    height: 1.1em;
+    cursor: pointer;
+}
+
+.delimiter-option, .output-format {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+select {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    background-color: white;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.convert-btn {
+    padding: 0.7rem 1.5rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.convert-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.features-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease 0.2s both;
+}
+
+.features-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    margin-bottom: 1rem;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo h2 span {
+    color: var(--accent-color);
+}
+
+.footer-logo p {
+    font-size: 0.9rem;
+    color: #adb5bd;
+}
+
+.footer-links h3, .footer-social h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-links a i {
+    font-size: 0.8rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #495057;
+    font-size: 0.85rem;
+    color: #adb5bd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    
+    nav ul {
+        gap: 0.5rem;
+    }
+    
+    .converter-tabs {
+        flex-direction: column;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast i {
+    font-size: 1.2rem;
+}
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      document.addEventListener('DOMContentLoaded', function() {
+    // Hide loading screen after 1.5 seconds
+    setTimeout(() => {
+        document.querySelector('.loading-screen').classList.add('fade-out');
+        setTimeout(() => {
+            document.querySelector('.loading-screen').style.display = 'none';
+        }, 500);
+    }, 1500);
+
+    // Tab switching functionality
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons and panes
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            btn.classList.add('active');
+            const tabId = btn.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // Sample data for both converters
+    const sampleData = {
+        json: `[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com",
+        "age": 28,
+        "isActive": true
+    },
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "age": 32,
+        "isActive": false
+    },
+    {
+        "id": 3,
+        "name": "Bob Johnson",
+        "email": "bob@example.com",
+        "age": 45,
+        "isActive": true
+    }
+]`,
+        csv: `id,name,email,age,isActive
+1,John Doe,john@example.com,28,true
+2,Jane Smith,jane@example.com,32,false
+3,Bob Johnson,bob@example.com,45,true`
+    };
+
+    // Load sample data
+    document.querySelectorAll('.sample-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const type = btn.getAttribute('data-type');
+            if (type === 'json') {
+                document.getElementById('json-input').value = sampleData.json;
+            } else if (type === 'csv') {
+                document.getElementById('csv-input').value = sampleData.csv;
+            }
+            showToast('Sample data loaded!');
+        });
+    });
+
+    // Clear input
+    document.querySelectorAll('.clear-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const pane = btn.closest('.tab-pane');
+            const input = pane.querySelector('.input-text');
+            input.value = '';
+            const output = pane.querySelector('.output-text');
+            if (output) output.value = '';
+            showToast('Input cleared!');
+        });
+    });
+
+    // Copy to clipboard
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const textarea = document.getElementById(targetId);
+            textarea.select();
+            document.execCommand('copy');
+            showToast('Copied to clipboard!');
+        });
+    });
+
+    // Format JSON
+    document.querySelectorAll('.format-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const textarea = document.getElementById(targetId);
+            
+            try {
+                const json = JSON.parse(textarea.value);
+                textarea.value = JSON.stringify(json, null, 2);
+                showToast('JSON formatted!');
+            } catch (e) {
+                showToast('Invalid JSON!', 'error');
+            }
+        });
+    });
+
+    // Download functionality
+    document.querySelectorAll('.download-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const textarea = document.getElementById(targetId);
+            const content = textarea.value;
+            
+            if (!content.trim()) {
+                showToast('No content to download!', 'error');
+                return;
+            }
+            
+            const pane = textarea.closest('.tab-pane');
+            let filename, mimeType;
+            
+            if (pane.id === 'json-to-csv') {
+                filename = 'converted_data.csv';
+                mimeType = 'text/csv';
+            } else {
+                filename = 'converted_data.json';
+                mimeType = 'application/json';
+            }
+            
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('Download started!');
+        });
+    });
+
+    // JSON to CSV conversion
+    document.getElementById('json-convert-btn').addEventListener('click', () => {
+        const jsonInput = document.getElementById('json-input').value;
+        const includeHeader = document.getElementById('json-header').checked;
+        const wrapQuotes = document.getElementById('json-quotes').checked;
+        const delimiter = document.getElementById('json-delimiter').value;
+        const output = document.getElementById('csv-output');
+        
+        if (!jsonInput.trim()) {
+            showToast('Please enter JSON data!', 'error');
+            return;
+        }
+        
+        try {
+            const json = JSON.parse(jsonInput);
+            let csv = '';
+            
+            // Add header row if requested
+            if (includeHeader && Array.isArray(json) && json.length > 0) {
+                const headers = Object.keys(json[0]);
+                csv += headers.map(h => wrapQuotes ? `"${h}"` : h).join(delimiter) + '\n';
+            }
+            
+            // Add data rows
+            if (Array.isArray(json)) {
+                json.forEach(item => {
+                    const values = Object.values(item).map(val => {
+                        if (val === null || val === undefined) return '';
+                        if (typeof val === 'object') return JSON.stringify(val);
+                        if (wrapQuotes) return `"${val}"`;
+                        return val;
+                    });
+                    csv += values.join(delimiter) + '\n';
+                });
+            } else if (typeof json === 'object') {
+                // Handle single object
+                const values = Object.values(json).map(val => {
+                    if (val === null || val === undefined) return '';
+                    if (typeof val === 'object') return JSON.stringify(val);
+                    if (wrapQuotes) return `"${val}"`;
+                    return val;
+                });
+                csv += values.join(delimiter) + '\n';
+            }
+            
+            output.value = csv.trim();
+            showToast('Conversion successful!');
+        } catch (e) {
+            showToast('Invalid JSON format!', 'error');
+            console.error(e);
+        }
+    });
+
+    // CSV to JSON conversion
+    document.getElementById('csv-convert-btn').addEventListener('click', () => {
+        const csvInput = document.getElementById('csv-input').value;
+        const hasHeader = document.getElementById('csv-header').checked;
+        const delimiter = document.getElementById('csv-delimiter').value;
+        const outputFormat = document.getElementById('json-format').value;
+        const output = document.getElementById('json-output');
+        
+        if (!csvInput.trim()) {
+            showToast('Please enter CSV data!', 'error');
+            return;
+        }
+        
+        try {
+            const lines = csvInput.split('\n').filter(line => line.trim() !== '');
+            let headers = [];
+            const result = [];
+            
+            if (hasHeader && lines.length > 0) {
+                headers = lines[0].split(delimiter).map(h => h.trim().replace(/"/g, ''));
+            }
+            
+            const startRow = hasHeader ? 1 : 0;
+            
+            for (let i = startRow; i < lines.length; i++) {
+                const currentLine = lines[i].split(delimiter);
+                const obj = {};
+                
+                if (hasHeader) {
+                    headers.forEach((header, j) => {
+                        let value = currentLine[j] || '';
+                        value = value.trim().replace(/"/g, '');
+                        
+                        // Try to parse numbers and booleans
+                        if (!isNaN(value) && value !== '') {
+                            value = Number(value);
+                        } else if (value.toLowerCase() === 'true') {
+                            value = true;
+                        } else if (value.toLowerCase() === 'false') {
+                            value = false;
+                        }
+                        
+                        obj[header] = value;
+                    });
+                } else {
+                    currentLine.forEach((value, j) => {
+                        value = value.trim().replace(/"/g, '');
+                        obj[`column${j + 1}`] = value;
+                    });
+                }
+                
+                result.push(obj);
+            }
+            
+            // Handle different output formats
+            let jsonOutput;
+            if (outputFormat === 'array') {
+                jsonOutput = JSON.stringify(result, null, 2);
+            } else if (outputFormat === 'object') {
+                const objResult = {};
+                result.forEach((item, index) => {
+                    objResult[`item${index + 1}`] = item;
+                });
+                jsonOutput = JSON.stringify(objResult, null, 2);
+            } else {
+                jsonOutput = JSON.stringify(result);
+            }
+            
+            output.value = jsonOutput;
+            showToast('Conversion successful!');
+        } catch (e) {
+            showToast('Error converting CSV!', 'error');
+            console.error(e);
+        }
+    });
+
+    // Toast notification function
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            ${message}
+        `;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    // Logo animation on hover
+    const logo = document.querySelector('.logo');
+    logo.addEventListener('mouseenter', () => {
+        logo.classList.add('pulse');
+    });
+    
+    logo.addEventListener('mouseleave', () => {
+        logo.classList.remove('pulse');
+    });
+});
+    </script>
+</body>
+</html>
