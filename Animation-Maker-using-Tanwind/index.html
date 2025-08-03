@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Solutions | Animation Maker</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'spin-slow': 'spin 3s linear infinite',
+            'bounce-slow': 'bounce 2s infinite',
+            'pulse-slow': 'pulse 3s infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .animation-delay-2000 {
+        animation-delay: 2s;
+      }
+      .animation-delay-4000 {
+        animation-delay: 4s;
+      }
+    }
+  </style>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div class="flex items-center mb-4 md:mb-0">
+        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-12 w-12 mr-3 hover:rotate-12 transition-transform">
+        <h1 class="text-2xl font-bold text-gray-800">Developer <span class="text-blue-600">Solutions</span></h1>
+      </div>
+      <nav class="flex space-x-4">
+        <a href="#" class="px-3 py-2 rounded-lg bg-blue-600 text-white flex items-center">
+          <i class="fas fa-film mr-2"></i> Animation Maker
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-exchange-alt mr-2"></i> JSON/CSV
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-font mr-2"></i> Lorem Ipsum
+        </a>
+      </nav>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Animation Controls -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-sliders-h mr-2 text-blue-500"></i> Animation Settings
+        </h2>
+        
+        <!-- Animation Type -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Animation Type</label>
+          <select id="animation-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="bounce">bounce</option>
+            <option value="spin">spin</option>
+            <option value="ping">ping</option>
+            <option value="pulse">pulse</option>
+            <option value="fade">fade (custom)</option>
+            <option value="slide">slide (custom)</option>
+          </select>
+        </div>
+
+        <!-- Duration -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+          <select id="animation-duration" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="100">100ms (fast)</option>
+            <option value="500">500ms</option>
+            <option value="1000" selected>1000ms (default)</option>
+            <option value="2000">2000ms (slow)</option>
+            <option value="3000">3000ms (slower)</option>
+          </select>
+        </div>
+
+        <!-- Timing Function -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Timing Function</label>
+          <select id="animation-timing" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="linear">linear</option>
+            <option value="ease-in">ease-in</option>
+            <option value="ease-out" selected>ease-out</option>
+            <option value="ease-in-out">ease-in-out</option>
+            <option value="cubic-bezier(0.68,-0.6,0.32,1.6)">bounce</option>
+          </select>
+        </div>
+
+        <!-- Delay -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Delay</label>
+          <select id="animation-delay" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="0" selected>0ms (none)</option>
+            <option value="500">500ms</option>
+            <option value="1000">1000ms</option>
+            <option value="2000">2000ms</option>
+          </select>
+        </div>
+
+        <!-- Iteration Count -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Iteration Count</label>
+          <select id="animation-iteration" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="infinite" selected>infinite</option>
+          </select>
+        </div>
+
+        <!-- Direction -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Direction</label>
+          <select id="animation-direction" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="normal" selected>normal</option>
+            <option value="reverse">reverse</option>
+            <option value="alternate">alternate</option>
+            <option value="alternate-reverse">alternate-reverse</option>
+          </select>
+        </div>
+
+        <button id="apply-animation" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+          Apply Animation
+        </button>
+      </div>
+
+      <!-- Preview Area -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-eye mr-2 text-blue-500"></i> Preview
+        </h2>
+        
+        <div id="animation-target" class="w-full h-64 flex items-center justify-center bg-gray-100 rounded-lg mb-4">
+          <div class="w-20 h-20 bg-blue-500 rounded-lg shadow-md flex items-center justify-center text-white font-bold">
+            Box
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Preview Element</label>
+          <select id="preview-element" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="box">Box</option>
+            <option value="circle">Circle</option>
+            <option value="text">Text</option>
+            <option value="button">Button</option>
+          </select>
+        </div>
+
+        <div id="preview-color" class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Element Color</label>
+          <div class="flex space-x-2">
+            <button data-color="bg-blue-500" class="w-8 h-8 rounded-full bg-blue-500 border-2 border-transparent hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"></button>
+            <button data-color="bg-red-500" class="w-8 h-8 rounded-full bg-red-500 border-2 border-transparent hover:border-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"></button>
+            <button data-color="bg-green-500" class="w-8 h-8 rounded-full bg-green-500 border-2 border-transparent hover:border-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"></button>
+            <button data-color="bg-yellow-500" class="w-8 h-8 rounded-full bg-yellow-500 border-2 border-transparent hover:border-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500"></button>
+            <button data-color="bg-purple-500" class="w-8 h-8 rounded-full bg-purple-500 border-2 border-transparent hover:border-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Code Output -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-code mr-2 text-blue-500"></i> Generated Code
+        </h2>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">HTML</label>
+          <pre id="html-code" class="bg-gray-100 p-3 rounded-md text-sm overflow-x-auto"><code>&lt;div class="animate-bounce"&gt;Element&lt;/div&gt;</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="html-code">
+            <i class="fas fa-copy mr-1"></i> Copy HTML
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Tailwind Classes</label>
+          <pre id="tailwind-code" class="bg-gray-100 p-3 rounded-md text-sm overflow-x-auto"><code>animate-bounce</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="tailwind-code">
+            <i class="fas fa-copy mr-1"></i> Copy Classes
+          </button>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Custom CSS</label>
+          <pre id="css-code" class="bg-gray-100 p-3 rounded-md text-sm overflow-x-auto"><code>@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+.animate-bounce {
+  animation: bounce 1s infinite;
+}</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="css-code">
+            <i class="fas fa-copy mr-1"></i> Copy CSS
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Custom Styles for Animations -->
+  <style>
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slide {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+    .animate-fade {
+      animation: fade 1s ease-out;
+    }
+    .animate-slide {
+      animation: slide 1s ease-out;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const animationTarget = document.getElementById('animation-target');
+      const previewElement = document.getElementById('preview-element');
+      const colorButtons = document.querySelectorAll('#preview-color button');
+      const applyBtn = document.getElementById('apply-animation');
+      
+      // Animation controls
+      const animationType = document.getElementById('animation-type');
+      const animationDuration = document.getElementById('animation-duration');
+      const animationTiming = document.getElementById('animation-timing');
+      const animationDelay = document.getElementById('animation-delay');
+      const animationIteration = document.getElementById('animation-iteration');
+      const animationDirection = document.getElementById('animation-direction');
+      
+      // Code outputs
+      const htmlCode = document.getElementById('html-code');
+      const tailwindCode = document.getElementById('tailwind-code');
+      const cssCode = document.getElementById('css-code');
+      
+      // Current element in preview
+      let currentElement = animationTarget.querySelector('div');
+      let currentColor = 'bg-blue-500';
+      
+      // Update preview element
+      previewElement.addEventListener('change', function() {
+        const elementType = this.value;
+        const newElement = document.createElement('div');
+        newElement.className = `${currentColor} rounded-lg shadow-md flex items-center justify-center text-white font-bold`;
+        
+        switch(elementType) {
+          case 'box':
+            newElement.className += ' w-20 h-20';
+            newElement.textContent = 'Box';
+            break;
+          case 'circle':
+            newElement.className += ' w-20 h-20 rounded-full';
+            newElement.textContent = '○';
+            break;
+          case 'text':
+            newElement.className += ' px-4 py-2';
+            newElement.textContent = 'Animated Text';
+            break;
+          case 'button':
+            newElement.className += ' px-6 py-3 cursor-pointer hover:opacity-90 transition-opacity';
+            newElement.textContent = 'Click Me';
+            break;
+        }
+        
+        // Copy animation classes if they exist
+        if (currentElement) {
+          Array.from(currentElement.classList).forEach(cls => {
+            if (cls.startsWith('animate-') || cls.startsWith('duration-') || 
+                cls.startsWith('ease-') || cls.startsWith('delay-') || 
+                cls.startsWith('animate-')) {
+              newElement.classList.add(cls);
+            }
+          });
+        }
+        
+        // Replace element
+        if (currentElement) {
+          animationTarget.replaceChild(newElement, currentElement);
+        } else {
+          animationTarget.appendChild(newElement);
+        }
+        currentElement = newElement;
+        updateCodeOutput();
+      });
+      
+      // Update color
+      colorButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          currentColor = this.getAttribute('data-color');
+          // Remove all color classes
+          const colorClasses = ['bg-blue-500', 'bg-red-500', 'bg-green-500', 'bg-yellow-500', 'bg-purple-500'];
+          colorClasses.forEach(cls => currentElement.classList.remove(cls));
+          // Add new color
+          currentElement.classList.add(currentColor);
+        });
+      });
+      
+      // Apply animation
+      applyBtn.addEventListener('click', function() {
+        if (!currentElement) return;
+        
+        // Remove all animation classes
+        Array.from(currentElement.classList).forEach(cls => {
+          if (cls.startsWith('animate-') || cls.startsWith('duration-') || 
+              cls.startsWith('ease-') || cls.startsWith('delay-') || 
+              cls.startsWith('animate-')) {
+            currentElement.classList.remove(cls);
+          }
+        });
+        
+        // Add new animation classes
+        const type = animationType.value;
+        const duration = animationDuration.value;
+        const timing = animationTiming.value;
+        const delay = animationDelay.value;
+        const iteration = animationIteration.value;
+        const direction = animationDirection.value;
+        
+        // Base animation class
+        currentElement.classList.add(`animate-${type}`);
+        
+        // Additional classes
+        currentElement.classList.add(`duration-${duration}`);
+        
+        if (timing === 'cubic-bezier(0.68,-0.6,0.32,1.6)') {
+          currentElement.style.animationTimingFunction = timing;
+        } else {
+          currentElement.classList.add(`ease-${timing}`);
+        }
+        
+        if (delay !== '0') {
+          currentElement.classList.add(`delay-${delay}`);
+        }
+        
+        currentElement.style.animationIterationCount = iteration;
+        currentElement.style.animationDirection = direction;
+        
+        updateCodeOutput();
+      });
+      
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const codeElement = document.getElementById(targetId);
+          const text = codeElement.querySelector('code').textContent;
+          
+          navigator.clipboard.writeText(text).then(() => {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+            setTimeout(() => {
+              this.innerHTML = originalText;
+            }, 2000);
+          });
+        });
+      });
+      
+      // Update code output
+      function updateCodeOutput() {
+        if (!currentElement) return;
+        
+        // Get animation classes
+        const animationClasses = [];
+        Array.from(currentElement.classList).forEach(cls => {
+          if (cls.startsWith('animate-') || cls.startsWith('duration-') || 
+              cls.startsWith('ease-') || cls.startsWith('delay-')) {
+            animationClasses.push(cls);
+          }
+        });
+        
+        // HTML code
+        const elementType = previewElement.value;
+        let elementHtml = '';
+        
+        switch(elementType) {
+          case 'box':
+            elementHtml = `&lt;div class="${animationClasses.join(' ')} ${currentColor} w-20 h-20 rounded-lg shadow-md flex items-center justify-center text-white font-bold"&gt;Box&lt;/div&gt;`;
+            break;
+          case 'circle':
+            elementHtml = `&lt;div class="${animationClasses.join(' ')} ${currentColor} w-20 h-20 rounded-full shadow-md flex items-center justify-center text-white font-bold"&gt;○&lt;/div&gt;`;
+            break;
+          case 'text':
+            elementHtml = `&lt;div class="${animationClasses.join(' ')} ${currentColor} px-4 py-2 rounded-lg shadow-md text-white font-bold"&gt;Animated Text&lt;/div&gt;`;
+            break;
+          case 'button':
+            elementHtml = `&lt;button class="${animationClasses.join(' ')} ${currentColor} px-6 py-3 rounded-lg shadow-md text-white font-bold hover:opacity-90 transition-opacity"&gt;Click Me&lt;/button&gt;`;
+            break;
+        }
+        
+        htmlCode.querySelector('code').textContent = elementHtml;
+        
+        // Tailwind classes
+        tailwindCode.querySelector('code').textContent = animationClasses.join(' ');
+        
+        // CSS code
+        const type = animationType.value;
+        const duration = animationDuration.value;
+        const timing = animationTiming.value;
+        const delay = animationDelay.value;
+        const iteration = animationIteration.value;
+        const direction = animationDirection.value;
+        
+        let css = '';
+        
+        switch(type) {
+          case 'fade':
+            css = `@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}\n`;
+            break;
+          case 'slide':
+            css = `@keyframes slide {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}\n`;
+            break;
+          case 'bounce':
+            css = `@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}\n`;
+            break;
+          case 'spin':
+            css = `@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}\n`;
+            break;
+          case 'ping':
+            css = `@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}\n`;
+            break;
+          case 'pulse':
+            css = `@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}\n`;
+            break;
+        }
+        
+        css += `.animate-${type} {
+  animation: ${type} ${duration}ms ${timing}`;
+        
+        if (delay !== '0') {
+          css += ` ${delay}ms`;
+        }
+        
+        css += ` ${iteration}`;
+        
+        if (direction !== 'normal') {
+          css += ` ${direction}`;
+        }
+        
+        css += `;\n}`;
+        
+        cssCode.querySelector('code').textContent = css;
+      }
+      
+      // Initialize
+      updateCodeOutput();
+    });
+  </script>
+</body>
+</html>

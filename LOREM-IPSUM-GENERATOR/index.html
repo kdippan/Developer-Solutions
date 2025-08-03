@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions | Lorem Ipsum Generator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lottie Animations -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/lorem-ipsum.css">
+    <!-- Favicon -->
+    <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+</head>
+<body>
+    <div class="loading-screen">
+        <div class="loader">
+            <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_raiw2hpe.json" background="transparent" speed="1" style="width: 150px; height: 150px;" loop autoplay></lottie-player>
+        </div>
+    </div>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+            <h1>Developer <span>Solutions</span></h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> JSON/CSV</a></li>
+                <li><a href="#" class="active"><i class="fas fa-font"></i> Lorem Ipsum</a></li>
+                <li><a href="#"><i class="fas fa-tools"></i> Generators</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="generator-section">
+            <div class="generator-header">
+                <h2><i class="fas fa-quote-left"></i> Lorem Ipsum Generator</h2>
+                <p>Generate placeholder text for your designs and mockups</p>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="text-type">Text Type:</label>
+                    <select id="text-type">
+                        <option value="paragraphs">Paragraphs</option>
+                        <option value="sentences">Sentences</option>
+                        <option value="words">Words</option>
+                        <option value="lists">Lists</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" min="1" max="50" value="3">
+                </div>
+
+                <div class="control-group">
+                    <label for="start-with">Start With:</label>
+                    <select id="start-with">
+                        <option value="lorem">Lorem ipsum dolor sit amet...</option>
+                        <option value="random">Random starting text</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="formatting">Formatting:</label>
+                    <select id="formatting">
+                        <option value="plain">Plain Text</option>
+                        <option value="html">HTML</option>
+                        <option value="markdown">Markdown</option>
+                    </select>
+                </div>
+
+                <button id="generate-btn" class="generate-btn">
+                    <i class="fas fa-magic"></i> Generate Text
+                </button>
+            </div>
+
+            <div class="output-section">
+                <div class="toolbar">
+                    <h3><i class="fas fa-file-alt"></i> Generated Text</h3>
+                    <div class="actions">
+                        <button class="btn copy-btn" id="copy-output">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                        <button class="btn download-btn" id="download-output">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn clear-btn" id="clear-output">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                <div id="output-text" class="output-text" contenteditable="true"></div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2><i class="fas fa-star"></i> Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_5tkzkblw.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Multiple Formats</h3>
+                    <p>Generate plain text, HTML, or Markdown formatted Lorem Ipsum text for any use case.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_ckcn4hvm.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Customizable Output</h3>
+                    <p>Control the quantity, text type, and starting text to get exactly what you need.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_5tkzkblw.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Easy Export</h3>
+                    <p>Copy to clipboard or download the generated text with a single click.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <lottie-player src="https://assets1.lottiefiles.com/packages/lf20_raiw2hpe.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+                    </div>
+                    <h3>Developer Friendly</h3>
+                    <p>Perfect for prototyping, testing layouts, and placeholder content.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="history-section">
+            <h2><i class="fas fa-history"></i> About Lorem Ipsum</h2>
+            <div class="history-content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim.</p>
+                <p>The text is derived from Cicero's 45 BC work "De finibus bonorum et malorum" (The Extremes of Good and Evil). It has been used as placeholder text since the 16th century.</p>
+                <div class="history-fact">
+                    <i class="fas fa-lightbulb"></i>
+                    <p>Did you know? Lorem ipsum is sometimes called "greeked text" in the publishing industry.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+                <h2>Developer <span>Solutions</span></h2>
+                <p>Making developer's life easier with powerful tools</p>
+            </div>
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-exchange-alt"></i> JSON/CSV Converter</a></li>
+                    <li><a href="#"><i class="fas fa-font"></i> Lorem Ipsum Generator</a></li>
+                    <li><a href="#"><i class="fas fa-tools"></i> Other Tools</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 Developer Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/lorem-ipsum.js"></script>
+    <style type="text/css" media="all">
+      :root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4895ef;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --success-color: #4cc9f0;
+    --warning-color: #f72585;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7ff;
+    color: var(--dark-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    text-align: center;
+}
+
+header {
+    background-color: white;
+    box-shadow: var(--box-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: rotate(15deg) scale(1.1);
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+h1 span {
+    color: var(--secondary-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+nav a:hover {
+    color: var(--primary-color);
+    background-color: rgba(67, 97, 238, 0.1);
+}
+
+nav a.active {
+    color: white;
+    background-color: var(--primary-color);
+}
+
+nav a i {
+    font-size: 0.9rem;
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.generator-section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.generator-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+    text-align: center;
+}
+
+.generator-header h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.generator-header p {
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+}
+
+.control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+.control-group select, 
+.control-group input {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    background-color: white;
+    transition: var(--transition);
+}
+
+.control-group select:focus, 
+.control-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.generate-btn {
+    grid-column: 1 / -1;
+    padding: 0.8rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+}
+
+.generate-btn:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.output-section {
+    padding: 0 1.5rem 1.5rem;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.toolbar h3 {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--secondary-color);
+}
+
+.actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: #e9ecef;
+    color: var(--dark-color);
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    background-color: #dee2e6;
+}
+
+.btn i {
+    font-size: 0.8rem;
+}
+
+.copy-btn {
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+}
+
+.copy-btn:hover {
+    background-color: rgba(67, 97, 238, 0.2);
+}
+
+.download-btn {
+    background-color: rgba(72, 149, 239, 0.1);
+    color: var(--accent-color);
+}
+
+.download-btn:hover {
+    background-color: rgba(72, 149, 239, 0.2);
+}
+
+.clear-btn {
+    background-color: rgba(247, 37, 133, 0.1);
+    color: var(--warning-color);
+}
+
+.clear-btn:hover {
+    background-color: rgba(247, 37, 133, 0.2);
+}
+
+.output-text {
+    width: 100%;
+    min-height: 200px;
+    max-height: 500px;
+    padding: 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: var(--border-radius);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    resize: vertical;
+    overflow-y: auto;
+    transition: var(--transition);
+    background-color: white;
+}
+
+.output-text:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.features-section {
+    margin-bottom: 3rem;
+    animation: fadeIn 0.5s ease 0.2s both;
+}
+
+.features-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.feature-card p {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.history-section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.history-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.history-content {
+    display: grid;
+    gap: 1rem;
+}
+
+.history-content p {
+    line-height: 1.7;
+}
+
+.history-fact {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius);
+    margin-top: 1rem;
+}
+
+.history-fact i {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.history-fact p {
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    margin-bottom: 1rem;
+}
+
+.footer-logo img {
+    height: 40px;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo h2 span {
+    color: var(--accent-color);
+}
+
+.footer-logo p {
+    font-size: 0.9rem;
+    color: #adb5bd;
+}
+
+.footer-links h3, .footer-social h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: #adb5bd;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-links a i {
+    font-size: 0.8rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.social-icons a:hover {
+    color: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #495057;
+    font-size: 0.85rem;
+    color: #adb5bd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    
+    nav ul {
+        gap: 0.5rem;
+    }
+    
+    .controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .generate-btn {
+        width: 100%;
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 1.5s infinite;
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1000;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast i {
+    font-size: 1.2rem;
+}
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      document.addEventListener('DOMContentLoaded', function() {
+  // Hide loading screen after 1.5 seconds
+  setTimeout(() => {
+    document.querySelector('.loading-screen').classList.add('fade-out');
+    setTimeout(() => {
+      document.querySelector('.loading-screen').style.display = 'none';
+    }, 500);
+  }, 1500);
+  
+  // Sample data for Lorem Ipsum generation
+  const loremData = {
+    words: [
+      'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur',
+      'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor',
+      'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua'
+    ],
+    sentences: [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+    ],
+    paragraphs: [
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+      'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.'
+    ],
+    listItems: [
+      'Lorem ipsum dolor sit amet',
+      'Consectetur adipiscing elit',
+      'Sed do eiusmod tempor incididunt',
+      'Ut labore et dolore magna aliqua',
+      'Ut enim ad minim veniam',
+      'Quis nostrud exercitation ullamco'
+    ]
+  };
+  
+  // Generate Lorem Ipsum text
+  document.getElementById('generate-btn').addEventListener('click', function() {
+    const textType = document.getElementById('text-type').value;
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const startWith = document.getElementById('start-with').value;
+    const formatting = document.getElementById('formatting').value;
+    const output = document.getElementById('output-text');
+    
+    let generatedText = '';
+    
+    switch (textType) {
+      case 'words':
+        generatedText = generateWords(quantity, startWith);
+        break;
+      case 'sentences':
+        generatedText = generateSentences(quantity, startWith);
+        break;
+      case 'paragraphs':
+        generatedText = generateParagraphs(quantity, startWith);
+        break;
+      case 'lists':
+        generatedText = generateList(quantity, startWith);
+        break;
+    }
+    
+    // Apply formatting
+    generatedText = formatText(generatedText, formatting, textType);
+    
+    output.innerHTML = generatedText;
+    showToast('Text generated successfully!');
+  });
+  
+  // Generate words
+  function generateWords(count, startWith) {
+    let words = [];
+    const wordCount = Math.min(count, 1000); // Limit to 1000 words
+    
+    if (startWith === 'lorem') {
+      words.push('Lorem', 'ipsum', 'dolor', 'sit', 'amet');
+      for (let i = 5; i < wordCount; i++) {
+        words.push(loremData.words[Math.floor(Math.random() * loremData.words.length)]);
+      }
+    } else {
+      for (let i = 0; i < wordCount; i++) {
+        words.push(loremData.words[Math.floor(Math.random() * loremData.words.length)]);
+      }
+    }
+    
+    return words.join(' ');
+  }
+  
+  // Generate sentences
+  function generateSentences(count, startWith) {
+    let sentences = [];
+    const sentenceCount = Math.min(count, 50); // Limit to 50 sentences
+    
+    if (startWith === 'lorem') {
+      sentences.push(loremData.sentences[0]);
+      for (let i = 1; i < sentenceCount; i++) {
+        sentences.push(loremData.sentences[Math.floor(Math.random() * loremData.sentences.length)]);
+      }
+    } else {
+      for (let i = 0; i < sentenceCount; i++) {
+        sentences.push(loremData.sentences[Math.floor(Math.random() * loremData.sentences.length)]);
+      }
+    }
+    
+    return sentences.join(' ');
+  }
+  
+  // Generate paragraphs
+  function generateParagraphs(count, startWith) {
+    let paragraphs = [];
+    const paragraphCount = Math.min(count, 20); // Limit to 20 paragraphs
+    
+    if (startWith === 'lorem') {
+      paragraphs.push(loremData.paragraphs[0]);
+      for (let i = 1; i < paragraphCount; i++) {
+        paragraphs.push(loremData.paragraphs[Math.floor(Math.random() * loremData.paragraphs.length)]);
+      }
+    } else {
+      for (let i = 0; i < paragraphCount; i++) {
+        paragraphs.push(loremData.paragraphs[Math.floor(Math.random() * loremData.paragraphs.length)]);
+      }
+    }
+    
+    return paragraphs.join('\n\n');
+  }
+  
+  // Generate list
+  function generateList(count, startWith) {
+    let items = [];
+    const itemCount = Math.min(count, 20); // Limit to 20 items
+    
+    if (startWith === 'lorem') {
+      items.push(loremData.listItems[0]);
+      for (let i = 1; i < itemCount; i++) {
+        items.push(loremData.listItems[Math.floor(Math.random() * loremData.listItems.length)]);
+      }
+    } else {
+      for (let i = 0; i < itemCount; i++) {
+        items.push(loremData.listItems[Math.floor(Math.random() * loremData.listItems.length)]);
+      }
+    }
+    
+    return items;
+  }
+  
+  // Format text based on selected format
+  function formatText(text, format, textType) {
+    switch (format) {
+      case 'html':
+        if (textType === 'paragraphs') {
+          return text.split('\n\n').map(p => `<p>${p}</p>`).join('\n');
+        } else if (textType === 'lists') {
+          return `<ul>\n${text.map(item => `  <li>${item}</li>`).join('\n')}\n</ul>`;
+        } else {
+          return text;
+        }
+      case 'markdown':
+        if (textType === 'paragraphs') {
+          return text.split('\n\n').join('\n\n');
+        } else if (textType === 'lists') {
+          return text.map(item => `- ${item}`).join('\n');
+        } else {
+          return text;
+        }
+      default:
+        if (Array.isArray(text)) {
+          return text.join('\n');
+        }
+        return text;
+    }
+  }
+  
+  // Copy output to clipboard
+  document.getElementById('copy-output').addEventListener('click', function() {
+    const output = document.getElementById('output-text');
+    const range = document.createRange();
+    range.selectNode(output);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    showToast('Copied to clipboard!');
+  });
+  
+  // Download output
+  document.getElementById('download-output').addEventListener('click', function() {
+    const output = document.getElementById('output-text');
+    const text = output.innerText;
+    const formatting = document.getElementById('formatting').value;
+    let extension = '.txt';
+    
+    if (formatting === 'html') extension = '.html';
+    if (formatting === 'markdown') extension = '.md';
+    
+    if (!text.trim()) {
+      showToast('No content to download!', 'error');
+      return;
+    }
+    
+    const blob = new Blob([text], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `lorem-ipsum${extension}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    showToast('Download started!');
+  });
+  
+  // Clear output
+  document.getElementById('clear-output').addEventListener('click', function() {
+    document.getElementById('output-text').innerHTML = '';
+    showToast('Output cleared!');
+  });
+  
+  // Toast notification function
+  function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i>
+            ${message}
+        `;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+      toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 3000);
+  }
+  
+  // Logo animation on hover
+  const logo = document.querySelector('.logo');
+  logo.addEventListener('mouseenter', () => {
+    logo.classList.add('pulse');
+  });
+  
+  logo.addEventListener('mouseleave', () => {
+    logo.classList.remove('pulse');
+  });
+});
+    </script>
+</body>
+</html>

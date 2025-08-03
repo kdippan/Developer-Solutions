@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Solutions | SVG Path Animator</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for advanced animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <!-- SVG Path Properties -->
+  <script src="https://cdn.jsdelivr.net/npm/svg-path-properties@1.0.4/dist/svg-path-properties.min.js"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+  <style>
+    .path-preview {
+      width: 100%;
+      height: 300px;
+      background-color: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 0.5rem;
+    }
+    .canvas-container {
+      position: relative;
+    }
+    #path-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    #preview-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .animate-path {
+      vector-effect: non-scaling-stroke;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div class="flex items-center mb-4 md:mb-0">
+        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-12 w-12 mr-3 hover:rotate-12 transition-transform">
+        <h1 class="text-2xl font-bold text-gray-800">Developer <span class="text-blue-600">Solutions</span></h1>
+      </div>
+      <nav class="flex space-x-4">
+        <a href="#" class="px-3 py-2 rounded-lg bg-blue-600 text-white flex items-center">
+          <i class="fas fa-pen-nib mr-2"></i> SVG Animator
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-film mr-2"></i> Animation Maker
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-exchange-alt mr-2"></i> JSON/CSV
+        </a>
+      </nav>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Controls Panel -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-sliders-h mr-2 text-blue-500"></i> Animation Controls
+        </h2>
+        
+        <!-- Path Input -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">SVG Path Data</label>
+          <textarea id="path-data" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 h-24" placeholder="M10 10 L90 10 L90 90 L10 90 Z">M10 10 C20 20, 40 20, 50 10 S80 20, 90 10</textarea>
+          <div class="flex space-x-2 mt-2">
+            <button id="btn-preset-1" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded">Curve</button>
+            <button id="btn-preset-2" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded">Heart</button>
+            <button id="btn-preset-3" class="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded">Spiral</button>
+            <button id="btn-clear" class="text-xs bg-red-100 hover:bg-red-200 text-red-800 px-2 py-1 rounded">Clear</button>
+          </div>
+        </div>
+
+        <!-- Animation Type -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Animation Type</label>
+          <select id="animation-type" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="draw">Draw Path</option>
+            <option value="morph">Morph Path</option>
+            <option value="dash">Dash Offset</option>
+            <option value="follow">Follow Path</option>
+          </select>
+        </div>
+
+        <!-- Morph Target (shown only when morph is selected) -->
+        <div id="morph-target-container" class="mb-6 hidden">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Morph To</label>
+          <textarea id="morph-target" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 h-24" placeholder="M10 50 Q25 10 40 50 T70 50"></textarea>
+        </div>
+
+        <!-- Duration -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Duration (seconds)</label>
+          <input type="range" id="animation-duration" min="0.5" max="5" step="0.1" value="2" class="w-full">
+          <div class="flex justify-between text-xs text-gray-500">
+            <span>0.5s</span>
+            <span id="duration-value">2s</span>
+            <span>5s</span>
+          </div>
+        </div>
+
+        <!-- Easing -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Easing Function</label>
+          <select id="animation-easing" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            <option value="none">Linear (none)</option>
+            <option value="power1.inOut">Smooth</option>
+            <option value="bounce.out">Bounce</option>
+            <option value="elastic.out">Elastic</option>
+            <option value="back.inOut">Anticipate</option>
+          </select>
+        </div>
+
+        <!-- Stroke Options -->
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Stroke Options</label>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Width</label>
+              <input type="range" id="stroke-width" min="1" max="10" value="3" class="w-full">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-500 mb-1">Color</label>
+              <input type="color" id="stroke-color" value="#3b82f6" class="w-full h-8">
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-2 gap-4">
+          <button id="btn-preview" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition">
+            Preview Animation
+          </button>
+          <button id="btn-reset" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Preview Area -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-eye mr-2 text-blue-500"></i> Animation Preview
+        </h2>
+        
+        <div class="canvas-container path-preview mb-4">
+          <svg id="preview-canvas" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+            <path id="animated-path" fill="none" stroke="#3b82f6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Preview Options</label>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="inline-flex items-center">
+                <input type="checkbox" id="show-original" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-offset-0 focus:ring-blue-200 focus:ring-opacity-50" checked>
+                <span class="ml-2 text-sm">Show Original</span>
+              </label>
+            </div>
+            <div>
+              <label class="inline-flex items-center">
+                <input type="checkbox" id="show-controls" class="rounded border-gray-300 text-blue-600 shadow-sm focus:border-blue-300 focus:ring focus:ring-offset-0 focus:ring-blue-200 focus:ring-opacity-50">
+                <span class="ml-2 text-sm">Show Controls</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex space-x-2">
+          <button id="btn-play" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center">
+            <i class="fas fa-play mr-2"></i> Play
+          </button>
+          <button id="btn-pause" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center">
+            <i class="fas fa-pause mr-2"></i> Pause
+          </button>
+          <button id="btn-stop" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center">
+            <i class="fas fa-stop mr-2"></i> Stop
+          </button>
+        </div>
+      </div>
+
+      <!-- Code Output -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-1">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-code mr-2 text-blue-500"></i> Generated Code
+        </h2>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">SVG with Inline Animation</label>
+          <pre id="svg-code" class="bg-gray-100 p-3 rounded-md text-xs overflow-x-auto"><code>&lt;svg viewBox="0 0 100 100"&gt;
+  &lt;path d="M10 10 C20 20..." 
+    stroke="#3b82f6" 
+    stroke-width="3"
+    fill="none"&gt;
+    &lt;animate attributeName="stroke-dashoffset" ... /&gt;
+  &lt;/path&gt;
+&lt;/svg&gt;</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="svg-code">
+            <i class="fas fa-copy mr-1"></i> Copy SVG
+          </button>
+        </div>
+
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">CSS/JS Animation</label>
+          <pre id="js-code" class="bg-gray-100 p-3 rounded-md text-xs overflow-x-auto"><code>const path = document.querySelector('path');
+const length = path.getTotalLength();
+
+path.style.strokeDasharray = length;
+path.style.strokeDashoffset = length;
+
+// Animate the drawing
+path.animate([
+  { strokeDashoffset: length },
+  { strokeDashoffset: 0 }
+], {
+  duration: 2000,
+  easing: 'ease-in-out'
+});</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="js-code">
+            <i class="fas fa-copy mr-1"></i> Copy JS
+          </button>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">GSAP Animation</label>
+          <pre id="gsap-code" class="bg-gray-100 p-3 rounded-md text-xs overflow-x-auto"><code>gsap.to("#path", {
+  duration: 2,
+  ease: "power1.inOut",
+  strokeDashoffset: 0,
+  morphSVG: "M10 10 C20 20..."
+});</code></pre>
+          <button class="copy-btn mt-2 text-sm bg-gray-200 hover:bg-gray-300 text-gray-800 py-1 px-3 rounded" data-target="gsap-code">
+            <i class="fas fa-copy mr-1"></i> Copy GSAP
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const pathDataInput = document.getElementById('path-data');
+      const morphTargetInput = document.getElementById('morph-target');
+      const morphContainer = document.getElementById('morph-target-container');
+      const animationTypeSelect = document.getElementById('animation-type');
+      const durationInput = document.getElementById('animation-duration');
+      const durationValue = document.getElementById('duration-value');
+      const easingSelect = document.getElementById('animation-easing');
+      const strokeWidthInput = document.getElementById('stroke-width');
+      const strokeColorInput = document.getElementById('stroke-color');
+      const previewBtn = document.getElementById('btn-preview');
+      const resetBtn = document.getElementById('btn-reset');
+      const playBtn = document.getElementById('btn-play');
+      const pauseBtn = document.getElementById('btn-pause');
+      const stopBtn = document.getElementById('btn-stop');
+      const showOriginalCheckbox = document.getElementById('show-original');
+      const showControlsCheckbox = document.getElementById('show-controls');
+      const animatedPath = document.getElementById('animated-path');
+      const svgCodeOutput = document.getElementById('svg-code');
+      const jsCodeOutput = document.getElementById('js-code');
+      const gsapCodeOutput = document.getElementById('gsap-code');
+      
+      // Preset buttons
+      const preset1Btn = document.getElementById('btn-preset-1');
+      const preset2Btn = document.getElementById('btn-preset-2');
+      const preset3Btn = document.getElementById('btn-preset-3');
+      const clearBtn = document.getElementById('btn-clear');
+      
+      // Animation timeline
+      let animationTimeline = gsap.timeline({ paused: true });
+      
+      // Preset paths
+      const presets = {
+        curve: "M10 10 C20 20, 40 20, 50 10 S80 20, 90 10",
+        heart: "M10 30 Q15 10 25 30 T45 30 T65 10 T85 30 T95 20 T90 50 T70 80 T50 95 T30 80 T10 50 T5 20 Z",
+        spiral: "M50 50 Q55 20 80 20 Q105 20 105 50 Q105 80 80 80 Q55 80 50 50 Q50 35 65 35 Q80 35 80 50 Q80 65 65 65 Q50 65 50 50"
+      };
+      
+      // Initialize
+      updateDurationValue();
+      updatePathPreview();
+      
+      // Event listeners
+      animationTypeSelect.addEventListener('change', function() {
+        morphContainer.classList.toggle('hidden', this.value !== 'morph');
+        updatePathPreview();
+      });
+      
+      durationInput.addEventListener('input', updateDurationValue);
+      
+      previewBtn.addEventListener('click', updatePathPreview);
+      resetBtn.addEventListener('click', resetAnimation);
+      playBtn.addEventListener('click', playAnimation);
+      pauseBtn.addEventListener('click', pauseAnimation);
+      stopBtn.addEventListener('click', resetAnimation);
+      
+      strokeWidthInput.addEventListener('input', updateStroke);
+      strokeColorInput.addEventListener('input', updateStroke);
+      
+      showOriginalCheckbox.addEventListener('change', toggleOriginal);
+      showControlsCheckbox.addEventListener('change', toggleControls);
+      
+      // Preset buttons
+      preset1Btn.addEventListener('click', () => loadPreset('curve'));
+      preset2Btn.addEventListener('click', () => loadPreset('heart'));
+      preset3Btn.addEventListener('click', () => loadPreset('spiral'));
+      clearBtn.addEventListener('click', clearPath);
+      
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const codeElement = document.getElementById(targetId);
+          const text = codeElement.querySelector('code').textContent;
+          
+          navigator.clipboard.writeText(text).then(() => {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-check mr-1"></i> Copied!';
+            setTimeout(() => {
+              this.innerHTML = originalText;
+            }, 2000);
+          });
+        });
+      });
+      
+      // Functions
+      function updateDurationValue() {
+        durationValue.textContent = `${durationInput.value}s`;
+      }
+      
+      function loadPreset(presetName) {
+        pathDataInput.value = presets[presetName];
+        updatePathPreview();
+      }
+      
+      function clearPath() {
+        pathDataInput.value = '';
+        updatePathPreview();
+      }
+      
+      function updateStroke() {
+        animatedPath.setAttribute('stroke-width', strokeWidthInput.value);
+        animatedPath.setAttribute('stroke', strokeColorInput.value);
+      }
+      
+      function updatePathPreview() {
+        // Reset any existing animation
+        animationTimeline.clear();
+        animationTimeline.kill();
+        animationTimeline = gsap.timeline({ paused: true });
+        
+        const pathData = pathDataInput.value.trim();
+        const duration = parseFloat(durationInput.value);
+        const easing = easingSelect.value;
+        const strokeWidth = strokeWidthInput.value;
+        const strokeColor = strokeColorInput.value;
+        
+        if (!pathData) {
+          animatedPath.setAttribute('d', '');
+          return;
+        }
+        
+        // Update path attributes
+        animatedPath.setAttribute('d', pathData);
+        updateStroke();
+        
+        // Calculate path length for stroke-dashoffset animation
+        const pathLength = animatedPath.getTotalLength();
+        animatedPath.style.strokeDasharray = pathLength;
+        animatedPath.style.strokeDashoffset = pathLength;
+        
+        // Generate animation based on type
+        const animationType = animationTypeSelect.value;
+        
+        switch(animationType) {
+          case 'draw':
+            // Draw animation using stroke-dashoffset
+            animationTimeline.to(animatedPath, {
+              strokeDashoffset: 0,
+              duration: duration,
+              ease: easing === 'none' ? 'none' : easing
+            });
+            
+            // Update code outputs
+            updateCodeOutputs(pathData, duration, easing, strokeWidth, strokeColor, 'draw');
+            break;
+            
+          case 'morph':
+            // Morph animation to target path
+            const morphTarget = morphTargetInput.value.trim();
+            if (morphTarget) {
+              animationTimeline.to(animatedPath, {
+                duration: duration,
+                ease: easing === 'none' ? 'none' : easing,
+                morphSVG: morphTarget
+              });
+              
+              // Update code outputs
+              updateCodeOutputs(pathData, duration, easing, strokeWidth, strokeColor, 'morph', morphTarget);
+            }
+            break;
+            
+          case 'dash':
+            // Animated dash offset
+            animationTimeline.to(animatedPath, {
+              strokeDashoffset: -pathLength,
+              duration: duration,
+              ease: easing === 'none' ? 'none' : easing,
+              repeat: -1
+            });
+            
+            // Update code outputs
+            updateCodeOutputs(pathData, duration, easing, strokeWidth, strokeColor, 'dash');
+            break;
+            
+          case 'follow':
+            // Follow path animation (would need an additional element)
+            // This is a placeholder - actual implementation would be more complex
+            animationTimeline.to(animatedPath, {
+              strokeDashoffset: 0,
+              duration: duration,
+              ease: easing === 'none' ? 'none' : easing
+            });
+            
+            // Update code outputs
+            updateCodeOutputs(pathData, duration, easing, strokeWidth, strokeColor, 'follow');
+            break;
+        }
+      }
+      
+      function updateCodeOutputs(pathData, duration, easing, strokeWidth, strokeColor, animationType, morphTarget = '') {
+        // SVG with SMIL animation
+        let svgCode = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">\n`;
+        svgCode += `  <path d="${pathData}"\n`;
+        svgCode += `    stroke="${strokeColor}"\n`;
+        svgCode += `    stroke-width="${strokeWidth}"\n`;
+        svgCode += `    fill="none"\n`;
+        svgCode += `    stroke-linecap="round"\n`;
+        svgCode += `    stroke-linejoin="round">\n`;
+        
+        if (animationType === 'draw') {
+          svgCode += `    <animate \n`;
+          svgCode += `      attributeName="stroke-dashoffset"\n`;
+          svgCode += `      from="${animatedPath.getTotalLength()}"\n`;
+          svgCode += `      to="0"\n`;
+          svgCode += `      dur="${duration}s"\n`;
+          svgCode += `      fill="freeze" />\n`;
+        } else if (animationType === 'morph' && morphTarget) {
+          svgCode += `    <animate \n`;
+          svgCode += `      attributeName="d"\n`;
+          svgCode += `      to="${morphTarget}"\n`;
+          svgCode += `      dur="${duration}s"\n`;
+          svgCode += `      fill="freeze" />\n`;
+        }
+        
+        svgCode += `  </path>\n`;
+        svgCode += `</svg>`;
+        
+        // JavaScript animation code
+        let jsCode = `const path = document.querySelector('path');\n`;
+        jsCode += `const length = path.getTotalLength();\n\n`;
+        jsCode += `path.style.strokeDasharray = length;\n`;
+        jsCode += `path.style.strokeDashoffset = length;\n\n`;
+        jsCode += `// Animate the path\n`;
+        jsCode += `path.animate([\n`;
+        jsCode += `  { strokeDashoffset: length },\n`;
+        jsCode += `  { strokeDashoffset: ${animationType === 'dash' ? '-length' : '0'} }\n`;
+        jsCode += `], {\n`;
+        jsCode += `  duration: ${duration * 1000},\n`;
+        jsCode += `  easing: '${easing === 'none' ? 'linear' : easing}',\n`;
+        if (animationType === 'dash') {
+          jsCode += `  iterations: Infinity,\n`;
+        }
+        jsCode += `  fill: 'forwards'\n`;
+        jsCode += `});`;
+        
+        // GSAP animation code
+        let gsapCode = `// First include GSAP and MorphSVG plugin:\n`;
+        gsapCode += `<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"><\/script>\n`;
+        gsapCode += `<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/MorphSVGPlugin.min.js"><\/script>\n\n`;
+        gsapCode += `// Then animate:\n`;
+        gsapCode += `gsap.to("#animated-path", {\n`;
+        gsapCode += `  duration: ${duration},\n`;
+        gsapCode += `  ease: "${easing === 'none' ? 'none' : easing}",\n`;
+        
+        if (animationType === 'draw') {
+          gsapCode += `  strokeDashoffset: 0,\n`;
+        } else if (animationType === 'morph') {
+          gsapCode += `  morphSVG: "${morphTarget}",\n`;
+        } else if (animationType === 'dash') {
+          gsapCode += `  strokeDashoffset: -length,\n`;
+          gsapCode += `  repeat: -1,\n`;
+        }
+        
+        gsapCode += `});`;
+        
+        // Update DOM
+        svgCodeOutput.querySelector('code').textContent = svgCode;
+        jsCodeOutput.querySelector('code').textContent = jsCode;
+        gsapCodeOutput.querySelector('code').textContent = gsapCode;
+      }
+      
+      function playAnimation() {
+        animationTimeline.play();
+      }
+      
+      function pauseAnimation() {
+        animationTimeline.pause();
+      }
+      
+      function resetAnimation() {
+        animationTimeline.progress(0).pause();
+        updatePathPreview();
+      }
+      
+      function toggleOriginal() {
+        // Would show/hide original path if we had one
+      }
+      
+      function toggleControls() {
+        // Would show/hide path control points if implemented
+      }
+    });
+  </script>
+</body>
+</html>
