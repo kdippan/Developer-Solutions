@@ -1,0 +1,2663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Collection | Developers Solutions</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f7fa;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e1e4e8;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .button-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .button-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+        }
+        
+        .button-preview {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            min-height: 60px;
+            align-items: center;
+        }
+        
+        .button-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .copy-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #e1e4e8;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .button-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Button Collection</h1>
+        <p class="subtitle">Click any button to copy its HTML & CSS code</p>
+    </header>
+    
+    <main>
+        <div class="button-grid">
+            <!-- Button 1 -->
+            <div class="button-card">
+                <div class="button-name">Button 1</div>
+                <div class="button-preview">
+                    <button class="button-1" role="button">Button 1</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-1&quot; role=&quot;button&quot;&gt;Button 1&lt;/button&gt;
+
+/* CSS */
+.button-1 {
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: &quot;Haas Grot Text R Web&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 10px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-1:hover,
+.button-1:focus {
+  background-color: #F082AC;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 2 -->
+            <div class="button-card">
+                <div class="button-name">Button 2</div>
+                <div class="button-preview">
+                    <button class="button-2" role="button">Button 2</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-2&quot; role=&quot;button&quot;&gt;Button 2&lt;/button&gt;
+
+/* CSS */
+.button-2 {
+  background-color: rgba(51, 51, 51, 0.05);
+  border-radius: 8px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: &quot;Haas Grot Text R Web&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 200ms;
+  vertical-align: baseline;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 3 -->
+            <div class="button-card">
+                <div class="button-name">Button 3</div>
+                <div class="button-preview">
+                    <button class="button-3" role="button">Button 3</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-3&quot; role=&quot;button&quot;&gt;Button 3&lt;/button&gt;
+
+/* CSS */
+.button-3 {
+  appearance: none;
+  background-color: #2ea44f;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 6px 16px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.button-3:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.button-3:hover {
+  background-color: #2c974b;
+}
+
+.button-3:focus {
+  box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+  outline: none;
+}
+
+.button-3:disabled {
+  background-color: #94d3a2;
+  border-color: rgba(27, 31, 35, .1);
+  color: rgba(255, 255, 255, .8);
+  cursor: default;
+}
+
+.button-3:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 4 -->
+            <div class="button-card">
+                <div class="button-name">Button 4</div>
+                <div class="button-preview">
+                    <button class="button-4" role="button">Button 4</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-4&quot; role=&quot;button&quot;&gt;Button 4&lt;/button&gt;
+
+/* CSS */
+.button-4 {
+  appearance: none;
+  background-color: #FAFBFC;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #24292E;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system, system-ui, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  list-style: none;
+  padding: 6px 16px;
+  position: relative;
+  transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+  word-wrap: break-word;
+}
+
+.button-4:hover {
+  background-color: #F3F4F6;
+  text-decoration: none;
+  transition-duration: 0.1s;
+}
+
+.button-4:disabled {
+  background-color: #FAFBFC;
+  border-color: rgba(27, 31, 35, 0.15);
+  color: #959DA5;
+  cursor: default;
+}
+
+.button-4:active {
+  background-color: #EDEFF2;
+  box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+  transition: none 0s;
+}
+
+.button-4:focus {
+  outline: 1px transparent;
+}
+
+.button-4:before {
+  display: none;
+}
+
+.button-4:-webkit-details-marker {
+  display: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 5 -->
+            <div class="button-card">
+                <div class="button-name">Button 5</div>
+                <div class="button-preview">
+                    <button class="button-6" role="button">Button 5</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-6&quot; role=&quot;button&quot;&gt;Button 5&lt;/button&gt;
+
+/* CSS */
+.button-6 {
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.85);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.button-6:hover,
+.button-6:focus {
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.button-6:hover {
+  transform: translateY(-1px);
+}
+
+.button-6:active {
+  background-color: #F0F0F1;
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+  color: rgba(0, 0, 0, 0.65);
+  transform: translateY(0);
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 6 -->
+            <div class="button-card">
+                <div class="button-name">Button 6</div>
+                <div class="button-preview">
+                    <button class="button-8" role="button">Button 6</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-8&quot; role=&quot;button&quot;&gt;Button 6&lt;/button&gt;
+
+/* CSS */
+.button-8 {
+  background-color: #e1ecf4;
+  border-radius: 3px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,&quot;Liberation Sans&quot;,sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-8:hover,
+.button-8:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.button-8:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-8:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 7 -->
+            <div class="button-card">
+                <div class="button-name">Button 7</div>
+                <div class="button-preview">
+                    <button class="button-7" role="button">Button 7</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-7&quot; role=&quot;button&quot;&gt;Button 7&lt;/button&gt;
+
+/* CSS */
+.button-7 {
+  background-color: #0095ff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,&quot;Liberation Sans&quot;,sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  margin: 0;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.button-7:hover,
+.button-7:focus {
+  background-color: #07c;
+}
+
+.button-7:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+}
+
+.button-7:active {
+  background-color: #0064bd;
+  box-shadow: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 8 -->
+            <div class="button-card">
+                <div class="button-name">Button 8</div>
+                <div class="button-preview">
+                    <button class="button-9" role="button">Button 8</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-9&quot; role=&quot;button&quot;&gt;Button 8&lt;/button&gt;
+
+/* CSS */
+.button-9 {
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #405cf5;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
+  font-size: 100%;
+  height: 44px;
+  line-height: 1.15;
+  margin: 12px 0 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.button-9:disabled {
+  cursor: default;
+}
+
+.button-9:focus {
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 9 -->
+            <div class="button-card">
+                <div class="button-name">Button 9</div>
+                <div class="button-preview">
+                    <button class="button-12" role="button">Button 9</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-12&quot; role=&quot;button&quot;&gt;Button 9&lt;/button&gt;
+
+/* CSS */
+.button-12 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, &apos;Roboto&apos;, sans-serif;
+  border-radius: 6px;
+  border: none;
+  background: #6E6D70;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+  color: #DFDEDF;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-12:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 10 -->
+            <div class="button-card">
+                <div class="button-name">Button 10</div>
+                <div class="button-preview">
+                    <button class="button-11" role="button">Button 10</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-11&quot; role=&quot;button&quot;&gt;Button 10&lt;/button&gt;
+
+/* CSS */
+.button-11 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, &apos;Roboto&apos;, sans-serif;
+  border-radius: 6px;
+  color: #3D3D3D;
+  background: #fff;
+  border: none;
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-11:focus {
+  box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 11 -->
+            <div class="button-card">
+                <div class="button-name">Button 11</div>
+                <div class="button-preview">
+                    <button class="button-13" role="button">Button 11</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-13&quot; role=&quot;button&quot;&gt;Button 11&lt;/button&gt;
+
+/* CSS */
+.button-13 {
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: &quot;Amazon Ember&quot;,sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.button-13:hover {
+  background-color: #f7fafa;
+}
+
+.button-13:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 12 -->
+            <div class="button-card">
+                <div class="button-name">Button 12</div>
+                <div class="button-preview">
+                    <button class="button-14" role="button">Button 12</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-14&quot; role=&quot;button&quot;&gt;Button 12&lt;/button&gt;
+
+/* CSS */
+.button-14 {
+  background-image: linear-gradient(#f7f8fa ,#e7e9ec);
+  border-color: #adb1b8 #a2a6ac #8d9096;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: &quot;Amazon Ember&quot;,Arial,sans-serif;
+  font-size: 14px;
+  height: 29px;
+  font-size: 13px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 11px;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-14:active {
+  border-bottom-color: #a2a6ac;
+}
+
+.button-14:active:hover {
+  border-bottom-color: #a2a6ac;
+}
+
+.button-14:hover {
+  border-color: #a2a6ac #979aa1 #82858a;
+}
+
+.button-14:focus {
+  border-color: #e77600;
+  box-shadow: rgba(228, 121, 17, .5) 0 0 3px 2px;
+  outline: 0;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 13 -->
+            <div class="button-card">
+                <div class="button-name">Button 13</div>
+                <div class="button-preview">
+                    <button class="button-15" role="button">Button 13</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-15&quot; role=&quot;button&quot;&gt;Button 13&lt;/button&gt;
+
+/* CSS */
+.button-15 {
+  background-image: linear-gradient(#42A1EC, #0070C9);
+  border: 1px solid #0077CC;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  direction: ltr;
+  display: block;
+  font-family: &quot;SF Pro Text&quot;,&quot;SF Pro Icons&quot;,&quot;AOS Icons&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -.022em;
+  line-height: 1.47059;
+  min-width: 30px;
+  overflow: visible;
+  padding: 4px 15px;
+  text-align: center;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+}
+
+.button-15:disabled {
+  cursor: default;
+  opacity: .3;
+}
+
+.button-15:hover {
+  background-image: linear-gradient(#51A9EE, #147BCD);
+  border-color: #1482D0;
+  text-decoration: none;
+}
+
+.button-15:active {
+  background-image: linear-gradient(#3D94D9, #0067B9);
+  border-color: #006DBC;
+  outline: none;
+}
+
+.button-15:focus {
+  box-shadow: rgba(131, 192, 253, 0.5) 0 0 0 3px;
+  outline: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 14 -->
+            <div class="button-card">
+                <div class="button-name">Button 14</div>
+                <div class="button-preview">
+                    <button class="button-16" role="button">Button 14</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-16&quot; role=&quot;button&quot;&gt;Button 14&lt;/button&gt;
+
+/* CSS */
+.button-16 {
+  background-color: #f8f9fa;
+  border: 1px solid #f8f9fa;
+  border-radius: 4px;
+  color: #3c4043;
+  cursor: pointer;
+  font-family: arial,sans-serif;
+  font-size: 14px;
+  height: 36px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 16px;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: pre;
+}
+
+.button-16:hover {
+  border-color: #dadce0;
+  box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+  color: #202124;
+}
+
+.button-16:focus {
+  border-color: #4285f4;
+  outline: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 15 -->
+            <div class="button-card">
+                <div class="button-name">Button 15</div>
+                <div class="button-preview">
+                    <button class="button-17" role="button">Button 15</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-17&quot; role=&quot;button&quot;&gt;Button 15&lt;/button&gt;
+
+/* CSS */
+.button-17 {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-family: &quot;Google Sans&quot;,Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+.button-17:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.button-17:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-17:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-17:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-17:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-17:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-17:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 16 -->
+            <div class="button-card">
+                <div class="button-name">Button 16</div>
+                <div class="button-preview">
+                    <button class="button-18" role="button">Button 16</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-18&quot; role=&quot;button&quot;&gt;Button 16&lt;/button&gt;
+
+/* CSS */
+.button-18 {
+  align-items: center;
+  background-color: #0A66C2;
+  border: 0;
+  border-radius: 100px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: -apple-system, system-ui, system-ui, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, &quot;Fira Sans&quot;, Ubuntu, Oxygen, &quot;Oxygen Sans&quot;, Cantarell, &quot;Droid Sans&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Lucida Grande&quot;, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 20px;
+  max-width: 480px;
+  min-height: 40px;
+  min-width: 0px;
+  overflow: hidden;
+  padding: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
+  touch-action: manipulation;
+  transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+}
+
+.button-18:hover,
+.button-18:focus { 
+  background-color: #16437E;
+  color: #ffffff;
+}
+
+.button-18:active {
+  background: #09223b;
+  color: rgb(255, 255, 255, .7);
+}
+
+.button-18:disabled { 
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, .08);
+  color: rgba(0, 0, 0, .3);
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 17 -->
+            <div class="button-card">
+                <div class="button-name">Button 17</div>
+                <div class="button-preview">
+                    <button class="button-19" role="button">Button 17</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-19&quot; role=&quot;button&quot;&gt;Button 17&lt;/button&gt;
+
+/* CSS */
+.button-19 {
+  appearance: button;
+  background-color: #1899D6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.button-19:after {
+  background-clip: padding-box;
+  background-color: #1CB0F6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: &quot;&quot;;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.button-19,
+.button-19:focus {
+  user-select: auto;
+}
+
+.button-19:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.button-19:disabled {
+  cursor: auto;
+}
+
+.button-19:active {
+  border-width: 4px 0 0;
+  background: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 18 -->
+            <div class="button-card">
+                <div class="button-name">Button 18</div>
+                <div class="button-preview">
+                    <button class="button-20" role="button">Button 18</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-20&quot; role=&quot;button&quot;&gt;Button 18&lt;/button&gt;
+
+/* CSS */
+.button-20 {
+  appearance: button;
+  background-color: #4D4AE8;
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
+  border: 1px solid #4D4AE8;
+  border-radius: 1rem;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter,sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-transform: none;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-20:focus:not(:focus-visible),
+.button-20:focus {
+  outline: 0;
+}
+
+.button-20:hover {
+  background-color: #3733E5;
+  border-color: #3733E5;
+}
+
+.button-20:focus {
+  background-color: #413FC5;
+  border-color: #3E3BBA;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:active {
+  background-color: #3E3BBA;
+  background-image: none;
+  border-color: #3A38AE;
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
+}
+
+.button-20:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+}
+
+.button-20:disabled {
+  background-image: none;
+  box-shadow: none;
+  opacity: .65;
+  pointer-events: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 19 -->
+            <div class="button-card">
+                <div class="button-name">Button 19</div>
+                <div class="button-preview">
+                    <button class="button-21" role="button">Button 19</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-21&quot; role=&quot;button&quot;&gt;Button 19&lt;/button&gt;
+
+/* CSS */
+.button-21 {
+  align-items: center;
+  appearance: none;
+  background-color: #3EB2FD;
+  background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+  background-size: calc(100% + 20px) calc(100% + 20px);
+  border-radius: 100px;
+  border-width: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: CircularStd,sans-serif;
+  font-size: 1rem;
+  height: auto;
+  justify-content: center;
+  line-height: 1.5;
+  padding: 6px 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .2s,background-position .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.button-21:active,
+.button-21:focus {
+  outline: none;
+}
+
+.button-21:hover {
+  background-position: -20px -20px;
+}
+
+.button-21:focus:not(:active) {
+  box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 20 -->
+            <div class="button-card">
+                <div class="button-name">Button 20</div>
+                <div class="button-preview">
+                    <button class="button-22" role="button">Button 20</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-22&quot; role=&quot;button&quot;&gt;Button 20&lt;/button&gt;
+
+/* CSS */
+.button-22 {
+  align-items: center;
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: &quot;RM Neue&quot;,sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-22:active {
+  background-color: #006AE8;
+}
+
+.button-22:hover {
+  background-color: #1C84FF;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 21 -->
+            <div class="button-card">
+                <div class="button-name">Button 21</div>
+                <div class="button-preview">
+                    <button class="button-23" role="button">Button 21</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-23&quot; role=&quot;button&quot;&gt;Button 21&lt;/button&gt;
+
+/* CSS */
+.button-23 {
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #222222;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,&quot;Helvetica Neue&quot;,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  padding: 13px 23px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  touch-action: manipulation;
+  transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+  user-select: none;
+  -webkit-user-select: none;
+  width: auto;
+}
+
+.button-23:focus-visible {
+  box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+  transition: box-shadow .2s;
+}
+
+.button-23:active {
+  background-color: #F7F7F7;
+  border-color: #000000;
+  transform: scale(.96);
+}
+
+.button-23:disabled {
+  border-color: #DDDDDD;
+  color: #DDDDDD;
+  cursor: not-allowed;
+  opacity: 1;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 22 -->
+            <div class="button-card">
+                <div class="button-name">Button 22</div>
+                <div class="button-preview">
+                    <button class="button-24" role="button">Button 22</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-24&quot; role=&quot;button&quot;&gt;Button 22&lt;/button&gt;
+
+/* CSS */
+.button-24 {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,&quot;proxima nova&quot;,sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.button-24:hover,
+.button-24:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
+}
+
+.button-24:active {
+  opacity: .5;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 23 -->
+            <div class="button-card">
+                <div class="button-name">Button 23</div>
+                <div class="button-preview">
+                    <button class="button-25" role="button">Button 23</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-25&quot; role=&quot;button&quot;&gt;Button 23&lt;/button&gt;
+
+/* CSS */
+.button-25 {
+  background-color: #36A9AE;
+  background-image: linear-gradient(#37ADB2, #329CA0);
+  border: 1px solid #2A8387;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: block;
+  font-family: -apple-system,&quot;.SFNSDisplay-Regular&quot;,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;
+  font-size: 17px;
+  line-height: 100%;
+  margin: 0;
+  outline: 0;
+  padding: 11px 15px 12px;
+  text-align: center;
+  transition: box-shadow .05s ease-in-out,opacity .05s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+}
+
+.button-25:hover {
+  box-shadow: rgba(255, 255, 255, 0.3) 0 0 2px inset, rgba(0, 0, 0, 0.4) 0 1px 2px;
+  text-decoration: none;
+  transition-duration: .15s, .15s;
+}
+
+.button-25:active {
+  box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px inset, rgba(0, 0, 0, 0.4) 0 1px 1px;
+}
+
+.button-25:disabled {
+  cursor: not-allowed;
+  opacity: .6;
+}
+
+.button-25:disabled:active {
+  pointer-events: none;
+}
+
+.button-25:disabled:hover {
+  box-shadow: none;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 24 -->
+            <div class="button-card">
+                <div class="button-name">Button 24</div>
+                <div class="button-preview">
+                    <button class="button-26" role="button">Button 24</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-26&quot; role=&quot;button&quot;&gt;Button 24&lt;/button&gt;
+
+/* CSS */
+.button-26 {
+  appearance: button;
+  background-color: #1652F0;
+  border: 1px solid #1652F0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  font-family: Graphik,-apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,Oxygen,Ubuntu,Cantarell,&quot;Fira Sans&quot;,&quot;Droid Sans&quot;,&quot;Helvetica Neue&quot;,sans-serif;
+  font-size: 14px;
+  line-height: 1.15;
+  overflow: visible;
+  padding: 12px 16px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: all 80ms ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: fit-content;
+}
+
+.button-26:disabled {
+  opacity: .5;
+}
+
+.button-26:focus {
+  outline: 0;
+}
+
+.button-26:hover {
+  background-color: #0A46E4;
+  border-color: #0A46E4;
+}
+
+.button-26:active {
+  background-color: #0039D7;
+  border-color: #0039D7;
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 25 -->
+            <div class="button-card">
+                <div class="button-name">Button 25</div>
+                <div class="button-preview">
+                    <button class="button-27" role="button">Button 25</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-27&quot; role=&quot;button&quot;&gt;Button 25&lt;/button&gt;
+
+/* CSS */
+.button-27 {
+  appearance: none;
+  background-color: #000000;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.button-27:disabled {
+  pointer-events: none;
+}
+
+.button-27:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-27:active {
+  box-shadow: none;
+  transform: translateY(0);
+}'>Copy Code</button>
+            </div>
+            
+            <!-- Button 26 -->
+            <div class="button-card">
+                <div class="button-name">Button 26</div>
+                <div class="button-preview">
+                    <button class="button-28" role="button">Button 26</button>
+                </div>
+                <button class="copy-btn" data-code='&lt;!-- HTML !--&gt;
+&lt;button class=&quot;button-28&quot; role=&quot;button&quot;&gt;Button 26&lt;/button&gt;
+
+/* CSS */
+.button-28 {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,Helvetica,Arial,sans-serif,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,&quot;Segoe UI Symbol&quot;;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  will-change: transform;
+}
+
+.button-28:disabled {
+  pointer-events: none;
+}
+
+.button-28:hover {
+  color: #fff;
+  background-color: #1A1A1A;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button-28:active {
+  box-shadow: none;
+  transform: translateY(0);
+}'>Copy Code</button>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>Developers Solutions &copy; 2023 | Button Collection</p>
+    </footer>
+    
+    <div class="toast" id="toast">Code copied to clipboard!</div>
+    
+    <style>
+        /* Button 1 */
+        .button-1 {
+          background-color: #EA4C89;
+          border-radius: 8px;
+          border-style: none;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-block;
+          font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          height: 40px;
+          line-height: 20px;
+          list-style: none;
+          margin: 0;
+          outline: none;
+          padding: 10px 16px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          transition: color 100ms;
+          vertical-align: baseline;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+
+        .button-1:hover,
+        .button-1:focus {
+          background-color: #F082AC;
+        }
+
+        /* Button 2 */
+        .button-2 {
+          background-color: rgba(51, 51, 51, 0.05);
+          border-radius: 8px;
+          border-width: 0;
+          color: #333333;
+          cursor: pointer;
+          display: inline-block;
+          font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          list-style: none;
+          margin: 0;
+          padding: 10px 12px;
+          text-align: center;
+          transition: all 200ms;
+          vertical-align: baseline;
+          white-space: nowrap;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+
+        /* Button 3 */
+        .button-3 {
+          appearance: none;
+          background-color: #2ea44f;
+          border: 1px solid rgba(27, 31, 35, .15);
+          border-radius: 6px;
+          box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+          box-sizing: border-box;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 20px;
+          padding: 6px 16px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: middle;
+          white-space: nowrap;
+        }
+
+        .button-3:focus:not(:focus-visible):not(.focus-visible) {
+          box-shadow: none;
+          outline: none;
+        }
+
+        .button-3:hover {
+          background-color: #2c974b;
+        }
+
+        .button-3:focus {
+          box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+          outline: none;
+        }
+
+        .button-3:disabled {
+          background-color: #94d3a2;
+          border-color: rgba(27, 31, 35, .1);
+          color: rgba(255, 255, 255, .8);
+          cursor: default;
+        }
+
+        .button-3:active {
+          background-color: #298e46;
+          box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+        }
+
+        /* Button 4 */
+        .button-4 {
+          appearance: none;
+          background-color: #FAFBFC;
+          border: 1px solid rgba(27, 31, 35, 0.15);
+          border-radius: 6px;
+          box-shadow: rgba(27, 31, 35, 0.04) 0 1px 0, rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+          box-sizing: border-box;
+          color: #24292E;
+          cursor: pointer;
+          display: inline-block;
+          font-family: -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          list-style: none;
+          padding: 6px 16px;
+          position: relative;
+          transition: background-color 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: middle;
+          white-space: nowrap;
+          word-wrap: break-word;
+        }
+
+        .button-4:hover {
+          background-color: #F3F4F6;
+          text-decoration: none;
+          transition-duration: 0.1s;
+        }
+
+        .button-4:disabled {
+          background-color: #FAFBFC;
+          border-color: rgba(27, 31, 35, 0.15);
+          color: #959DA5;
+          cursor: default;
+        }
+
+        .button-4:active {
+          background-color: #EDEFF2;
+          box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
+          transition: none 0s;
+        }
+
+        .button-4:focus {
+          outline: 1px transparent;
+        }
+
+        .button-4:before {
+          display: none;
+        }
+
+        .button-4:-webkit-details-marker {
+          display: none;
+        }
+
+        /* Button 5 (Button 6 in original) */
+        .button-6 {
+          align-items: center;
+          background-color: #FFFFFF;
+          border: 1px solid rgba(0, 0, 0, 0.1);
+          border-radius: .25rem;
+          box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+          box-sizing: border-box;
+          color: rgba(0, 0, 0, 0.85);
+          cursor: pointer;
+          display: inline-flex;
+          font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          justify-content: center;
+          line-height: 1.25;
+          margin: 0;
+          min-height: 3rem;
+          padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+          position: relative;
+          text-decoration: none;
+          transition: all 250ms;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: baseline;
+          width: auto;
+        }
+
+        .button-6:hover,
+        .button-6:focus {
+          border-color: rgba(0, 0, 0, 0.15);
+          box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+          color: rgba(0, 0, 0, 0.65);
+        }
+
+        .button-6:hover {
+          transform: translateY(-1px);
+        }
+
+        .button-6:active {
+          background-color: #F0F0F1;
+          border-color: rgba(0, 0, 0, 0.15);
+          box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+          color: rgba(0, 0, 0, 0.65);
+          transform: translateY(0);
+        }
+
+        /* Button 6 (Button 8 in original) */
+        .button-8 {
+          background-color: #e1ecf4;
+          border-radius: 3px;
+          border: 1px solid #7aa7c7;
+          box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+          box-sizing: border-box;
+          color: #39739d;
+          cursor: pointer;
+          display: inline-block;
+          font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 1.15385;
+          margin: 0;
+          outline: none;
+          padding: 8px .8em;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: baseline;
+          white-space: nowrap;
+        }
+
+        .button-8:hover,
+        .button-8:focus {
+          background-color: #b3d3ea;
+          color: #2c5777;
+        }
+
+        .button-8:focus {
+          box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+        }
+
+        .button-8:active {
+          background-color: #a0c7e4;
+          box-shadow: none;
+          color: #2c5777;
+        }
+
+        /* Button 7 */
+        .button-7 {
+          background-color: #0095ff;
+          border: 1px solid transparent;
+          border-radius: 3px;
+          box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+          box-sizing: border-box;
+          color: #fff;
+          cursor: pointer;
+          display: inline-block;
+          font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+          font-size: 13px;
+          font-weight: 400;
+          line-height: 1.15385;
+          margin: 0;
+          outline: none;
+          padding: 8px .8em;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: baseline;
+          white-space: nowrap;
+        }
+
+        .button-7:hover,
+        .button-7:focus {
+          background-color: #07c;
+        }
+
+        .button-7:focus {
+          box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+        }
+
+        .button-7:active {
+          background-color: #0064bd;
+          box-shadow: none;
+        }
+
+        /* Button 8 (Button 9 in original) */
+        .button-9 {
+          appearance: button;
+          backface-visibility: hidden;
+          background-color: #405cf5;
+          border-radius: 6px;
+          border-width: 0;
+          box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+          box-sizing: border-box;
+          color: #fff;
+          cursor: pointer;
+          font-family: -apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif;
+          font-size: 100%;
+          height: 44px;
+          line-height: 1.15;
+          margin: 12px 0 0;
+          outline: none;
+          overflow: hidden;
+          padding: 0 25px;
+          position: relative;
+          text-align: center;
+          text-transform: none;
+          transform: translateZ(0);
+          transition: all .2s,box-shadow .08s ease-in;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: 100%;
+        }
+
+        .button-9:disabled {
+          cursor: default;
+        }
+
+        .button-9:focus {
+          box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+        }
+
+        /* Button 9 (Button 12 in original) */
+        .button-12 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 6px 14px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+          border-radius: 6px;
+          border: none;
+          background: #6E6D70;
+          box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), inset 0px 0.5px 0.5px rgba(255, 255, 255, 0.5), 0px 0px 0px 0.5px rgba(0, 0, 0, 0.12);
+          color: #DFDEDF;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+
+        .button-12:focus {
+          box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+          outline: 0;
+        }
+
+        /* Button 10 (Button 11 in original) */
+        .button-11 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 6px 14px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+          border-radius: 6px;
+          color: #3D3D3D;
+          background: #fff;
+          border: none;
+          box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1);
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+
+        .button-11:focus {
+          box-shadow: 0px 0.5px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+          outline: 0;
+        }
+
+        /* Button 11 (Button 13 in original) */
+        .button-13 {
+          background-color: #fff;
+          border: 1px solid #d5d9d9;
+          border-radius: 8px;
+          box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+          box-sizing: border-box;
+          color: #0f1111;
+          cursor: pointer;
+          display: inline-block;
+          font-family: "Amazon Ember",sans-serif;
+          font-size: 13px;
+          line-height: 29px;
+          padding: 0 10px 0 11px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: middle;
+          width: 100px;
+        }
+
+        .button-13:hover {
+          background-color: #f7fafa;
+        }
+
+        .button-13:focus {
+          border-color: #008296;
+          box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+          outline: 0;
+        }
+
+        /* Button 12 (Button 14 in original) */
+        .button-14 {
+          background-image: linear-gradient(#f7f8fa ,#e7e9ec);
+          border-color: #adb1b8 #a2a6ac #8d9096;
+          border-style: solid;
+          border-width: 1px;
+          border-radius: 3px;
+          box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+          box-sizing: border-box;
+          color: #0f1111;
+          cursor: pointer;
+          display: inline-block;
+          font-family: "Amazon Ember",Arial,sans-serif;
+          font-size: 14px;
+          height: 29px;
+          font-size: 13px;
+          outline: 0;
+          overflow: hidden;
+          padding: 0 11px;
+          text-align: center;
+          text-decoration: none;
+          text-overflow: ellipsis;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          white-space: nowrap;
+        }
+
+        .button-14:active {
+          border-bottom-color: #a2a6ac;
+        }
+
+        .button-14:active:hover {
+          border-bottom-color: #a2a6ac;
+        }
+
+        .button-14:hover {
+          border-color: #a2a6ac #979aa1 #82858a;
+        }
+
+        .button-14:focus {
+          border-color: #e77600;
+          box-shadow: rgba(228, 121, 17, .5) 0 0 3px 2px;
+          outline: 0;
+        }
+
+        /* Button 13 (Button 15 in original) */
+        .button-15 {
+          background-image: linear-gradient(#42A1EC, #0070C9);
+          border: 1px solid #0077CC;
+          border-radius: 4px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          direction: ltr;
+          display: block;
+          font-family: "SF Pro Text","SF Pro Icons","AOS Icons","Helvetica Neue",Helvetica,Arial,sans-serif;
+          font-size: 17px;
+          font-weight: 400;
+          letter-spacing: -.022em;
+          line-height: 1.47059;
+          min-width: 30px;
+          overflow: visible;
+          padding: 4px 15px;
+          text-align: center;
+          vertical-align: baseline;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          white-space: nowrap;
+        }
+
+        .button-15:disabled {
+          cursor: default;
+          opacity: .3;
+        }
+
+        .button-15:hover {
+          background-image: linear-gradient(#51A9EE, #147BCD);
+          border-color: #1482D0;
+          text-decoration: none;
+        }
+
+        .button-15:active {
+          background-image: linear-gradient(#3D94D9, #0067B9);
+          border-color: #006DBC;
+          outline: none;
+        }
+
+        .button-15:focus {
+          box-shadow: rgba(131, 192, 253, 0.5) 0 0 0 3px;
+          outline: none;
+        }
+
+        /* Button 14 (Button 16 in original) */
+        .button-16 {
+          background-color: #f8f9fa;
+          border: 1px solid #f8f9fa;
+          border-radius: 4px;
+          color: #3c4043;
+          cursor: pointer;
+          font-family: arial,sans-serif;
+          font-size: 14px;
+          height: 36px;
+          line-height: 27px;
+          min-width: 54px;
+          padding: 0 16px;
+          text-align: center;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          white-space: pre;
+        }
+
+        .button-16:hover {
+          border-color: #dadce0;
+          box-shadow: rgba(0, 0, 0, .1) 0 1px 1px;
+          color: #202124;
+        }
+
+        .button-16:focus {
+          border-color: #4285f4;
+          outline: none;
+        }
+
+        /* Button 15 (Button 17 in original) */
+        .button-17 {
+          align-items: center;
+          appearance: none;
+          background-color: #fff;
+          border-radius: 24px;
+          border-style: none;
+          box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+          box-sizing: border-box;
+          color: #3c4043;
+          cursor: pointer;
+          display: inline-flex;
+          fill: currentcolor;
+          font-family: "Google Sans",Roboto,Arial,sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          height: 48px;
+          justify-content: center;
+          letter-spacing: .25px;
+          line-height: normal;
+          max-width: 100%;
+          overflow: visible;
+          padding: 2px 24px;
+          position: relative;
+          text-align: center;
+          text-transform: none;
+          transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: auto;
+          will-change: transform,opacity;
+          z-index: 0;
+        }
+
+        .button-17:hover {
+          background: #F6F9FE;
+          color: #174ea6;
+        }
+
+        .button-17:active {
+          box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+          outline: none;
+        }
+
+        .button-17:focus {
+          outline: none;
+          border: 2px solid #4285f4;
+        }
+
+        .button-17:not(:disabled) {
+          box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+
+        .button-17:not(:disabled):hover {
+          box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+        }
+
+        .button-17:not(:disabled):focus {
+          box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+
+        .button-17:not(:disabled):active {
+          box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+        }
+
+        .button-17:disabled {
+          box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+        }
+
+        /* Button 16 (Button 18 in original) */
+        .button-18 {
+          align-items: center;
+          background-color: #0A66C2;
+          border: 0;
+          border-radius: 100px;
+          box-sizing: border-box;
+          color: #ffffff;
+          cursor: pointer;
+          display: inline-flex;
+          font-family: -apple-system, system-ui, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Fira Sans", Ubuntu, Oxygen, "Oxygen Sans", Cantarell, "Droid Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Lucida Grande", Helvetica, Arial, sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          justify-content: center;
+          line-height: 20px;
+          max-width: 480px;
+          min-height: 40px;
+          min-width: 0px;
+          overflow: hidden;
+          padding: 0px;
+          padding-left: 20px;
+          padding-right: 20px;
+          text-align: center;
+          touch-action: manipulation;
+          transition: background-color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, box-shadow 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s, color 0.167s cubic-bezier(0.4, 0, 0.2, 1) 0s;
+          user-select: none;
+          -webkit-user-select: none;
+          vertical-align: middle;
+        }
+
+        .button-18:hover,
+        .button-18:focus { 
+          background-color: #16437E;
+          color: #ffffff;
+        }
+
+        .button-18:active {
+          background: #09223b;
+          color: rgb(255, 255, 255, .7);
+        }
+
+        .button-18:disabled { 
+          cursor: not-allowed;
+          background: rgba(0, 0, 0, .08);
+          color: rgba(0, 0, 0, .3);
+        }
+
+        /* Button 17 (Button 19 in original) */
+        .button-19 {
+          appearance: button;
+          background-color: #1899D6;
+          border: solid transparent;
+          border-radius: 16px;
+          border-width: 0 0 4px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-block;
+          font-family: din-round,sans-serif;
+          font-size: 15px;
+          font-weight: 700;
+          letter-spacing: .8px;
+          line-height: 20px;
+          margin: 0;
+          outline: none;
+          overflow: visible;
+          padding: 13px 16px;
+          text-align: center;
+          text-transform: uppercase;
+          touch-action: manipulation;
+          transform: translateZ(0);
+          transition: filter .2s;
+          user-select: none;
+          -webkit-user-select: none;
+          vertical-align: middle;
+          white-space: nowrap;
+          width: 100%;
+        }
+
+        .button-19:after {
+          background-clip: padding-box;
+          background-color: #1CB0F6;
+          border: solid transparent;
+          border-radius: 16px;
+          border-width: 0 0 4px;
+          bottom: -4px;
+          content: "";
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+          z-index: -1;
+        }
+
+        .button-19,
+        .button-19:focus {
+          user-select: auto;
+        }
+
+        .button-19:hover:not(:disabled) {
+          filter: brightness(1.1);
+          -webkit-filter: brightness(1.1);
+        }
+
+        .button-19:disabled {
+          cursor: auto;
+        }
+
+        .button-19:active {
+          border-width: 4px 0 0;
+          background: none;
+        }
+
+        /* Button 18 (Button 20 in original) */
+        .button-20 {
+          appearance: button;
+          background-color: #4D4AE8;
+          background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
+          border: 1px solid #4D4AE8;
+          border-radius: 1rem;
+          box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-block;
+          font-family: Inter,sans-serif;
+          font-size: 1rem;
+          font-weight: 500;
+          line-height: 1.5;
+          margin: 0;
+          padding: .5rem 1rem;
+          text-align: center;
+          text-transform: none;
+          transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: middle;
+        }
+
+        .button-20:focus:not(:focus-visible),
+        .button-20:focus {
+          outline: 0;
+        }
+
+        .button-20:hover {
+          background-color: #3733E5;
+          border-color: #3733E5;
+        }
+
+        .button-20:focus {
+          background-color: #413FC5;
+          border-color: #3E3BBA;
+          box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+        }
+
+        .button-20:active {
+          background-color: #3E3BBA;
+          background-image: none;
+          border-color: #3A38AE;
+          box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
+        }
+
+        .button-20:active:focus {
+          box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+        }
+
+        .button-20:disabled {
+          background-image: none;
+          box-shadow: none;
+          opacity: .65;
+          pointer-events: none;
+        }
+
+        /* Button 19 (Button 21 in original) */
+        .button-21 {
+          align-items: center;
+          appearance: none;
+          background-color: #3EB2FD;
+          background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+          background-size: calc(100% + 20px) calc(100% + 20px);
+          border-radius: 100px;
+          border-width: 0;
+          box-shadow: none;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-flex;
+          font-family: CircularStd,sans-serif;
+          font-size: 1rem;
+          height: auto;
+          justify-content: center;
+          line-height: 1.5;
+          padding: 6px 20px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          transition: background-color .2s,background-position .2s;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: top;
+          white-space: nowrap;
+        }
+
+        .button-21:active,
+        .button-21:focus {
+          outline: none;
+        }
+
+        .button-21:hover {
+          background-position: -20px -20px;
+        }
+
+        .button-21:focus:not(:active) {
+          box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+        }
+
+        /* Button 20 (Button 22 in original) */
+        .button-22 {
+          align-items: center;
+          appearance: button;
+          background-color: #0276FF;
+          border-radius: 8px;
+          border-style: none;
+          box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+          box-sizing: border-box;
+          color: #fff;
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          flex-shrink: 0;
+          font-family: "RM Neue",sans-serif;
+          font-size: 100%;
+          line-height: 1.15;
+          margin: 0;
+          padding: 10px 21px;
+          text-align: center;
+          text-transform: none;
+          transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+        }
+
+        .button-22:active {
+          background-color: #006AE8;
+        }
+
+        .button-22:hover {
+          background-color: #1C84FF;
+        }
+
+        /* Button 21 (Button 23 in original) */
+        .button-23 {
+          background-color: #FFFFFF;
+          border: 1px solid #222222;
+          border-radius: 8px;
+          box-sizing: border-box;
+          color: #222222;
+          cursor: pointer;
+          display: inline-block;
+          font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 20px;
+          margin: 0;
+          outline: none;
+          padding: 13px 23px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          touch-action: manipulation;
+          transition: box-shadow .2s,-ms-transform .1s,-webkit-transform .1s,transform .1s;
+          user-select: none;
+          -webkit-user-select: none;
+          width: auto;
+        }
+
+        .button-23:focus-visible {
+          box-shadow: #222222 0 0 0 2px, rgba(255, 255, 255, 0.8) 0 0 0 4px;
+          transition: box-shadow .2s;
+        }
+
+        .button-23:active {
+          background-color: #F7F7F7;
+          border-color: #000000;
+          transform: scale(.96);
+        }
+
+        .button-23:disabled {
+          border-color: #DDDDDD;
+          color: #DDDDDD;
+          cursor: not-allowed;
+          opacity: 1;
+        }
+
+        /* Button 22 (Button 24 in original) */
+        .button-24 {
+          background: #FF4742;
+          border: 1px solid #FF4742;
+          border-radius: 6px;
+          box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-block;
+          font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+          font-size: 16px;
+          font-weight: 800;
+          line-height: 16px;
+          min-height: 40px;
+          outline: 0;
+          padding: 12px 14px;
+          text-align: center;
+          text-rendering: geometricprecision;
+          text-transform: none;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: middle;
+        }
+
+        .button-24:hover,
+        .button-24:active {
+          background-color: initial;
+          background-position: 0 0;
+          color: #FF4742;
+        }
+
+        .button-24:active {
+          opacity: .5;
+        }
+
+        /* Button 23 (Button 25 in original) */
+        .button-25 {
+          background-color: #36A9AE;
+          background-image: linear-gradient(#37ADB2, #329CA0);
+          border: 1px solid #2A8387;
+          border-radius: 4px;
+          box-shadow: rgba(0, 0, 0, 0.12) 0 1px 1px;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: block;
+          font-family: -apple-system,".SFNSDisplay-Regular","Helvetica Neue",Helvetica,Arial,sans-serif;
+          font-size: 17px;
+          line-height: 100%;
+          margin: 0;
+          outline: 0;
+          padding: 11px 15px 12px;
+          text-align: center;
+          transition: box-shadow .05s ease-in-out,opacity .05s ease-in-out;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: 100%;
+        }
+
+        .button-25:hover {
+          box-shadow: rgba(255, 255, 255, 0.3) 0 0 2px inset, rgba(0, 0, 0, 0.4) 0 1px 2px;
+          text-decoration: none;
+          transition-duration: .15s, .15s;
+        }
+
+        .button-25:active {
+          box-shadow: rgba(0, 0, 0, 0.15) 0 2px 4px inset, rgba(0, 0, 0, 0.4) 0 1px 1px;
+        }
+
+        .button-25:disabled {
+          cursor: not-allowed;
+          opacity: .6;
+        }
+
+        .button-25:disabled:active {
+          pointer-events: none;
+        }
+
+        .button-25:disabled:hover {
+          box-shadow: none;
+        }
+
+        /* Button 24 (Button 26 in original) */
+        .button-26 {
+          appearance: button;
+          background-color: #1652F0;
+          border: 1px solid #1652F0;
+          border-radius: 4px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+          font-size: 14px;
+          line-height: 1.15;
+          overflow: visible;
+          padding: 12px 16px;
+          position: relative;
+          text-align: center;
+          text-transform: none;
+          transition: all 80ms ease-in-out;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: fit-content;
+        }
+
+        .button-26:disabled {
+          opacity: .5;
+        }
+
+        .button-26:focus {
+          outline: 0;
+        }
+
+        .button-26:hover {
+          background-color: #0A46E4;
+          border-color: #0A46E4;
+        }
+
+        .button-26:active {
+          background-color: #0039D7;
+          border-color: #0039D7;
+        }
+
+        /* Button 25 (Button 27 in original) */
+        .button-27 {
+          appearance: none;
+          background-color: #000000;
+          border: 2px solid #1A1A1A;
+          border-radius: 15px;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-block;
+          font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+          font-size: 16px;
+          font-weight: 600;
+          line-height: normal;
+          margin: 0;
+          min-height: 60px;
+          min-width: 0;
+          outline: none;
+          padding: 16px 24px;
+          text-align: center;
+          text-decoration: none;
+          transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: 100%;
+          will-change: transform;
+        }
+
+        .button-27:disabled {
+          pointer-events: none;
+        }
+
+        .button-27:hover {
+          box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+          transform: translateY(-2px);
+        }
+
+        .button-27:active {
+          box-shadow: none;
+          transform: translateY(0);
+        }
+
+        /* Button 26 (Button 28 in original) */
+        .button-28 {
+          appearance: none;
+          background-color: transparent;
+          border: 2px solid #1A1A1A;
+          border-radius: 15px;
+          box-sizing: border-box;
+          color: #3B3B3B;
+          cursor: pointer;
+          display: inline-block;
+          font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+          font-size: 16px;
+          font-weight: 600;
+          line-height: normal;
+          margin: 0;
+          min-height: 60px;
+          min-width: 0;
+          outline: none;
+          padding: 16px 24px;
+          text-align: center;
+          text-decoration: none;
+          transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          width: 100%;
+          will-change: transform;
+        }
+
+        .button-28:disabled {
+          pointer-events: none;
+        }
+
+        .button-28:hover {
+          color: #fff;
+          background-color: #1A1A1A;
+          box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+          transform: translateY(-2px);
+        }
+
+        .button-28:active {
+          box-shadow: none;
+          transform: translateY(0);
+        }
+    </style>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            const toast = document.getElementById('toast');
+            
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const code = this.getAttribute('data-code');
+                    navigator.clipboard.writeText(code).then(() => {
+                        // Show toast
+                        toast.classList.add('show');
+                        
+                        // Hide toast after 2 seconds
+                        setTimeout(() => {
+                            toast.classList.remove('show');
+                        }, 2000);
+                    }).catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
