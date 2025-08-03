@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Currency Converter</h1>
+        
+        <div class="converter-box">
+            <div class="amount-box">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" value="1" min="1">
+            </div>
+            
+            <div class="from-box">
+                <label for="from-currency">From</label>
+                <select id="from-currency">
+                    <option value="USD" selected>USD - United States Dollar</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            
+            <div class="reverse-btn">
+                <button id="reverse-currencies"><i class="fas fa-exchange-alt"></i></button>
+            </div>
+            
+            <div class="to-box">
+                <label for="to-currency">To</label>
+                <select id="to-currency">
+                    <option value="EUR">EUR - Euro</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            
+            <div class="result-box">
+                <button id="convert-btn">Convert</button>
+                <div id="result">1 USD = 0.92 EUR</div>
+            </div>
+        </div>
+        
+        <div class="rate-info">
+            <div id="rate-date">Exchange rates last updated: Loading...</div>
+            <div id="rate-value">1 USD = 0.92 EUR</div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <style type="text/css" media="all">
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.converter-box {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.amount-box, .from-box, .to-box, .result-box {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+}
+
+input, select {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #4a6bff;
+}
+
+input {
+    width: 100%;
+}
+
+#reverse-currencies {
+    background-color: #4a6bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: background-color 0.3s;
+}
+
+#reverse-currencies:hover {
+    background-color: #3a5bef;
+}
+
+#convert-btn {
+    background-color: #4a6bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: background-color 0.3s;
+}
+
+#convert-btn:hover {
+    background-color: #3a5bef;
+}
+
+#result {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.rate-info {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+#rate-value {
+    margin-top: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .converter-box {
+        grid-template-columns: 1fr;
+    }
+    
+    #reverse-currencies, #convert-btn {
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+}
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      document.addEventListener('DOMContentLoaded', function() {
+  const apiKey = 'fca_live_vTUVsH1eor1r92khlfQGStMLm67o5MUQBhCSPek3';
+  const apiUrl = `https://api.currencyapi.com/v3/latest?apikey=${apiKey}`;
+  
+  const amountInput = document.getElementById('amount');
+  const fromCurrencySelect = document.getElementById('from-currency');
+  const toCurrencySelect = document.getElementById('to-currency');
+  const convertBtn = document.getElementById('convert-btn');
+  const resultDiv = document.getElementById('result');
+  const rateDateDiv = document.getElementById('rate-date');
+  const rateValueDiv = document.getElementById('rate-value');
+  const reverseBtn = document.getElementById('reverse-currencies');
+  
+  let exchangeRates = {};
+  let lastUpdated = '';
+  let currencies = [];
+  
+  // Fetch exchange rates from API
+  async function fetchExchangeRates() {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      
+      if (data.data) {
+        exchangeRates = data.data;
+        lastUpdated = new Date(data.meta.last_updated_at).toLocaleString();
+        currencies = Object.keys(data.data).sort();
+        
+        // Update UI
+        populateCurrencyDropdowns();
+        updateRateInfo();
+        convertCurrency();
+      }
+    } catch (error) {
+      console.error('Error fetching exchange rates:', error);
+      resultDiv.textContent = 'Failed to fetch exchange rates. Please try again later.';
+    }
+  }
+  
+  // Populate currency dropdowns
+  function populateCurrencyDropdowns() {
+    // Clear existing options (except the first one which is the default)
+    while (fromCurrencySelect.options.length > 1) {
+      fromCurrencySelect.remove(1);
+    }
+    
+    while (toCurrencySelect.options.length > 1) {
+      toCurrencySelect.remove(1);
+    }
+    
+    // Add all available currencies
+    currencies.forEach(currencyCode => {
+      const currency = exchangeRates[currencyCode];
+      const optionText = `${currencyCode} - ${currency.name}`;
+      
+      const fromOption = document.createElement('option');
+      fromOption.value = currencyCode;
+      fromOption.textContent = optionText;
+      fromCurrencySelect.appendChild(fromOption);
+      
+      const toOption = document.createElement('option');
+      toOption.value = currencyCode;
+      toOption.textContent = optionText;
+      toCurrencySelect.appendChild(toOption);
+    });
+  }
+  
+  // Convert currency
+  function convertCurrency() {
+    const amount = parseFloat(amountInput.value);
+    if (isNaN(amount) || amount <= 0) {
+      resultDiv.textContent = 'Please enter a valid amount';
+      return;
+    }
+    
+    const fromCurrency = fromCurrencySelect.value;
+    const toCurrency = toCurrencySelect.value;
+    
+    if (!exchangeRates[fromCurrency] || !exchangeRates[toCurrency]) {
+      resultDiv.textContent = 'Currency not available';
+      return;
+    }
+    
+    // Convert via USD as base (since the API returns rates relative to USD)
+    const fromRate = exchangeRates[fromCurrency].value;
+    const toRate = exchangeRates[toCurrency].value;
+    
+    const convertedAmount = (amount / fromRate) * toRate;
+    
+    resultDiv.textContent = `${amount.toFixed(2)} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+    rateValueDiv.textContent = `1 ${fromCurrency} = ${(toRate / fromRate).toFixed(6)} ${toCurrency}`;
+  }
+  
+  // Update rate information
+  function updateRateInfo() {
+    if (lastUpdated) {
+      rateDateDiv.textContent = `Exchange rates last updated: ${lastUpdated}`;
+    }
+  }
+  
+  // Reverse currencies
+  function reverseCurrencies() {
+    const temp = fromCurrencySelect.value;
+    fromCurrencySelect.value = toCurrencySelect.value;
+    toCurrencySelect.value = temp;
+    convertCurrency();
+  }
+  
+  // Event listeners
+  convertBtn.addEventListener('click', convertCurrency);
+  reverseBtn.addEventListener('click', reverseCurrencies);
+  amountInput.addEventListener('input', convertCurrency);
+  fromCurrencySelect.addEventListener('change', convertCurrency);
+  toCurrencySelect.addEventListener('change', convertCurrency);
+  
+  // Initialize
+  fetchExchangeRates();
+});
+    </script>
+    <style type="text/css" media="all">
+      
+    </style>
+</body>
+</html>
