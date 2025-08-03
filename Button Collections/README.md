@@ -1,6 +1,6 @@
 # Button Collections - Developer Solutions
 
-![Button Collections Preview](https://developersolutions.netlify.app/Button Collections/preview.png)
+![Button Collections Preview](https://developersolutions.netlify.app/Button%20Collections/preview.png)
 
 A comprehensive collection of ready-to-use CSS buttons for web developers. Easily copy and implement these stylish buttons in your projects.
 
