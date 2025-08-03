@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Minifier Tool | Developer Solutions - Free Online HTML Compression</title>
+    <meta name="description" content="Free online HTML minifier tool that compresses and optimizes your HTML code. Remove comments, whitespace and reduce file size for better performance.">
+    <meta name="keywords" content="HTML minifier, HTML compressor, code optimization, web performance, developer tools">
+    <meta name="author" content="Developer Solutions">
+    <meta property="og:title" content="HTML Minifier Tool | Developer Solutions">
+    <meta property="og:description" content="Free online HTML minifier tool that compresses and optimizes your HTML code">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
+        
+        .tool-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .tool-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Tool Box */
+        .tool-box {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .tool-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .tool-title i {
+            font-size: 1.5rem;
+        }
+        
+        /* HTML Specific Styles */
+        .html-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .html-line-numbers {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            padding: 1rem;
+            font-family: monospace;
+            color: var(--gray);
+            text-align: right;
+            background: rgba(0,0,0,0.03);
+            border-right: 1px solid var(--gray-light);
+            border-radius: 8px 0 0 8px;
+            user-select: none;
+        }
+        
+        .html-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 1rem 1rem 1rem 3.5rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+        
+        .html-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+        
+        .html-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid var(--gray-light);
+            min-height: 200px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: var(--gray-light);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        /* Button Styles */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(67, 97, 238, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .toast.show {
+            opacity: 1;
+            bottom: 30px;
+        }
+        
+        .toast-success {
+            background: #4BB543;
+        }
+        
+        .toast-error {
+            background: #FF3333;
+        }
+        
+        .toast-warning {
+            background: #FFA500;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            margin-bottom: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .stats-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo">
+                <span class="logo-text">Developer Solutions</span>
+            </div>
+            <nav>
+                <a href="#" style="color: white; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> Back to Tools
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section class="tool-header">
+            <h1>HTML Minifier Tool</h1>
+            <p>Compress and optimize your HTML code by removing unnecessary characters, whitespace and comments. Reduce file size for better performance.</p>
+        </section>
+        
+        <section class="tool-box">
+            <div class="tool-title">
+                <i class="fas fa-compress-alt"></i>
+                <h2>HTML Compressor</h2>
+            </div>
+            
+            <div class="input-group">
+                <label for="html-input">HTML Input</label>
+                <div class="html-container">
+                    <div class="html-line-numbers" id="line-numbers">1</div>
+                    <textarea id="html-input" class="html-textarea" placeholder='Paste your HTML here... Example: <!DOCTYPE html><html><head><title>Test</title></head><body><h1>Hello World</h1></body></html>'></textarea>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button id="minify-btn" class="btn btn-primary">
+                    <i class="fas fa-compress-alt"></i> Minify HTML
+                </button>
+                <button id="clear-btn" class="btn btn-outline">
+                    <i class="fas fa-trash-alt"></i> Clear
+                </button>
+                <button id="copy-btn" class="btn btn-outline">
+                    <i class="fas fa-copy"></i> Copy
+                </button>
+                <button id="download-btn" class="btn btn-outline">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            
+            <div class="stats-bar" id="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label">Original Size</span>
+                    <span class="stat-value" id="original-size">0 bytes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Minified Size</span>
+                    <span class="stat-value" id="minified-size">0 bytes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Reduction</span>
+                    <span class="stat-value" id="reduction">0%</span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="html-output">Minified HTML</label>
+                <pre id="html-output" class="html-preview">Your minified HTML will appear here...</pre>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>Developer Solutions is open source on GitHub</p>
+                <a href="https://github.com/kdippan/Developer-Solutions" class="btn btn-primary" style="margin: 10px 0;">
+                    <i class="fab fa-github"></i> Contribute
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/kdippan/Developer-Solutions" title="GitHub" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" title="Twitter" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" title="LinkedIn" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            <p class="copyright">&copy; 2023 Developer Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const htmlInput = document.getElementById('html-input');
+        const htmlOutput = document.getElementById('html-output');
+        const minifyBtn = document.getElementById('minify-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const lineNumbers = document.getElementById('line-numbers');
+        const originalSizeEl = document.getElementById('original-size');
+        const minifiedSizeEl = document.getElementById('minified-size');
+        const reductionEl = document.getElementById('reduction');
+        const statsBar = document.getElementById('stats-bar');
+        
+        // Update line numbers
+        function updateLineNumbers() {
+            const lines = htmlInput.value.split('\n').length;
+            let numbers = '';
+            for (let i = 1; i <= lines; i++) {
+                numbers += i + '<br>';
+            }
+            lineNumbers.innerHTML = numbers;
+            
+            // Update original size
+            updateStats();
+        }
+        
+        // Minify HTML
+        function minifyHTML(html) {
+            // Preserve content within <pre>, <code>, <textarea>, and <script> tags
+            const preserveTags = [];
+            
+            // Replace content that should be preserved with placeholders
+            html = html.replace(/<(pre|code|textarea|script)[^>]*>[\s\S]*?<\/\1>/g, function(match) {
+                preserveTags.push(match);
+                return `<!--PRESERVE_TAG_${preserveTags.length - 1}-->`;
+            });
+            
+            // Minify the rest of the HTML
+            let minified = html
+                // Remove HTML comments except conditional comments
+                .replace(/<!--(?!\[if[\s\S]*?\]>)[\s\S]*?-->/g, '')
+                // Remove whitespace between tags
+                .replace(/>\s+</g, '><')
+                // Collapse multiple whitespace characters
+                .replace(/\s+/g, ' ')
+                // Remove whitespace around tags
+                .replace(/\s*<\s*/g, '<')
+                .replace(/\s*>\s*/g, '>')
+                // Trim whitespace
+                .trim();
+            
+            // Restore preserved content
+            minified = minified.replace(/<!--PRESERVE_TAG_(\d+)-->/g, function(match, index) {
+                return preserveTags[parseInt(index)] || '';
+            });
+            
+            return minified;
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const originalSize = new Blob([htmlInput.value]).size;
+            const minifiedSize = htmlOutput.textContent.includes('here...') ? 0 : new Blob([htmlOutput.textContent]).size;
+            const reduction = originalSize > 0 ? Math.round(((originalSize - minifiedSize) / originalSize) * 100) : 0;
+            
+            originalSizeEl.textContent = formatBytes(originalSize);
+            minifiedSizeEl.textContent = minifiedSize > 0 ? formatBytes(minifiedSize) : '0 bytes';
+            reductionEl.textContent = minifiedSize > 0 ? `${reduction}%` : '0%';
+            
+            // Update stats bar visibility
+            statsBar.style.display = htmlInput.value.trim() ? 'flex' : 'none';
+        }
+        
+        // Format bytes to human-readable format
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 bytes';
+            const k = 1024;
+            const sizes = ['bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Show toast notification
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+        
+        // Event listeners
+        htmlInput.addEventListener('input', updateLineNumbers);
+        
+        minifyBtn.addEventListener('click', function() {
+            if (!htmlInput.value.trim()) {
+                showToast('Please enter HTML to minify', 'warning');
+                return;
+            }
+            
+            try {
+                const minified = minifyHTML(htmlInput.value);
+                htmlOutput.textContent = minified;
+                updateStats();
+                showToast('HTML minified successfully!', 'success');
+            } catch (error) {
+                htmlOutput.textContent = 'Error minifying HTML: ' + error.message;
+                showToast('Error minifying HTML', 'error');
+            }
+        });
+        
+        clearBtn.addEventListener('click', function() {
+            htmlInput.value = '';
+            htmlOutput.textContent = 'Your minified HTML will appear here...';
+            updateLineNumbers();
+            showToast('Cleared input and output', 'success');
+        });
+        
+        copyBtn.addEventListener('click', function() {
+            if (htmlOutput.textContent.includes('here...')) {
+                showToast('Nothing to copy', 'warning');
+                return;
+            }
+            
+            navigator.clipboard.writeText(htmlOutput.textContent)
+                .then(() => showToast('Copied to clipboard!', 'success'))
+                .catch(() => showToast('Failed to copy', 'error'));
+        });
+        
+        downloadBtn.addEventListener('click', function() {
+            if (htmlOutput.textContent.includes('here...')) {
+                showToast('Nothing to download', 'warning');
+                return;
+            }
+            
+            const blob = new Blob([htmlOutput.textContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'minified.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Download started', 'success');
+        });
+        
+        // Initialize
+        updateLineNumbers();
+        statsBar.style.display = 'none';
+    </script>
+</body>
+</html>
