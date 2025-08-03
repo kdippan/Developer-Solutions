@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Solutions | Image ↔ Base64 Converter</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+  <style>
+    .dropzone {
+      border: 2px dashed #cbd5e1;
+      transition: all 0.3s ease;
+    }
+    .dropzone.active {
+      border-color: #3b82f6;
+      background-color: #f0f7ff;
+    }
+    #imagePreview {
+      max-height: 300px;
+      max-width: 100%;
+    }
+    #base64Output {
+      min-height: 200px;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div class="flex items-center mb-4 md:mb-0">
+        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-12 w-12 mr-3 hover:rotate-12 transition-transform">
+        <h1 class="text-2xl font-bold text-gray-800">Developer <span class="text-blue-600">Solutions</span></h1>
+      </div>
+      <nav class="flex space-x-4">
+        <a href="#" class="px-3 py-2 rounded-lg bg-blue-600 text-white flex items-center">
+          <i class="fas fa-image mr-2"></i> Image Converter
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-film mr-2"></i> Animation Maker
+        </a>
+        <a href="#" class="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 flex items-center">
+          <i class="fas fa-exchange-alt mr-2"></i> JSON/CSV
+        </a>
+      </nav>
+    </header>
+
+    <main class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Image to Base64 -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-arrow-right mr-2 text-blue-500"></i> Image to Base64
+        </h2>
+        
+        <!-- File Dropzone -->
+        <div id="dropzone" class="dropzone p-8 rounded-lg mb-4 text-center cursor-pointer">
+          <div class="flex flex-col items-center justify-center">
+            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+            <p class="text-gray-600">Drag & drop an image here or click to browse</p>
+            <p class="text-sm text-gray-500 mt-1">Supports JPG, PNG, GIF, WEBP (Max 5MB)</p>
+          </div>
+          <input type="file" id="fileInput" accept="image/*" class="hidden">
+        </div>
+
+        <!-- Preview -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Image Preview</label>
+          <div class="flex items-center justify-center bg-gray-100 rounded-lg p-4">
+            <img id="imagePreview" class="max-h-64 mx-auto" style="display: none;">
+            <p id="noPreviewText" class="text-gray-500">No image selected</p>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Image Quality</label>
+            <select id="qualitySelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="1.0">High (100%)</option>
+              <option value="0.8" selected>Medium (80%)</option>
+              <option value="0.6">Low (60%)</option>
+              <option value="0.4">Very Low (40%)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Output Format</label>
+            <select id="formatSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="jpeg">JPEG</option>
+              <option value="png" selected>PNG</option>
+              <option value="webp">WEBP</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Convert Button -->
+        <button id="convertToBase64Btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center">
+          <i class="fas fa-exchange-alt mr-2"></i> Convert to Base64
+        </button>
+      </div>
+
+      <!-- Base64 to Image -->
+      <div class="bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-arrow-left mr-2 text-blue-500"></i> Base64 to Image
+        </h2>
+        
+        <!-- Base64 Input -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Base64 String</label>
+          <textarea id="base64Input" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 h-32" placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."></textarea>
+        </div>
+
+        <!-- Output Image -->
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">Image Output</label>
+          <div class="flex items-center justify-center bg-gray-100 rounded-lg p-4">
+            <img id="base64ImageOutput" class="max-h-64 mx-auto" style="display: none;">
+            <p id="noBase64OutputText" class="text-gray-500">No Base64 converted yet</p>
+          </div>
+        </div>
+
+        <!-- Download Options -->
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">File Name</label>
+            <input type="text" id="fileNameInput" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" placeholder="converted-image" value="converted-image">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">File Format</label>
+            <select id="outputFormatSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+              <option value="png">PNG</option>
+              <option value="jpeg">JPEG</option>
+              <option value="webp">WEBP</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Convert Button -->
+        <button id="convertToImageBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center mb-2">
+          <i class="fas fa-exchange-alt mr-2"></i> Convert to Image
+        </button>
+
+        <!-- Download Button -->
+        <button id="downloadImageBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition flex items-center justify-center" disabled>
+          <i class="fas fa-download mr-2"></i> Download Image
+        </button>
+      </div>
+
+      <!-- Base64 Output -->
+      <div class="bg-white p-6 rounded-xl shadow-md lg:col-span-2">
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 flex items-center">
+          <i class="fas fa-code mr-2 text-blue-500"></i> Base64 Output
+        </h2>
+        
+        <textarea id="base64Output" class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 h-48 font-mono text-sm" readonly placeholder="Your Base64 string will appear here..."></textarea>
+        
+        <div class="flex justify-end space-x-2 mt-2">
+          <button id="copyBase64Btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition flex items-center">
+            <i class="fas fa-copy mr-2"></i> Copy Base64
+          </button>
+          <button id="clearBase64Btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition flex items-center">
+            <i class="fas fa-trash mr-2"></i> Clear
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Elements
+      const dropzone = document.getElementById('dropzone');
+      const fileInput = document.getElementById('fileInput');
+      const imagePreview = document.getElementById('imagePreview');
+      const noPreviewText = document.getElementById('noPreviewText');
+      const convertToBase64Btn = document.getElementById('convertToBase64Btn');
+      const base64Output = document.getElementById('base64Output');
+      const copyBase64Btn = document.getElementById('copyBase64Btn');
+      const clearBase64Btn = document.getElementById('clearBase64Btn');
+      const base64Input = document.getElementById('base64Input');
+      const base64ImageOutput = document.getElementById('base64ImageOutput');
+      const noBase64OutputText = document.getElementById('noBase64OutputText');
+      const convertToImageBtn = document.getElementById('convertToImageBtn');
+      const downloadImageBtn = document.getElementById('downloadImageBtn');
+      const qualitySelect = document.getElementById('qualitySelect');
+      const formatSelect = document.getElementById('formatSelect');
+      const outputFormatSelect = document.getElementById('outputFormatSelect');
+      const fileNameInput = document.getElementById('fileNameInput');
+      
+      // Current image data
+      let currentFile = null;
+      let currentBase64Image = null;
+
+      // Dropzone events
+      dropzone.addEventListener('click', () => fileInput.click());
+      
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('active');
+      });
+      
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('active');
+      });
+      
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('active');
+        
+        if (e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          handleFileSelect(fileInput.files[0]);
+        }
+      });
+      
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files.length) {
+          handleFileSelect(fileInput.files[0]);
+        }
+      });
+      
+      // Convert buttons
+      convertToBase64Btn.addEventListener('click', convertToBase64);
+      convertToImageBtn.addEventListener('click', convertToImage);
+      
+      // Other buttons
+      copyBase64Btn.addEventListener('click', copyBase64);
+      clearBase64Btn.addEventListener('click', clearBase64);
+      downloadImageBtn.addEventListener('click', downloadImage);
+      
+      // Functions
+      function handleFileSelect(file) {
+        // Check file size (max 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File size exceeds 5MB limit');
+          return;
+        }
+        
+        // Check file type
+        if (!file.type.match('image.*')) {
+          alert('Please select an image file');
+          return;
+        }
+        
+        currentFile = file;
+        
+        // Preview image
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+          noPreviewText.style.display = 'none';
+        };
+        reader.readAsDataURL(file);
+      }
+      
+      function convertToBase64() {
+        if (!currentFile) {
+          alert('Please select an image first');
+          return;
+        }
+        
+        const quality = parseFloat(qualitySelect.value);
+        const format = formatSelect.value;
+        
+        // For PNG, quality doesn't affect the output
+        if (format === 'png') {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            base64Output.value = e.target.result;
+            currentBase64Image = e.target.result;
+          };
+          reader.readAsDataURL(currentFile);
+        } else {
+          // For other formats, we can control quality
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+              const canvas = document.createElement('canvas');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              
+              let mimeType;
+              switch(format) {
+                case 'jpeg': mimeType = 'image/jpeg'; break;
+                case 'webp': mimeType = 'image/webp'; break;
+                default: mimeType = 'image/png';
+              }
+              
+              const base64 = canvas.toDataURL(mimeType, quality);
+              base64Output.value = base64;
+              currentBase64Image = base64;
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(currentFile);
+        }
+      }
+      
+      function convertToImage() {
+        const base64String = base64Input.value.trim();
+        
+        if (!base64String) {
+          alert('Please enter a Base64 string');
+          return;
+        }
+        
+        // Validate Base64 string
+        if (!base64String.startsWith('data:image/')) {
+          alert('Invalid Base64 image string. It should start with "data:image/"');
+          return;
+        }
+        
+        try {
+          base64ImageOutput.src = base64String;
+          base64ImageOutput.style.display = 'block';
+          noBase64OutputText.style.display = 'none';
+          currentBase64Image = base64String;
+          downloadImageBtn.disabled = false;
+        } catch (e) {
+          alert('Error converting Base64 to image: ' + e.message);
+        }
+      }
+      
+      function copyBase64() {
+        if (!base64Output.value) {
+          alert('No Base64 data to copy');
+          return;
+        }
+        
+        base64Output.select();
+        document.execCommand('copy');
+        
+        // Show feedback
+        const originalText = copyBase64Btn.innerHTML;
+        copyBase64Btn.innerHTML = '<i class="fas fa-check mr-2"></i> Copied!';
+        setTimeout(() => {
+          copyBase64Btn.innerHTML = originalText;
+        }, 2000);
+      }
+      
+      function clearBase64() {
+        base64Output.value = '';
+      }
+      
+      function downloadImage() {
+        if (!currentBase64Image) {
+          alert('No image to download');
+          return;
+        }
+        
+        const format = outputFormatSelect.value;
+        let fileName = fileNameInput.value.trim() || 'converted-image';
+        fileName += '.' + format;
+        
+        // Create a temporary link
+        const link = document.createElement('a');
+        link.href = currentBase64Image;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
+  </script>
+</body>
+</html>
