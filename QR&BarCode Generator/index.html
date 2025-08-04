@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Developer Solutions</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <!-- QRious Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gradient-to-br from-blue-900 via-gray-800 to-black text-white font-poppins min-h-screen flex items-center justify-center p-4">
+    <div class="container max-w-4xl w-full bg-gray-900 bg-opacity-80 rounded-2xl shadow-2xl p-8 transform transition-all duration-500 animate-slideIn">
+        <!-- Header with Animated Logo -->
+        <div class="flex justify-center mb-6">
+            <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-20 w-20 hover:scale-110 hover:rotate-12 transition-transform duration-300">
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-4">QR Code Generator</h1>
+        <p class="text-center text-gray-400 mb-8">Create custom QR codes with ease and download or share them instantly.</p>
+
+        <!-- Input Form -->
+        <form id="qrForm" class="space-y-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <label for="urlInput" class="block text-sm font-medium mb-2">Enter URL or Text</label>
+                    <div class="relative">
+                        <input type="text" id="urlInput" placeholder="e.g., https://example.com" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300" required>
+                        <lord-icon src="https://cdn.lordicon.com/wzrwauiw.json" trigger="hover" colors="primary:#ffffff" class="absolute right-3 top-1/2 transform -translate-y-1/2 w-6 h-6"></lord-icon>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customization Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="size" class="block text-sm font-medium mb-2">QR Code Size (px)</label>
+                    <input type="number" id="size" value="200" min="100" max="500" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="fgColor" class="block text-sm font-medium mb-2">Foreground Color</label>
+                    <input type="color" id="fgColor" value="#ffffff" class="w-full h-12 rounded-lg bg-gray-800 border border-gray-700 cursor-pointer">
+                </div>
+                <div>
+                    <label for="bgColor" class="block text-sm font-medium mb-2">Background Color</label>
+                    <input type="color" id="bgColor" value="#000000" class="w-full h-12 rounded-lg bg-gray-800 border border-gray-700 cursor-pointer">
+                </div>
+                <div>
+                    <label for="errorCorrection" class="block text-sm font-medium mb-2">Error Correction Level</label>
+                    <select id="errorCorrection" class="w-full p-3 rounded-lg bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="L">Low</option>
+                        <option value="M" selected>Medium</option>
+                        <option value="Q">Quartile</option>
+                        <option value="H">High</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <button type="submit" id="generateBtn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300">
+                <i class="fas fa-qrcode"></i> Generate QR Code
+            </button>
+        </form>
+
+        <!-- QR Code Display and Download -->
+        <div id="qrCodeContainer" class="mt-8 flex flex-col items-center hidden">
+            <canvas id="qrCode" class="rounded-lg shadow-lg"></canvas>
+            <div class="mt-4 flex gap-4">
+                <a id="downloadBtn" class="py-2 px-4 bg-green-600 hover:bg-green-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-300">
+                    <i class="fas fa-download"></i> Download QR Code
+                </a>
+                <button id="shareBtn" class="py-2 px-4 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium flex items-center gap-2 transition-all duration-300">
+                    <i class="fas fa-share-alt"></i> Share URL
+                </button>
+            </div>
+            <p id="qrUrl" class="mt-4 text-gray-400 text-sm"></p>
+        </div>
+    </div>
+<style>
+  /* Custom animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideIn {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+/* Input focus animation */
+input:focus, select:focus {
+    transform: scale(1.02);
+}
+
+/* Button hover effect */
+button:hover, a:hover {
+    transform: translateY(-2px);
+}
+</style>
+<script type="text/javascript" charset="utf-8">
+  document.getElementById('qrForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const urlInput = document.getElementById('urlInput').value;
+    const size = document.getElementById('size').value;
+    const fgColor = document.getElementById('fgColor').value;
+    const bgColor = document.getElementById('bgColor').value;
+    const errorCorrection = document.getElementById('errorCorrection').value;
+    const qrCodeContainer = document.getElementById('qrCodeContainer');
+    const qrCodeCanvas = document.getElementById('qrCode');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const qrUrl = document.getElementById('qrUrl');
+
+    // Generate QR Code
+    const qr = new QRious({
+        element: qrCodeCanvas,
+        value: urlInput,
+        size: parseInt(size),
+        foreground: fgColor,
+        background: bgColor,
+        level: errorCorrection,
+    });
+
+    // Convert canvas to blob
+    const blob = await new Promise((resolve) => qrCodeCanvas.toBlob(resolve, 'image/png'));
+
+    // Upload to ImgBB
+    const formData = new FormData();
+    formData.append('image', blob);
+    formData.append('key', '6e0324c4c96e42d562b67dc04dae946a');
+
+    try {
+        const response = await fetch('https://api.imgbb.com/1/upload', {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+
+        if (data.success) {
+            const imageUrl = data.data.url;
+            qrCodeContainer.classList.remove('hidden');
+            downloadBtn.href = imageUrl;
+            downloadBtn.download = 'Developer-Solutions-qr-code.png';
+            qrUrl.textContent = `QR Code URL: ${imageUrl}`;
+
+            // Share functionality
+            shareBtn.onclick = async () => {
+                if (navigator.share) {
+                    await navigator.share({
+                        title: 'QR Code - Developer Solutions',
+                        text: 'Check out this QR code generated by Developer Solutions!',
+                        url: imageUrl,
+                    });
+                } else {
+                    alert('Share API not supported. Copy the URL below.');
+                    navigator.clipboard.writeText(imageUrl);
+                }
+            };
+        } else {
+            alert('Failed to upload QR code to ImgBB.');
+        }
+    } catch (error) {
+        console.error('Error uploading to ImgBB:', error);
+        alert('An error occurred while uploading the QR code.');
+    }
+});
+</script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

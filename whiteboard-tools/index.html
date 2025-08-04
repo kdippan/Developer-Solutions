@@ -359,10 +359,11 @@
             let currentColor = '#000000';
             let currentSize = 5;
             let currentOpacity = 1;
-            let startX, startY;
+            let startX, startY, endX, endY;
             let drawingHistory = [];
             let historyIndex = -1;
             let textPosition = { x: 0, y: 0 };
+            let paths = []; // To store drawing paths for SVG
             
             // Load from localStorage
             loadDrawing();
@@ -371,13 +372,8 @@
             const toolButtons = document.querySelectorAll('.tool-btn');
             toolButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Remove active class from all buttons
                     toolButtons.forEach(btn => btn.classList.remove('bg-blue-50', 'text-primary'));
-                    
-                    // Add active class to clicked button
                     this.classList.add('bg-blue-50', 'text-primary');
-                    
-                    // Set current tool
                     currentTool = this.id.replace('-tool', '');
                     updateToolInfo();
                 });
@@ -387,17 +383,9 @@
             const colorOptions = document.querySelectorAll('.color-option');
             colorOptions.forEach(option => {
                 option.addEventListener('click', function() {
-                    if (this.dataset.color === 'gradient') {
-                        // For gradient, we'll use a special case
-                        currentColor = 'gradient';
-                    } else {
-                        currentColor = this.dataset.color;
-                    }
-                    
-                    // Update selected color
+                    currentColor = this.dataset.color;
                     colorOptions.forEach(opt => opt.classList.remove('border-2', 'border-white', 'shadow'));
                     this.classList.add('border-2', 'border-white', 'shadow');
-                    
                     updateToolInfo();
                 });
             });
@@ -427,7 +415,7 @@
                     document.getElementById('color-picker-modal').classList.remove('hidden');
                 } else {
                     setBackground();
-                    saveDrawing();
+                    saveState();
                 }
             });
             
@@ -438,13 +426,10 @@
             const cancelColor = document.getElementById('cancel-color');
             const applyColor = document.getElementById('apply-color');
             
-            closeColorPicker.addEventListener('click', closeColorModal);
-            cancelColor.addEventListener('click', closeColorModal);
-            
+            [closeColorPicker, cancelColor].forEach(el => el.addEventListener('click', closeColorModal));
             applyColor.addEventListener('click', function() {
-                const color = customColorPicker.value;
-                setBackground(color);
-                saveDrawing();
+                setBackground(customColorPicker.value);
+                saveState();
                 closeColorModal();
             });
             
@@ -462,15 +447,12 @@
             const textSize = document.getElementById('text-size');
             const textFont = document.getElementById('text-font');
             
-            closeTextInput.addEventListener('click', closeTextModal);
-            cancelText.addEventListener('click', closeTextModal);
-            
+            [closeTextInput, cancelText].forEach(el => el.addEventListener('click', closeTextModal));
             applyText.addEventListener('click', function() {
-                const text = textInput.value;
+                const text = textInput.value.trim();
                 if (text) {
                     addTextToCanvas(text, textPosition.x, textPosition.y, textSize.value, textFont.value);
                     saveState();
-                    saveDrawing();
                 }
                 closeTextModal();
             });
@@ -484,7 +466,7 @@
             document.getElementById('clear-btn').addEventListener('click', function() {
                 if (confirm('Are you sure you want to clear the whiteboard?')) {
                     clearCanvas();
-                    saveDrawing();
+                    saveState();
                 }
             });
             
@@ -512,9 +494,9 @@
             canvas.addEventListener('mouseout', stopDrawing);
             
             // Touch support
-            canvas.addEventListener('touchstart', handleTouchStart);
-            canvas.addEventListener('touchmove', handleTouchMove);
-            canvas.addEventListener('touchend', handleTouchEnd);
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
             
             // Prevent scrolling on touch devices
             document.body.addEventListener('touchmove', function(e) {
@@ -538,20 +520,12 @@
                 startX = e.clientX - rect.left;
                 startY = e.clientY - rect.top;
                 
-                // For freehand tools, start the path immediately
                 if (['pen', 'brush', 'highlighter', 'eraser'].includes(currentTool)) {
                     ctx.beginPath();
                     ctx.moveTo(startX, startY);
-                    
-                    // Set drawing style based on tool
                     setDrawingStyle();
-                    
-                    // For eraser, we use destination-out composition
-                    if (currentTool === 'eraser') {
-                        ctx.globalCompositeOperation = 'destination-out';
-                    } else {
-                        ctx.globalCompositeOperation = 'source-over';
-                    }
+                    if (currentTool === 'eraser') ctx.globalCompositeOperation = 'destination-out';
+                    else ctx.globalCompositeOperation = 'source-over';
                 }
             }
             
@@ -559,122 +533,119 @@
                 if (!isDrawing) return;
                 
                 const rect = canvas.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
+                endX = e.clientX - rect.left;
+                endY = e.clientY - rect.top;
                 
-                // Clear temp canvas
                 tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
                 
-                // Handle different tools
                 switch (currentTool) {
                     case 'pen':
                     case 'brush':
                     case 'highlighter':
                     case 'eraser':
-                        // Freehand drawing
-                        ctx.lineTo(x, y);
+                        ctx.lineTo(endX, endY);
                         ctx.stroke();
+                        paths.push({ type: currentTool, color: currentColor, size: currentSize, opacity: currentOpacity, points: [{ x: startX, y: startY }, { x: endX, y: endY }] });
+                        startX = endX;
+                        startY = endY;
                         break;
-                        
                     case 'line':
-                        // Draw line on temp canvas
-                        tempCtx.beginPath();
-                        tempCtx.moveTo(startX, startY);
-                        tempCtx.lineTo(x, y);
-                        setTempDrawingStyle();
-                        tempCtx.stroke();
+                        drawTempLine();
                         break;
-                        
                     case 'rectangle':
-                        // Draw rectangle on temp canvas
-                        tempCtx.beginPath();
-                        tempCtx.rect(startX, startY, x - startX, y - startY);
-                        setTempDrawingStyle();
-                        tempCtx.stroke();
+                        drawTempRectangle();
                         break;
-                        
                     case 'circle':
-                        // Draw circle on temp canvas
-                        const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
-                        tempCtx.beginPath();
-                        tempCtx.arc(startX, startY, radius, 0, Math.PI * 2);
-                        setTempDrawingStyle();
-                        tempCtx.stroke();
+                        drawTempCircle();
                         break;
                 }
             }
             
-            function stopDrawing() {
+            function stopDrawing(e) {
                 if (!isDrawing) return;
                 isDrawing = false;
                 
-                // For shape tools, draw the final shape on the main canvas
                 if (['line', 'rectangle', 'circle'].includes(currentTool)) {
-                    const x = event.clientX - canvas.getBoundingClientRect().left;
-                    const y = event.clientY - canvas.getBoundingClientRect().top;
-                    
+                    const rect = canvas.getBoundingClientRect();
+                    endX = e.clientX - rect.left;
+                    endY = e.clientY - rect.top;
                     ctx.beginPath();
                     setDrawingStyle();
-                    
                     switch (currentTool) {
                         case 'line':
                             ctx.moveTo(startX, startY);
-                            ctx.lineTo(x, y);
+                            ctx.lineTo(endX, endY);
+                            paths.push({ type: 'line', color: currentColor, size: currentSize, opacity: currentOpacity, start: { x: startX, y: startY }, end: { x: endX, y: endY } });
                             break;
-                            
                         case 'rectangle':
-                            ctx.rect(startX, startY, x - startX, y - startY);
+                            ctx.rect(startX, startY, endX - startX, endY - startY);
+                            paths.push({ type: 'rectangle', color: currentColor, size: currentSize, opacity: currentOpacity, start: { x: startX, y: startY }, end: { x: endX, y: endY } });
                             break;
-                            
                         case 'circle':
-                            const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+                            const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
                             ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+                            paths.push({ type: 'circle', color: currentColor, size: currentSize, opacity: currentOpacity, center: { x: startX, y: startY }, radius });
                             break;
                     }
-                    
                     ctx.stroke();
-                    
-                    // Clear temp canvas
                     tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
                 }
                 
-                // Save the state for undo/redo
                 saveState();
-                
-                // Update SVG path
                 updateSVGPath();
             }
             
             function handleTouchStart(e) {
                 e.preventDefault();
                 const touch = e.touches[0];
-                const mouseEvent = new MouseEvent('mousedown', {
+                startDrawing(new MouseEvent('mousedown', {
                     clientX: touch.clientX,
                     clientY: touch.clientY
-                });
-                startDrawing(mouseEvent);
+                }));
             }
             
             function handleTouchMove(e) {
                 e.preventDefault();
                 const touch = e.touches[0];
-                const mouseEvent = new MouseEvent('mousemove', {
+                draw(new MouseEvent('mousemove', {
                     clientX: touch.clientX,
                     clientY: touch.clientY
-                });
-                draw(mouseEvent);
+                }));
             }
             
             function handleTouchEnd(e) {
                 e.preventDefault();
-                const mouseEvent = new MouseEvent('mouseup', {});
-                stopDrawing(mouseEvent);
+                stopDrawing(new MouseEvent('mouseup', {}));
+            }
+            
+            // Temp drawing functions
+            function drawTempLine() {
+                tempCtx.beginPath();
+                tempCtx.moveTo(startX, startY);
+                tempCtx.lineTo(endX, endY);
+                setTempDrawingStyle();
+                tempCtx.stroke();
+            }
+            
+            function drawTempRectangle() {
+                tempCtx.beginPath();
+                tempCtx.rect(startX, startY, endX - startX, endY - startY);
+                setTempDrawingStyle();
+                tempCtx.stroke();
+            }
+            
+            function drawTempCircle() {
+                const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                tempCtx.beginPath();
+                tempCtx.arc(startX, startY, radius, 0, Math.PI * 2);
+                setTempDrawingStyle();
+                tempCtx.stroke();
             }
             
             // Style functions
             function setDrawingStyle() {
                 if (currentColor === 'gradient') {
-                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    const gradient = ctx.createLinearGradient(startX, startY, endX, endY);
                     gradient.addColorStop(0, '#ec4899');
                     gradient.addColorStop(0.5, '#a855f7');
                     gradient.addColorStop(1, '#6366f1');
@@ -682,23 +653,17 @@
                 } else {
                     ctx.strokeStyle = currentColor;
                 }
-                
                 ctx.lineWidth = currentSize;
                 ctx.lineCap = 'round';
                 ctx.lineJoin = 'round';
                 ctx.globalAlpha = currentOpacity;
-                
-                // Special styles for different tools
-                if (currentTool === 'brush') {
-                    ctx.lineWidth = currentSize * 2;
-                } else if (currentTool === 'highlighter') {
-                    ctx.globalAlpha = 0.4;
-                }
+                if (currentTool === 'brush') ctx.lineWidth *= 2;
+                else if (currentTool === 'highlighter') ctx.globalAlpha *= 0.4;
             }
             
             function setTempDrawingStyle() {
                 if (currentColor === 'gradient') {
-                    const gradient = tempCtx.createLinearGradient(0, 0, tempCanvas.width, tempCanvas.height);
+                    const gradient = tempCtx.createLinearGradient(startX, startY, endX, endY);
                     gradient.addColorStop(0, '#ec4899');
                     gradient.addColorStop(0.5, '#a855f7');
                     gradient.addColorStop(1, '#6366f1');
@@ -706,139 +671,79 @@
                 } else {
                     tempCtx.strokeStyle = currentColor;
                 }
-                
                 tempCtx.lineWidth = currentSize;
                 tempCtx.lineCap = 'round';
                 tempCtx.lineJoin = 'round';
                 tempCtx.globalAlpha = currentOpacity;
+                if (currentTool === 'brush') tempCtx.lineWidth *= 2;
+                else if (currentTool === 'highlighter') tempCtx.globalAlpha *= 0.4;
             }
             
             // Background functions
             function setBackground(color = null) {
                 ctx.fillStyle = '#ffffff';
-                
                 switch (backgroundSelector.value) {
-                    case 'white':
-                        ctx.fillStyle = '#ffffff';
-                        break;
-                    case 'grid':
-                        drawGridBackground('#f3f4f6', '#e5e7eb');
-                        return;
-                    case 'dots':
-                        drawDotBackground('#e5e7eb');
-                        return;
-                    case 'lined':
-                        drawLinedBackground('#e5e7eb');
-                        return;
-                    case 'black':
-                        ctx.fillStyle = '#000000';
-                        break;
-                    case 'custom':
-                        if (color) {
-                            ctx.fillStyle = color;
-                        } else {
-                            ctx.fillStyle = '#ffffff';
-                        }
-                        break;
+                    case 'white': ctx.fillStyle = '#ffffff'; break;
+                    case 'grid': drawGridBackground('#f3f4f6', '#e5e7eb'); return;
+                    case 'dots': drawDotBackground('#e5e7eb'); return;
+                    case 'lined': drawLinedBackground('#e5e7eb'); return;
+                    case 'black': ctx.fillStyle = '#000000'; break;
+                    case 'custom': if (color) ctx.fillStyle = color; break;
                 }
-                
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 redrawCanvas();
             }
             
             function drawGridBackground(lightColor, darkColor) {
-                // Fill with white first
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw grid
-                const gridSize = 20;
-                const majorGridSize = 100;
-                
-                ctx.strokeStyle = lightColor;
-                ctx.lineWidth = 1;
-                
-                // Minor grid lines
-                for (let x = 0; x <= canvas.width; x += gridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, canvas.height);
-                    ctx.stroke();
-                }
-                
-                for (let y = 0; y <= canvas.height; y += gridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
-                    ctx.stroke();
-                }
-                
-                // Major grid lines
+                const gridSize = 20, majorGridSize = 100;
+                ctx.strokeStyle = lightColor; ctx.lineWidth = 1;
+                for (let x = 0; x <= canvas.width; x += gridSize) ctx.createLine(x, 0, x, canvas.height);
+                for (let y = 0; y <= canvas.height; y += gridSize) ctx.createLine(0, y, canvas.width, y);
                 ctx.strokeStyle = darkColor;
-                ctx.lineWidth = 1;
-                
-                for (let x = 0; x <= canvas.width; x += majorGridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, canvas.height);
-                    ctx.stroke();
-                }
-                
-                for (let y = 0; y <= canvas.height; y += majorGridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
-                    ctx.stroke();
-                }
+                for (let x = 0; x <= canvas.width; x += majorGridSize) ctx.createLine(x, 0, x, canvas.height);
+                for (let y = 0; y <= canvas.height; y += majorGridSize) ctx.createLine(0, y, canvas.width, y);
+                ctx.stroke();
             }
             
             function drawDotBackground(color) {
-                // Fill with white first
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw dots
-                const dotSize = 2;
-                const dotSpacing = 20;
-                
+                const dotSize = 2, dotSpacing = 20;
                 ctx.fillStyle = color;
-                
-                for (let x = 0; x <= canvas.width; x += dotSpacing) {
+                for (let x = 0; x <= canvas.width; x += dotSpacing)
                     for (let y = 0; y <= canvas.height; y += dotSpacing) {
                         ctx.beginPath();
                         ctx.arc(x, y, dotSize, 0, Math.PI * 2);
                         ctx.fill();
                     }
-                }
             }
             
             function drawLinedBackground(color) {
-                // Fill with white first
                 ctx.fillStyle = '#ffffff';
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-                
-                // Draw lines
                 const lineSpacing = 24;
-                
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 1;
-                
-                for (let y = 0; y <= canvas.height; y += lineSpacing) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(canvas.width, y);
-                    ctx.stroke();
-                }
+                ctx.strokeStyle = color; ctx.lineWidth = 1;
+                for (let y = 0; y <= canvas.height; y += lineSpacing) ctx.createLine(0, y, canvas.width, y);
+                ctx.stroke();
             }
             
             // Text functions
             function addTextToCanvas(text, x, y, size, font) {
                 ctx.font = `${size}px ${font}`;
-                ctx.fillStyle = currentColor;
+                if (currentColor === 'gradient') {
+                    const gradient = ctx.createLinearGradient(x, y, x + size, y + size);
+                    gradient.addColorStop(0, '#ec4899');
+                    gradient.addColorStop(0.5, '#a855f7');
+                    gradient.addColorStop(1, '#6366f1');
+                    ctx.fillStyle = gradient;
+                } else {
+                    ctx.fillStyle = currentColor;
+                }
                 ctx.globalAlpha = currentOpacity;
                 ctx.fillText(text, x, y);
-                
-                // Update SVG path
+                paths.push({ type: 'text', text, x, y, size, font, color: currentColor, opacity: currentOpacity });
                 updateSVGPath();
             }
             
@@ -849,32 +754,62 @@
                 setBackground();
                 drawingHistory = [];
                 historyIndex = -1;
+                paths = [];
                 updateSVGPath();
             }
             
             function redrawCanvas() {
-                // Redraw everything from history
-                if (drawingHistory.length > 0) {
-                    const imageData = drawingHistory[historyIndex];
-                    ctx.putImageData(imageData, 0, 0);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                setBackground();
+                if (historyIndex >= 0 && drawingHistory[historyIndex]) {
+                    ctx.putImageData(drawingHistory[historyIndex], 0, 0);
                 }
+                paths.forEach(path => {
+                    ctx.beginPath();
+                    setDrawingStyle(path);
+                    switch (path.type) {
+                        case 'pen':
+                        case 'brush':
+                        case 'highlighter':
+                        case 'eraser':
+                            ctx.moveTo(path.points[0].x, path.points[0].y);
+                            for (let i = 1; i < path.points.length; i++)
+                                ctx.lineTo(path.points[i].x, path.points[i].y);
+                            ctx.stroke();
+                            break;
+                        case 'line':
+                            ctx.moveTo(path.start.x, path.start.y);
+                            ctx.lineTo(path.end.x, path.end.y);
+                            ctx.stroke();
+                            break;
+                        case 'rectangle':
+                            ctx.rect(path.start.x, path.start.y, path.end.x - path.start.x, path.end.y - path.start.y);
+                            ctx.stroke();
+                            break;
+                        case 'circle':
+                            ctx.arc(path.center.x, path.center.y, path.radius, 0, Math.PI * 2);
+                            ctx.stroke();
+                            break;
+                        case 'text':
+                            ctx.font = `${path.size}px ${path.font}`;
+                            ctx.fillText(path.text, path.x, path.y);
+                            break;
+                    }
+                });
             }
             
             // Undo/Redo functions
             function saveState() {
-                // If we're not at the end of history, discard future states
                 if (historyIndex < drawingHistory.length - 1) {
                     drawingHistory = drawingHistory.slice(0, historyIndex + 1);
+                    paths = paths.slice(0, historyIndex + 1);
                 }
-                
-                // Save current state
                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
                 drawingHistory.push(imageData);
                 historyIndex = drawingHistory.length - 1;
-                
-                // Limit history to 50 states to prevent memory issues
                 if (drawingHistory.length > 50) {
                     drawingHistory.shift();
+                    paths.shift();
                     historyIndex--;
                 }
             }
@@ -882,8 +817,7 @@
             function undo() {
                 if (historyIndex > 0) {
                     historyIndex--;
-                    const imageData = drawingHistory[historyIndex];
-                    ctx.putImageData(imageData, 0, 0);
+                    redrawCanvas();
                     updateSVGPath();
                 }
             }
@@ -891,76 +825,129 @@
             function redo() {
                 if (historyIndex < drawingHistory.length - 1) {
                     historyIndex++;
-                    const imageData = drawingHistory[historyIndex];
-                    ctx.putImageData(imageData, 0, 0);
+                    redrawCanvas();
                     updateSVGPath();
                 }
             }
             
             // Export functions
             function exportAsPNG() {
-                // Create a temporary canvas with white background for export
                 const exportCanvas = document.createElement('canvas');
                 exportCanvas.width = canvas.width;
                 exportCanvas.height = canvas.height;
                 const exportCtx = exportCanvas.getContext('2d');
-                
-                // Fill with white background
                 exportCtx.fillStyle = '#ffffff';
                 exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
-                
-                // Draw the content
                 exportCtx.drawImage(canvas, 0, 0);
-                
-                // Convert to PNG and download
                 const dataURL = exportCanvas.toDataURL('image/png');
                 const link = document.createElement('a');
                 link.download = 'whiteboard-drawing.png';
                 link.href = dataURL;
                 link.click();
-                
                 showToast('Exported as PNG successfully!');
             }
             
             function exportAsSVG() {
-                // Create a Canvas2SVG instance
                 const svgCanvas = new C2S(canvas.width, canvas.height);
                 const svgCtx = svgCanvas.getContext('2d');
-                
-                // Redraw everything on the SVG canvas
-                if (drawingHistory.length > 0) {
-                    const imageData = drawingHistory[historyIndex];
-                    svgCtx.putImageData(imageData, 0, 0);
-                }
-                
-                // Get SVG as string
+                redrawCanvasOnContext(svgCtx);
                 const svg = svgCanvas.getSerializedSvg();
-                
-                // Create download link
                 const blob = new Blob([svg], { type: 'image/svg+xml' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.download = 'whiteboard-drawing.svg';
                 link.href = url;
                 link.click();
-                
                 showToast('Exported as SVG successfully!');
+            }
+            
+            function redrawCanvasOnContext(ctx) {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                paths.forEach(path => {
+                    ctx.beginPath();
+                    setDrawingStyleOnContext(ctx, path);
+                    switch (path.type) {
+                        case 'pen':
+                        case 'brush':
+                        case 'highlighter':
+                            ctx.moveTo(path.points[0].x, path.points[0].y);
+                            for (let i = 1; i < path.points.length; i++)
+                                ctx.lineTo(path.points[i].x, path.points[i].y);
+                            ctx.stroke();
+                            break;
+                        case 'line':
+                            ctx.moveTo(path.start.x, path.start.y);
+                            ctx.lineTo(path.end.x, path.end.y);
+                            ctx.stroke();
+                            break;
+                        case 'rectangle':
+                            ctx.rect(path.start.x, path.start.y, path.end.x - path.start.x, path.end.y - path.start.y);
+                            ctx.stroke();
+                            break;
+                        case 'circle':
+                            ctx.arc(path.center.x, path.center.y, path.radius, 0, Math.PI * 2);
+                            ctx.stroke();
+                            break;
+                        case 'text':
+                            ctx.font = `${path.size}px ${path.font}`;
+                            ctx.fillText(path.text, path.x, path.y);
+                            break;
+                    }
+                });
+            }
+            
+            function setDrawingStyleOnContext(ctx, path) {
+                if (path.color === 'gradient') {
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#ec4899');
+                    gradient.addColorStop(0.5, '#a855f7');
+                    gradient.addColorStop(1, '#6366f1');
+                    ctx.strokeStyle = gradient;
+                } else {
+                    ctx.strokeStyle = path.color;
+                }
+                ctx.lineWidth = path.size;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.globalAlpha = path.opacity;
+                if (path.type === 'brush') ctx.lineWidth *= 2;
+                else if (path.type === 'highlighter') ctx.globalAlpha *= 0.4;
             }
             
             // SVG Path functions
             function updateSVGPath() {
-                // This is a simplified version - in a real app you'd track all drawing commands
                 const svgPathCode = document.getElementById('svg-path-code');
-                
-                if (drawingHistory.length === 0) {
+                if (paths.length === 0) {
                     svgPathCode.textContent = 'Draw something to generate SVG path...';
                     return;
                 }
-                
-                // For demonstration, we'll just show a sample path
-                svgPathCode.textContent = `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">\n` +
-                    `  <path d="M10 10 L100 100 C150 50 200 150 250 100" stroke="${currentColor}" stroke-width="${currentSize}" fill="none" />\n` +
-                    `</svg>`;
+                let svgContent = `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">\n`;
+                paths.forEach(path => {
+                    svgContent += `  <path `;
+                    if (path.type === 'text') {
+                        svgContent += `fill="${path.color}" font-size="${path.size}" font-family="${path.font}" x="${path.x}" y="${path.y}">`;
+                        svgContent += `<text>${path.text}</text>`;
+                    } else {
+                        let d = '';
+                        if (path.type === 'pen' || path.type === 'brush' || path.type === 'highlighter') {
+                            d = `M${path.points[0].x},${path.points[0].y}`;
+                            for (let i = 1; i < path.points.length; i++)
+                                d += ` L${path.points[i].x},${path.points[i].y}`;
+                        } else if (path.type === 'line') {
+                            d = `M${path.start.x},${path.start.y} L${path.end.x},${path.end.y}`;
+                        } else if (path.type === 'rectangle') {
+                            d = `M${path.start.x},${path.start.y} h${path.end.x - path.start.x} v${path.end.y - path.start.y} h${path.start.x - path.end.x} Z`;
+                        } else if (path.type === 'circle') {
+                            d = `M${path.center.x},${path.center.y} m-${path.radius},0 a${path.radius},${path.radius} 0 1,0 ${path.radius * 2},0 a${path.radius},${path.radius} 0 1,0 -${path.radius * 2},0`;
+                        }
+                        svgContent += `d="${d}" stroke="${path.color}" stroke-width="${path.size}" fill="none" opacity="${path.opacity}"`;
+                        if (path.type === 'highlighter') svgContent += ` stroke-opacity="0.4"`;
+                    }
+                    svgContent += ` />\n`;
+                });
+                svgContent += `</svg>`;
+                svgPathCode.textContent = svgContent;
             }
             
             function copySVGCode() {
@@ -974,10 +961,9 @@
             function saveDrawing() {
                 const dataURL = canvas.toDataURL();
                 localStorage.setItem('whiteboardDrawing', dataURL);
-                
-                // Also save the drawing history
+                localStorage.setItem('whiteboardPaths', JSON.stringify(paths));
                 localStorage.setItem('whiteboardHistory', JSON.stringify({
-                    history: drawingHistory.map(imgData => imgData.data),
+                    history: drawingHistory.map(imgData => Array.from(imgData.data)),
                     width: canvas.width,
                     height: canvas.height,
                     historyIndex
@@ -986,6 +972,7 @@
             
             function loadDrawing() {
                 const savedDrawing = localStorage.getItem('whiteboardDrawing');
+                const savedPaths = localStorage.getItem('whiteboardPaths');
                 const savedHistory = localStorage.getItem('whiteboardHistory');
                 
                 if (savedDrawing) {
@@ -995,18 +982,19 @@
                     };
                     img.src = savedDrawing;
                 }
-                
+                if (savedPaths) {
+                    paths = JSON.parse(savedPaths);
+                    updateSVGPath();
+                }
                 if (savedHistory) {
                     try {
                         const { history, width, height, historyIndex: savedIndex } = JSON.parse(savedHistory);
-                        
-                        // Reconstruct ImageData objects
                         drawingHistory = history.map(data => {
-                            const arr = new Uint8ClampedArray(Object.values(data));
+                            const arr = new Uint8ClampedArray(data);
                             return new ImageData(arr, width, height);
                         });
-                        
                         historyIndex = savedIndex;
+                        redrawCanvas();
                     } catch (e) {
                         console.error('Error loading drawing history:', e);
                     }
@@ -1016,31 +1004,14 @@
             // UI functions
             function updateToolInfo() {
                 const toolNames = {
-                    pen: 'Pen',
-                    brush: 'Brush',
-                    highlighter: 'Highlighter',
-                    eraser: 'Eraser',
-                    line: 'Line',
-                    rectangle: 'Rectangle',
-                    circle: 'Circle',
-                    text: 'Text'
+                    pen: 'Pen', brush: 'Brush', highlighter: 'Highlighter', eraser: 'Eraser',
+                    line: 'Line', rectangle: 'Rectangle', circle: 'Circle', text: 'Text'
                 };
-                
                 const colorNames = {
-                    '#000000': 'Black',
-                    '#ef4444': 'Red',
-                    '#3b82f6': 'Blue',
-                    '#22c55e': 'Green',
-                    '#eab308': 'Yellow',
-                    '#a855f7': 'Purple',
-                    '#ec4899': 'Pink',
-                    '#f97316': 'Orange',
-                    '#14b8a6': 'Teal',
-                    '#6b7280': 'Gray',
-                    '#ffffff': 'White',
-                    'gradient': 'Gradient'
+                    '#000000': 'Black', '#ef4444': 'Red', '#3b82f6': 'Blue', '#22c55e': 'Green',
+                    '#eab308': 'Yellow', '#a855f7': 'Purple', '#ec4899': 'Pink', '#f97316': 'Orange',
+                    '#14b8a6': 'Teal', '#6b7280': 'Gray', '#ffffff': 'White', 'gradient': 'Gradient'
                 };
-                
                 document.getElementById('current-tool').textContent = toolNames[currentTool] || 'Pen';
                 document.getElementById('current-color').textContent = colorNames[currentColor] || 'Custom';
                 document.getElementById('current-size').textContent = `${currentSize}px`;
@@ -1049,11 +1020,9 @@
             function showToast(message) {
                 const toast = document.getElementById('success-toast');
                 const toastMessage = document.getElementById('toast-message');
-                
                 toastMessage.textContent = message;
                 toast.classList.remove('translate-y-10', 'opacity-0');
                 toast.classList.add('translate-y-0', 'opacity-100');
-                
                 setTimeout(() => {
                     toast.classList.remove('translate-y-0', 'opacity-100');
                     toast.classList.add('translate-y-10', 'opacity-0');
