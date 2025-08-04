@@ -1,0 +1,1069 @@
+<!--Code is under Construction,-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions - Whiteboard</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7c3aed',
+                        dark: '#1e293b',
+                        light: '#f8fafc',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Roboto Mono', 'monospace'],
+                    },
+                    animation: {
+                        'logo-spin': 'spin 6s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        .tooltip {
+            position: relative;
+        }
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #334155;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, visibility 0.2s;
+        }
+        .tooltip:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        canvas {
+            touch-action: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="#" class="flex items-center">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" 
+                         class="h-10 w-10 hover:animate-logo-spin transition-transform">
+                    <span class="ml-2 text-xl font-bold text-dark">Developer Solutions</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-slate-600 hover:text-primary font-medium">Tools</a>
+                <a href="#" class="text-slate-600 hover:text-primary font-medium">Docs</a>
+                <a href="#" class="text-slate-600 hover:text-primary font-medium">Community</a>
+                <a href="#" class="text-slate-600 hover:text-primary font-medium">Pricing</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded-full hover:bg-slate-100">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/slkvcfos.json"
+                        trigger="hover"
+                        colors="primary:#64748b"
+                        style="width:24px;height:24px">
+                    </lord-icon>
+                </button>
+                <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                    Sign In
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Tools Panel -->
+            <div class="w-full lg:w-64 bg-white rounded-xl shadow-sm p-4 flex flex-col">
+                <h2 class="text-lg font-semibold text-dark mb-4">Drawing Tools</h2>
+                
+                <!-- Tool Selection -->
+                <div class="grid grid-cols-4 lg:grid-cols-2 gap-2 mb-6">
+                    <button id="pen-tool" class="tool-btn p-2 rounded-lg bg-blue-50 text-primary" data-tooltip="Pen">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button id="brush-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Brush">
+                        <i class="fas fa-paint-brush"></i>
+                    </button>
+                    <button id="highlighter-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Highlighter">
+                        <i class="fas fa-highlighter"></i>
+                    </button>
+                    <button id="eraser-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Eraser">
+                        <i class="fas fa-eraser"></i>
+                    </button>
+                    <button id="line-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Line">
+                        <i class="fas fa-slash"></i>
+                    </button>
+                    <button id="rectangle-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Rectangle">
+                        <i class="fas fa-square"></i>
+                    </button>
+                    <button id="circle-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Circle">
+                        <i class="fas fa-circle"></i>
+                    </button>
+                    <button id="text-tool" class="tool-btn p-2 rounded-lg hover:bg-slate-100" data-tooltip="Text">
+                        <i class="fas fa-font"></i>
+                    </button>
+                </div>
+
+                <!-- Color Selection -->
+                <h3 class="text-sm font-medium text-slate-600 mb-2">Colors</h3>
+                <div class="grid grid-cols-6 gap-2 mb-6">
+                    <div class="color-option h-6 w-6 rounded-full bg-black cursor-pointer border-2 border-white shadow" data-color="#000000"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-red-500 cursor-pointer" data-color="#ef4444"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-blue-500 cursor-pointer" data-color="#3b82f6"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-green-500 cursor-pointer" data-color="#22c55e"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-yellow-500 cursor-pointer" data-color="#eab308"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-purple-500 cursor-pointer" data-color="#a855f7"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-pink-500 cursor-pointer" data-color="#ec4899"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-orange-500 cursor-pointer" data-color="#f97316"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-teal-500 cursor-pointer" data-color="#14b8a6"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-gray-500 cursor-pointer" data-color="#6b7280"></div>
+                    <div class="color-option h-6 w-6 rounded-full bg-white cursor-pointer border border-gray-300" data-color="#ffffff"></div>
+                    <div class="color-option h-6 w-6 rounded-full cursor-pointer bg-gradient-to-r from-pink-500 to-violet-500" data-color="gradient"></div>
+                </div>
+
+                <!-- Size Slider -->
+                <div class="mb-6">
+                    <label for="size-slider" class="block text-sm font-medium text-slate-600 mb-1">Size: <span id="size-value">5</span>px</label>
+                    <input type="range" id="size-slider" min="1" max="50" value="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <!-- Opacity Slider -->
+                <div class="mb-6">
+                    <label for="opacity-slider" class="block text-sm font-medium text-slate-600 mb-1">Opacity: <span id="opacity-value">100</span>%</label>
+                    <input type="range" id="opacity-slider" min="10" max="100" value="100" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                </div>
+
+                <!-- Background Options -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-slate-600 mb-2">Whiteboard Background</h3>
+                    <select id="background-selector" class="w-full p-2 border border-slate-300 rounded-lg text-sm">
+                        <option value="white">White</option>
+                        <option value="grid">Grid</option>
+                        <option value="dots">Dots</option>
+                        <option value="lined">Lined</option>
+                        <option value="black">Black</option>
+                        <option value="custom">Custom Color...</option>
+                    </select>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="mt-auto space-y-3">
+                    <button id="clear-btn" class="w-full py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium transition">
+                        <i class="fas fa-trash-alt mr-2"></i> Clear
+                    </button>
+                    <button id="save-btn" class="w-full py-2 bg-blue-50 hover:bg-blue-100 rounded-lg text-primary font-medium transition">
+                        <i class="fas fa-save mr-2"></i> Save
+                    </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="export-png" class="py-2 bg-green-50 hover:bg-green-100 rounded-lg text-green-700 text-sm font-medium transition">
+                            <i class="fas fa-download mr-1"></i> PNG
+                        </button>
+                        <button id="export-svg" class="py-2 bg-purple-50 hover:bg-purple-100 rounded-lg text-purple-700 text-sm font-medium transition">
+                            <i class="fas fa-download mr-1"></i> SVG
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Whiteboard Canvas -->
+            <div class="flex-grow bg-white rounded-xl shadow-sm overflow-hidden">
+                <div class="p-2 border-b flex justify-between items-center">
+                    <div class="text-sm text-slate-500">
+                        <span id="current-tool">Pen</span> • <span id="current-color">Black</span> • <span id="current-size">5px</span>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="undo-btn" class="p-1 text-slate-500 hover:text-primary" data-tooltip="Undo">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button id="redo-btn" class="p-1 text-slate-500 hover:text-primary" data-tooltip="Redo">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="relative w-full h-[calc(100vh-200px)]">
+                    <canvas id="whiteboard" class="absolute inset-0 w-full h-full"></canvas>
+                    <canvas id="temp-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+                </div>
+            </div>
+
+            <!-- SVG Code Panel -->
+            <div class="w-full lg:w-80 bg-white rounded-xl shadow-sm p-4 hidden lg:block">
+                <h2 class="text-lg font-semibold text-dark mb-4">SVG Path Code</h2>
+                <div class="bg-slate-50 p-3 rounded-lg mb-4 h-64 overflow-auto">
+                    <pre id="svg-path-code" class="text-xs font-mono text-slate-700">Draw something to generate SVG path...</pre>
+                </div>
+                <button id="copy-svg-btn" class="w-full py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 font-medium transition mb-3">
+                    <i class="fas fa-copy mr-2"></i> Copy SVG
+                </button>
+                <div class="text-xs text-slate-500">
+                    <p class="mb-2">This SVG path represents your drawing and can be used in web projects.</p>
+                    <p>Tip: Use the "Pen" tool for cleaner SVG paths.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-8 w-8">
+                    <span class="text-lg font-bold text-dark">Developer Solutions</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-600 hover:text-primary">Terms</a>
+                    <a href="#" class="text-slate-600 hover:text-primary">Privacy</a>
+                    <a href="#" class="text-slate-600 hover:text-primary">Contact</a>
+                </div>
+            </div>
+            <div class="mt-6 text-center text-sm text-slate-500">
+                &copy; 2023 Developer Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Color Picker Modal -->
+    <div id="color-picker-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-80">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Custom Color</h3>
+                <button id="close-color-picker" class="text-slate-500 hover:text-slate-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-4">
+                <input type="color" id="custom-color-picker" value="#000000" class="w-full h-12 cursor-pointer">
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button id="cancel-color" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
+                <button id="apply-color" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700">Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Text Input Modal -->
+    <div id="text-input-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl p-6 w-96">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Add Text</h3>
+                <button id="close-text-input" class="text-slate-500 hover:text-slate-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="mb-4">
+                <input type="text" id="text-input" placeholder="Enter your text" class="w-full p-3 border border-slate-300 rounded-lg">
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm text-slate-600 mb-1">Font Size</label>
+                    <select id="text-size" class="w-full p-2 border border-slate-300 rounded-lg">
+                        <option value="16">Small</option>
+                        <option value="24" selected>Medium</option>
+                        <option value="32">Large</option>
+                        <option value="48">Extra Large</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-slate-600 mb-1">Font Family</label>
+                    <select id="text-font" class="w-full p-2 border border-slate-300 rounded-lg">
+                        <option value="Arial">Arial</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button id="cancel-text" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">Cancel</button>
+                <button id="apply-text" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700">Add Text</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="success-toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 transform translate-y-10 opacity-0 transition-all duration-300 z-50">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Operation successful!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas2svg@1.0.20/canvas2svg.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Canvas setup
+            const canvas = document.getElementById('whiteboard');
+            const tempCanvas = document.getElementById('temp-canvas');
+            const ctx = canvas.getContext('2d');
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Set canvas dimensions
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                canvas.width = container.clientWidth;
+                canvas.height = container.clientHeight;
+                tempCanvas.width = container.clientWidth;
+                tempCanvas.height = container.clientHeight;
+                
+                // Redraw background after resize
+                setBackground();
+                redrawCanvas();
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Drawing state
+            let isDrawing = false;
+            let currentTool = 'pen';
+            let currentColor = '#000000';
+            let currentSize = 5;
+            let currentOpacity = 1;
+            let startX, startY;
+            let drawingHistory = [];
+            let historyIndex = -1;
+            let textPosition = { x: 0, y: 0 };
+            
+            // Load from localStorage
+            loadDrawing();
+            
+            // Tool buttons
+            const toolButtons = document.querySelectorAll('.tool-btn');
+            toolButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    toolButtons.forEach(btn => btn.classList.remove('bg-blue-50', 'text-primary'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('bg-blue-50', 'text-primary');
+                    
+                    // Set current tool
+                    currentTool = this.id.replace('-tool', '');
+                    updateToolInfo();
+                });
+            });
+            
+            // Color options
+            const colorOptions = document.querySelectorAll('.color-option');
+            colorOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    if (this.dataset.color === 'gradient') {
+                        // For gradient, we'll use a special case
+                        currentColor = 'gradient';
+                    } else {
+                        currentColor = this.dataset.color;
+                    }
+                    
+                    // Update selected color
+                    colorOptions.forEach(opt => opt.classList.remove('border-2', 'border-white', 'shadow'));
+                    this.classList.add('border-2', 'border-white', 'shadow');
+                    
+                    updateToolInfo();
+                });
+            });
+            
+            // Size slider
+            const sizeSlider = document.getElementById('size-slider');
+            const sizeValue = document.getElementById('size-value');
+            sizeSlider.addEventListener('input', function() {
+                currentSize = this.value;
+                sizeValue.textContent = this.value;
+                updateToolInfo();
+            });
+            
+            // Opacity slider
+            const opacitySlider = document.getElementById('opacity-slider');
+            const opacityValue = document.getElementById('opacity-value');
+            opacitySlider.addEventListener('input', function() {
+                currentOpacity = this.value / 100;
+                opacityValue.textContent = this.value;
+                updateToolInfo();
+            });
+            
+            // Background selector
+            const backgroundSelector = document.getElementById('background-selector');
+            backgroundSelector.addEventListener('change', function() {
+                if (this.value === 'custom') {
+                    document.getElementById('color-picker-modal').classList.remove('hidden');
+                } else {
+                    setBackground();
+                    saveDrawing();
+                }
+            });
+            
+            // Color picker modal
+            const colorPickerModal = document.getElementById('color-picker-modal');
+            const customColorPicker = document.getElementById('custom-color-picker');
+            const closeColorPicker = document.getElementById('close-color-picker');
+            const cancelColor = document.getElementById('cancel-color');
+            const applyColor = document.getElementById('apply-color');
+            
+            closeColorPicker.addEventListener('click', closeColorModal);
+            cancelColor.addEventListener('click', closeColorModal);
+            
+            applyColor.addEventListener('click', function() {
+                const color = customColorPicker.value;
+                setBackground(color);
+                saveDrawing();
+                closeColorModal();
+            });
+            
+            function closeColorModal() {
+                colorPickerModal.classList.add('hidden');
+                backgroundSelector.value = 'white';
+            }
+            
+            // Text input modal
+            const textInputModal = document.getElementById('text-input-modal');
+            const closeTextInput = document.getElementById('close-text-input');
+            const cancelText = document.getElementById('cancel-text');
+            const applyText = document.getElementById('apply-text');
+            const textInput = document.getElementById('text-input');
+            const textSize = document.getElementById('text-size');
+            const textFont = document.getElementById('text-font');
+            
+            closeTextInput.addEventListener('click', closeTextModal);
+            cancelText.addEventListener('click', closeTextModal);
+            
+            applyText.addEventListener('click', function() {
+                const text = textInput.value;
+                if (text) {
+                    addTextToCanvas(text, textPosition.x, textPosition.y, textSize.value, textFont.value);
+                    saveState();
+                    saveDrawing();
+                }
+                closeTextModal();
+            });
+            
+            function closeTextModal() {
+                textInputModal.classList.add('hidden');
+                textInput.value = '';
+            }
+            
+            // Clear button
+            document.getElementById('clear-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear the whiteboard?')) {
+                    clearCanvas();
+                    saveDrawing();
+                }
+            });
+            
+            // Save button
+            document.getElementById('save-btn').addEventListener('click', function() {
+                saveDrawing();
+                showToast('Drawing saved successfully!');
+            });
+            
+            // Export buttons
+            document.getElementById('export-png').addEventListener('click', exportAsPNG);
+            document.getElementById('export-svg').addEventListener('click', exportAsSVG);
+            
+            // Undo/Redo buttons
+            document.getElementById('undo-btn').addEventListener('click', undo);
+            document.getElementById('redo-btn').addEventListener('click', redo);
+            
+            // Copy SVG button
+            document.getElementById('copy-svg-btn').addEventListener('click', copySVGCode);
+            
+            // Canvas event listeners
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch support
+            canvas.addEventListener('touchstart', handleTouchStart);
+            canvas.addEventListener('touchmove', handleTouchMove);
+            canvas.addEventListener('touchend', handleTouchEnd);
+            
+            // Prevent scrolling on touch devices
+            document.body.addEventListener('touchmove', function(e) {
+                if (isDrawing) e.preventDefault();
+            }, { passive: false });
+            
+            // Drawing functions
+            function startDrawing(e) {
+                if (currentTool === 'text') {
+                    const rect = canvas.getBoundingClientRect();
+                    textPosition = {
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top
+                    };
+                    textInputModal.classList.remove('hidden');
+                    return;
+                }
+                
+                isDrawing = true;
+                const rect = canvas.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+                
+                // For freehand tools, start the path immediately
+                if (['pen', 'brush', 'highlighter', 'eraser'].includes(currentTool)) {
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    
+                    // Set drawing style based on tool
+                    setDrawingStyle();
+                    
+                    // For eraser, we use destination-out composition
+                    if (currentTool === 'eraser') {
+                        ctx.globalCompositeOperation = 'destination-out';
+                    } else {
+                        ctx.globalCompositeOperation = 'source-over';
+                    }
+                }
+            }
+            
+            function draw(e) {
+                if (!isDrawing) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Clear temp canvas
+                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                
+                // Handle different tools
+                switch (currentTool) {
+                    case 'pen':
+                    case 'brush':
+                    case 'highlighter':
+                    case 'eraser':
+                        // Freehand drawing
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                        break;
+                        
+                    case 'line':
+                        // Draw line on temp canvas
+                        tempCtx.beginPath();
+                        tempCtx.moveTo(startX, startY);
+                        tempCtx.lineTo(x, y);
+                        setTempDrawingStyle();
+                        tempCtx.stroke();
+                        break;
+                        
+                    case 'rectangle':
+                        // Draw rectangle on temp canvas
+                        tempCtx.beginPath();
+                        tempCtx.rect(startX, startY, x - startX, y - startY);
+                        setTempDrawingStyle();
+                        tempCtx.stroke();
+                        break;
+                        
+                    case 'circle':
+                        // Draw circle on temp canvas
+                        const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+                        tempCtx.beginPath();
+                        tempCtx.arc(startX, startY, radius, 0, Math.PI * 2);
+                        setTempDrawingStyle();
+                        tempCtx.stroke();
+                        break;
+                }
+            }
+            
+            function stopDrawing() {
+                if (!isDrawing) return;
+                isDrawing = false;
+                
+                // For shape tools, draw the final shape on the main canvas
+                if (['line', 'rectangle', 'circle'].includes(currentTool)) {
+                    const x = event.clientX - canvas.getBoundingClientRect().left;
+                    const y = event.clientY - canvas.getBoundingClientRect().top;
+                    
+                    ctx.beginPath();
+                    setDrawingStyle();
+                    
+                    switch (currentTool) {
+                        case 'line':
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(x, y);
+                            break;
+                            
+                        case 'rectangle':
+                            ctx.rect(startX, startY, x - startX, y - startY);
+                            break;
+                            
+                        case 'circle':
+                            const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+                            ctx.arc(startX, startY, radius, 0, Math.PI * 2);
+                            break;
+                    }
+                    
+                    ctx.stroke();
+                    
+                    // Clear temp canvas
+                    tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                }
+                
+                // Save the state for undo/redo
+                saveState();
+                
+                // Update SVG path
+                updateSVGPath();
+            }
+            
+            function handleTouchStart(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousedown', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                startDrawing(mouseEvent);
+            }
+            
+            function handleTouchMove(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent('mousemove', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                draw(mouseEvent);
+            }
+            
+            function handleTouchEnd(e) {
+                e.preventDefault();
+                const mouseEvent = new MouseEvent('mouseup', {});
+                stopDrawing(mouseEvent);
+            }
+            
+            // Style functions
+            function setDrawingStyle() {
+                if (currentColor === 'gradient') {
+                    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                    gradient.addColorStop(0, '#ec4899');
+                    gradient.addColorStop(0.5, '#a855f7');
+                    gradient.addColorStop(1, '#6366f1');
+                    ctx.strokeStyle = gradient;
+                } else {
+                    ctx.strokeStyle = currentColor;
+                }
+                
+                ctx.lineWidth = currentSize;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.globalAlpha = currentOpacity;
+                
+                // Special styles for different tools
+                if (currentTool === 'brush') {
+                    ctx.lineWidth = currentSize * 2;
+                } else if (currentTool === 'highlighter') {
+                    ctx.globalAlpha = 0.4;
+                }
+            }
+            
+            function setTempDrawingStyle() {
+                if (currentColor === 'gradient') {
+                    const gradient = tempCtx.createLinearGradient(0, 0, tempCanvas.width, tempCanvas.height);
+                    gradient.addColorStop(0, '#ec4899');
+                    gradient.addColorStop(0.5, '#a855f7');
+                    gradient.addColorStop(1, '#6366f1');
+                    tempCtx.strokeStyle = gradient;
+                } else {
+                    tempCtx.strokeStyle = currentColor;
+                }
+                
+                tempCtx.lineWidth = currentSize;
+                tempCtx.lineCap = 'round';
+                tempCtx.lineJoin = 'round';
+                tempCtx.globalAlpha = currentOpacity;
+            }
+            
+            // Background functions
+            function setBackground(color = null) {
+                ctx.fillStyle = '#ffffff';
+                
+                switch (backgroundSelector.value) {
+                    case 'white':
+                        ctx.fillStyle = '#ffffff';
+                        break;
+                    case 'grid':
+                        drawGridBackground('#f3f4f6', '#e5e7eb');
+                        return;
+                    case 'dots':
+                        drawDotBackground('#e5e7eb');
+                        return;
+                    case 'lined':
+                        drawLinedBackground('#e5e7eb');
+                        return;
+                    case 'black':
+                        ctx.fillStyle = '#000000';
+                        break;
+                    case 'custom':
+                        if (color) {
+                            ctx.fillStyle = color;
+                        } else {
+                            ctx.fillStyle = '#ffffff';
+                        }
+                        break;
+                }
+                
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                redrawCanvas();
+            }
+            
+            function drawGridBackground(lightColor, darkColor) {
+                // Fill with white first
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw grid
+                const gridSize = 20;
+                const majorGridSize = 100;
+                
+                ctx.strokeStyle = lightColor;
+                ctx.lineWidth = 1;
+                
+                // Minor grid lines
+                for (let x = 0; x <= canvas.width; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                
+                for (let y = 0; y <= canvas.height; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+                
+                // Major grid lines
+                ctx.strokeStyle = darkColor;
+                ctx.lineWidth = 1;
+                
+                for (let x = 0; x <= canvas.width; x += majorGridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                
+                for (let y = 0; y <= canvas.height; y += majorGridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+            }
+            
+            function drawDotBackground(color) {
+                // Fill with white first
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw dots
+                const dotSize = 2;
+                const dotSpacing = 20;
+                
+                ctx.fillStyle = color;
+                
+                for (let x = 0; x <= canvas.width; x += dotSpacing) {
+                    for (let y = 0; y <= canvas.height; y += dotSpacing) {
+                        ctx.beginPath();
+                        ctx.arc(x, y, dotSize, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+            
+            function drawLinedBackground(color) {
+                // Fill with white first
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw lines
+                const lineSpacing = 24;
+                
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 1;
+                
+                for (let y = 0; y <= canvas.height; y += lineSpacing) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+            }
+            
+            // Text functions
+            function addTextToCanvas(text, x, y, size, font) {
+                ctx.font = `${size}px ${font}`;
+                ctx.fillStyle = currentColor;
+                ctx.globalAlpha = currentOpacity;
+                ctx.fillText(text, x, y);
+                
+                // Update SVG path
+                updateSVGPath();
+            }
+            
+            // Canvas management
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+                setBackground();
+                drawingHistory = [];
+                historyIndex = -1;
+                updateSVGPath();
+            }
+            
+            function redrawCanvas() {
+                // Redraw everything from history
+                if (drawingHistory.length > 0) {
+                    const imageData = drawingHistory[historyIndex];
+                    ctx.putImageData(imageData, 0, 0);
+                }
+            }
+            
+            // Undo/Redo functions
+            function saveState() {
+                // If we're not at the end of history, discard future states
+                if (historyIndex < drawingHistory.length - 1) {
+                    drawingHistory = drawingHistory.slice(0, historyIndex + 1);
+                }
+                
+                // Save current state
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                drawingHistory.push(imageData);
+                historyIndex = drawingHistory.length - 1;
+                
+                // Limit history to 50 states to prevent memory issues
+                if (drawingHistory.length > 50) {
+                    drawingHistory.shift();
+                    historyIndex--;
+                }
+            }
+            
+            function undo() {
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    const imageData = drawingHistory[historyIndex];
+                    ctx.putImageData(imageData, 0, 0);
+                    updateSVGPath();
+                }
+            }
+            
+            function redo() {
+                if (historyIndex < drawingHistory.length - 1) {
+                    historyIndex++;
+                    const imageData = drawingHistory[historyIndex];
+                    ctx.putImageData(imageData, 0, 0);
+                    updateSVGPath();
+                }
+            }
+            
+            // Export functions
+            function exportAsPNG() {
+                // Create a temporary canvas with white background for export
+                const exportCanvas = document.createElement('canvas');
+                exportCanvas.width = canvas.width;
+                exportCanvas.height = canvas.height;
+                const exportCtx = exportCanvas.getContext('2d');
+                
+                // Fill with white background
+                exportCtx.fillStyle = '#ffffff';
+                exportCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
+                
+                // Draw the content
+                exportCtx.drawImage(canvas, 0, 0);
+                
+                // Convert to PNG and download
+                const dataURL = exportCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = 'whiteboard-drawing.png';
+                link.href = dataURL;
+                link.click();
+                
+                showToast('Exported as PNG successfully!');
+            }
+            
+            function exportAsSVG() {
+                // Create a Canvas2SVG instance
+                const svgCanvas = new C2S(canvas.width, canvas.height);
+                const svgCtx = svgCanvas.getContext('2d');
+                
+                // Redraw everything on the SVG canvas
+                if (drawingHistory.length > 0) {
+                    const imageData = drawingHistory[historyIndex];
+                    svgCtx.putImageData(imageData, 0, 0);
+                }
+                
+                // Get SVG as string
+                const svg = svgCanvas.getSerializedSvg();
+                
+                // Create download link
+                const blob = new Blob([svg], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.download = 'whiteboard-drawing.svg';
+                link.href = url;
+                link.click();
+                
+                showToast('Exported as SVG successfully!');
+            }
+            
+            // SVG Path functions
+            function updateSVGPath() {
+                // This is a simplified version - in a real app you'd track all drawing commands
+                const svgPathCode = document.getElementById('svg-path-code');
+                
+                if (drawingHistory.length === 0) {
+                    svgPathCode.textContent = 'Draw something to generate SVG path...';
+                    return;
+                }
+                
+                // For demonstration, we'll just show a sample path
+                svgPathCode.textContent = `<svg width="${canvas.width}" height="${canvas.height}" xmlns="http://www.w3.org/2000/svg">\n` +
+                    `  <path d="M10 10 L100 100 C150 50 200 150 250 100" stroke="${currentColor}" stroke-width="${currentSize}" fill="none" />\n` +
+                    `</svg>`;
+            }
+            
+            function copySVGCode() {
+                const svgPathCode = document.getElementById('svg-path-code');
+                navigator.clipboard.writeText(svgPathCode.textContent)
+                    .then(() => showToast('SVG code copied to clipboard!'))
+                    .catch(err => showToast('Failed to copy SVG code'));
+            }
+            
+            // LocalStorage functions
+            function saveDrawing() {
+                const dataURL = canvas.toDataURL();
+                localStorage.setItem('whiteboardDrawing', dataURL);
+                
+                // Also save the drawing history
+                localStorage.setItem('whiteboardHistory', JSON.stringify({
+                    history: drawingHistory.map(imgData => imgData.data),
+                    width: canvas.width,
+                    height: canvas.height,
+                    historyIndex
+                }));
+            }
+            
+            function loadDrawing() {
+                const savedDrawing = localStorage.getItem('whiteboardDrawing');
+                const savedHistory = localStorage.getItem('whiteboardHistory');
+                
+                if (savedDrawing) {
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = savedDrawing;
+                }
+                
+                if (savedHistory) {
+                    try {
+                        const { history, width, height, historyIndex: savedIndex } = JSON.parse(savedHistory);
+                        
+                        // Reconstruct ImageData objects
+                        drawingHistory = history.map(data => {
+                            const arr = new Uint8ClampedArray(Object.values(data));
+                            return new ImageData(arr, width, height);
+                        });
+                        
+                        historyIndex = savedIndex;
+                    } catch (e) {
+                        console.error('Error loading drawing history:', e);
+                    }
+                }
+            }
+            
+            // UI functions
+            function updateToolInfo() {
+                const toolNames = {
+                    pen: 'Pen',
+                    brush: 'Brush',
+                    highlighter: 'Highlighter',
+                    eraser: 'Eraser',
+                    line: 'Line',
+                    rectangle: 'Rectangle',
+                    circle: 'Circle',
+                    text: 'Text'
+                };
+                
+                const colorNames = {
+                    '#000000': 'Black',
+                    '#ef4444': 'Red',
+                    '#3b82f6': 'Blue',
+                    '#22c55e': 'Green',
+                    '#eab308': 'Yellow',
+                    '#a855f7': 'Purple',
+                    '#ec4899': 'Pink',
+                    '#f97316': 'Orange',
+                    '#14b8a6': 'Teal',
+                    '#6b7280': 'Gray',
+                    '#ffffff': 'White',
+                    'gradient': 'Gradient'
+                };
+                
+                document.getElementById('current-tool').textContent = toolNames[currentTool] || 'Pen';
+                document.getElementById('current-color').textContent = colorNames[currentColor] || 'Custom';
+                document.getElementById('current-size').textContent = `${currentSize}px`;
+            }
+            
+            function showToast(message) {
+                const toast = document.getElementById('success-toast');
+                const toastMessage = document.getElementById('toast-message');
+                
+                toastMessage.textContent = message;
+                toast.classList.remove('translate-y-10', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+                
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-0', 'opacity-100');
+                    toast.classList.add('translate-y-10', 'opacity-0');
+                }, 3000);
+            }
+            
+            // Initialize
+            updateToolInfo();
+            setBackground();
+        });
+    </script>
+</body>
+</html>

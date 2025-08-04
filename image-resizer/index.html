@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions | Tools for Developers</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <!-- UploadCare -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#7c3aed',
+                        dark: '#1e293b',
+                        light: '#f8fafc'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .logo-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(37, 99, 235, 0.6));
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans text-dark min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <a href="#" class="flex items-center">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" 
+                         class="h-10 w-10 logo-hover transition-all duration-300">
+                    <span class="ml-2 text-xl font-bold gradient-text">Developer Solutions</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-600 hover:text-primary font-medium transition">Home</a>
+                <a href="#tools" class="text-gray-600 hover:text-primary font-medium transition">Tools</a>
+                <a href="#features" class="text-gray-600 hover:text-primary font-medium transition">Features</a>
+                <a href="#about" class="text-gray-600 hover:text-primary font-medium transition">About</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="md:hidden text-gray-600 hover:text-primary">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <a href="#" class="hidden md:block bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 bg-gradient-to-r from-blue-50 to-purple-50">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    Supercharge Your <span class="gradient-text">Development</span> Workflow
+                </h1>
+                <p class="text-lg text-gray-600 mb-8">
+                    Powerful tools designed to make developers' lives easier. From image optimization to code formatting, 
+                    we've got everything you need to work smarter and faster.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#tools" class="bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium text-center transition">
+                        Explore Tools
+                    </a>
+                    <a href="#" class="border border-primary text-primary hover:bg-blue-50 px-6 py-3 rounded-lg font-medium text-center transition">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <lord-icon
+                    src="https://cdn.lordicon.com/ajkxzzfb.json"
+                    trigger="loop"
+                    colors="primary:#2563eb,secondary:#7c3aed"
+                    style="width:400px;height:400px">
+                </lord-icon>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Developer Tools</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our collection of tools to streamline your development process and boost productivity.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Image Resizer -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-blue-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/wloilxuq.json"
+                                    trigger="hover"
+                                    colors="primary:#2563eb"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">Image Resizer</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Resize your images to any dimension while maintaining quality. Perfect for web optimization.
+                        </p>
+                        <button onclick="openTool('resizer-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Image Compressor -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/hiqmdfkt.json"
+                                    trigger="hover"
+                                    colors="primary:#7c3aed"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">Image Compressor</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Reduce image file size without noticeable quality loss. Optimize for web performance.
+                        </p>
+                        <button onclick="openTool('compressor-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Code Formatter -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-green-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/ihyatngg.json"
+                                    trigger="hover"
+                                    colors="primary:#10b981"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">Code Formatter</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Format your code beautifully with support for multiple languages. Keep your code clean.
+                        </p>
+                        <button onclick="openTool('formatter-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Color Picker -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-red-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/ncxoehra.json"
+                                    trigger="hover"
+                                    colors="primary:#ef4444"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">Color Picker</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Advanced color picker with HEX, RGB, HSL conversions. Create perfect color schemes.
+                        </p>
+                        <button onclick="openTool('color-picker-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- JSON Formatter -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/dxjqoygy.json"
+                                    trigger="hover"
+                                    colors="primary:#f59e0b"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">JSON Formatter</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Validate and format JSON data with syntax highlighting. Make JSON readable and beautiful.
+                        </p>
+                        <button onclick="openTool('json-formatter-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Base64 Converter -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden tool-card transition-all duration-300 border border-gray-100">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-indigo-100 p-3 rounded-lg mr-4">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/oclwxpmm.json"
+                                    trigger="hover"
+                                    colors="primary:#6366f1"
+                                    style="width:32px;height:32px">
+                                </lord-icon>
+                            </div>
+                            <h3 class="text-xl font-semibold">Base64 Converter</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">
+                            Encode and decode Base64 strings. Convert images, text, and files to Base64 and back.
+                        </p>
+                        <button onclick="openTool('base64-converter-modal')" class="w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition">
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Why Choose Developer Solutions?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    Our platform is designed with developers in mind, offering powerful features to enhance your workflow.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/wfadduyg.json"
+                            trigger="loop"
+                            colors="primary:#2563eb"
+                            style="width:32px;height:32px">
+                        </lord-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Lightning Fast</h3>
+                    <p class="text-gray-600">
+                        Our tools process your files and data in milliseconds, saving you valuable development time.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/iiixgoqp.json"
+                            trigger="loop"
+                            colors="primary:#7c3aed"
+                            style="width:32px;height:32px">
+                        </lord-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">No Registration</h3>
+                    <p class="text-gray-600">
+                        Use all our tools without creating an account. No personal data collection, just pure functionality.
+                    </p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <lord-icon
+                            src="https://cdn.lordicon.com/sbiheqdr.json"
+                            trigger="loop"
+                            colors="primary:#10b981"
+                            style="width:32px;height:32px">
+                        </lord-icon>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Privacy Focused</h3>
+                    <p class="text-gray-600">
+                        All processing happens in your browser. Your files never leave your device unless you want them to.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <h2 class="text-3xl font-bold mb-6">About Developer Solutions</h2>
+                    <p class="text-gray-600 mb-6">
+                        Developer Solutions was born out of frustration with the lack of simple, effective tools for everyday development tasks. 
+                        As developers ourselves, we understand the pain points and have created solutions that just work.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        Our mission is to provide high-quality, free tools that help developers of all skill levels work more efficiently 
+                        without compromising on privacy or user experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-primary hover:text-blue-700">
+                            <i class="fab fa-github text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-primary hover:text-blue-700">
+                            <i class="fab fa-twitter text-2xl"></i>
+                        </a>
+                        <a href="#" class="text-primary hover:text-blue-700">
+                            <i class="fab fa-discord text-2xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-gray-100 rounded-xl p-8 relative overflow-hidden">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-200 rounded-full opacity-20"></div>
+                        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-200 rounded-full opacity-20"></div>
+                        <lord-icon
+                            src="https://cdn.lordicon.com/etwtznjn.json"
+                            trigger="loop"
+                            colors="primary:#2563eb,secondary:#7c3aed"
+                            style="width:100%;height:300px">
+                        </lord-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-8 w-8">
+                        <span class="ml-2 text-xl font-bold text-white">Developer Solutions</span>
+                    </div>
+                    <p class="text-gray-400">
+                        Tools designed to make developers' lives easier and workflows more efficient.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Tools</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Image Resizer</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Image Compressor</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Code Formatter</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Color Picker</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">API</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">GitHub</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Subscribe</h3>
+                    <p class="text-gray-400 mb-4">
+                        Get updates on new tools and features.
+                    </p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="bg-gray-700 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary w-full">
+                        <button class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-r-lg transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">
+                    © 2023 Developer Solutions. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Tool Modals -->
+    <!-- Image Resizer Modal -->
+    <div id="resizer-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Image Resizer</h3>
+                    <button onclick="closeModal('resizer-modal')" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                            <div id="resizer-upload-area" class="cursor-pointer">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/lyrrgrsl.json"
+                                    trigger="hover"
+                                    colors="primary:#2563eb,secondary:#7c3aed"
+                                    style="width:100px;height:100px">
+                                </lord-icon>
+                                <p class="text-gray-600 mt-4">Drag & drop your image here or click to browse</p>
+                                <p class="text-sm text-gray-500 mt-2">Supports JPG, PNG, WEBP (Max 10MB)</p>
+                            </div>
+                            <input type="file" id="resizer-file-input" class="hidden" accept="image/*">
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h4 class="font-medium mb-3">Resize Options</h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Width (px)</label>
+                                    <input type="number" id="resize-width" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Height (px)</label>
+                                    <input type="number" id="resize-height" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="maintain-aspect" class="rounded border-gray-300 text-primary focus:ring-primary" checked>
+                                    <span class="ml-2 text-sm text-gray-700">Maintain aspect ratio</span>
+                                </label>
+                            </div>
+                            <div class="mt-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Output Format</label>
+                                <select id="resize-format" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                    <option value="original">Original</option>
+                                    <option value="jpeg">JPEG</option>
+                                    <option value="png">PNG</option>
+                                    <option value="webp">WEBP</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button id="resize-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Resize Image
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-medium mb-3">Preview</h4>
+                            <div id="resizer-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64">
+                                <p class="text-gray-500 text-center">Your resized image will appear here</p>
+                            </div>
+                        </div>
+                        
+                        <div id="resizer-result" class="hidden">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium">Result</h4>
+                                <div class="text-sm text-gray-600">
+                                    <span id="resized-dimensions"></span> • <span id="resized-size"></span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button id="download-resized" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                                    <i class="fas fa-download mr-2"></i> Download
+                                </button>
+                                <button id="copy-resized" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                    <i class="fas fa-copy mr-2"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Code Formatter Modal -->
+<div id="formatter-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Code Formatter</h3>
+                <button onclick="closeModal('formatter-modal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                        <div id="formatter-upload-area" class="cursor-pointer">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/lyrrgrsl.json"
+                                trigger="hover"
+                                colors="primary:#10b981,secondary:#2563eb"
+                                style="width:100px;height:100px">
+                            </lord-icon>
+                            <p class="text-gray-600 mt-4">Paste your code here or click to upload a file</p>
+                            <p class="text-sm text-gray-500 mt-2">Supports .js, .py, .html, .css (Max 1MB)</p>
+                        </div>
+                        <textarea id="formatter-input" class="w-full h-40 border border-gray-300 rounded-lg p-3 mt-4 focus:ring-primary focus:border-primary hidden" placeholder="Paste your code here..."></textarea>
+                        <input type="file" id="formatter-file-input" class="hidden" accept=".js,.py,.html,.css">
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-medium mb-3">Formatting Options</h4>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Language</label>
+                            <select id="formatter-language" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                <option value="javascript">JavaScript</option>
+                                <option value="python">Python</option>
+                                <option value="html">HTML</option>
+                                <option value="css">CSS</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Indentation</label>
+                            <select id="formatter-indent" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                <option value="2">2 Spaces</option>
+                                <option value="4">4 Spaces</option>
+                                <option value="tab">Tab</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="format-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Format Code
+                    </button>
+                </div>
+
+                <div>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium mb-3">Preview</h4>
+                        <div id="formatter-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64 overflow-auto">
+                            <p class="text-gray-500 text-center">Your formatted code will appear here</p>
+                        </div>
+                    </div>
+
+                    <div id="formatter-result" class="hidden">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-medium">Result</h4>
+                            <div class="text-sm text-gray-600">
+                                <span id="formatted-size"></span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="download-formatted" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </button>
+                            <button id="copy-formatted" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    // Code Formatter
+const formatterUploadArea = document.getElementById('formatter-upload-area');
+const formatterFileInput = document.getElementById('formatter-file-input');
+const formatterInput = document.getElementById('formatter-input');
+const formatButton = document.getElementById('format-button');
+const formatterPreview = document.getElementById('formatter-preview');
+const formatterResult = document.getElementById('formatter-result');
+const formattedSize = document.getElementById('formatted-size');
+const downloadFormatted = document.getElementById('download-formatted');
+const copyFormatted = document.getElementById('copy-formatted');
+const formatterLanguage = document.getElementById('formatter-language');
+const formatterIndent = document.getElementById('formatter-indent');
+
+let originalCode = '';
+
+formatterUploadArea.addEventListener('click', () => {
+    formatterInput.classList.remove('hidden');
+    formatterInput.focus();
+    formatterFileInput.click();
+});
+
+formatterFileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+        const file = e.target.files[0];
+        if (!file.type.match('text.*') && !file.name.match(/\.(js|py|html|css)$/)) {
+            alert('Please select a valid code file (.js, .py, .html, .css)');
+            return;
+        }
+        if (file.size > 1 * 1024 * 1024) {
+            alert('File size should be less than 1MB');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalCode = e.target.result;
+            formatterInput.value = originalCode;
+            formatButton.disabled = false;
+            updatePreview(originalCode);
+        };
+        reader.readAsText(file);
+    }
+});
+
+formatterInput.addEventListener('input', (e) => {
+    originalCode = e.target.value;
+    formatButton.disabled = !originalCode.trim();
+    updatePreview(originalCode);
+});
+
+formatButton.addEventListener('click', () => {
+    if (!originalCode) return;
+    
+    const language = formatterLanguage.value;
+    const indent = formatterIndent.value === 'tab' ? '\t' : ' '.repeat(parseInt(formatterIndent.value));
+    const formattedCode = formatCode(originalCode, language, indent);
+    
+    formatterResult.classList.remove('hidden');
+    formattedSize.textContent = `${formatFileSize(new Blob([formattedCode]).size)}`;
+    updatePreview(formattedCode);
+    
+    downloadFormatted.onclick = () => {
+        const blob = new Blob([formattedCode], { type: 'text/plain' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `formatted-code.${language}`;
+        a.click();
+    };
+    
+    copyFormatted.onclick = () => {
+        navigator.clipboard.writeText(formattedCode).then(() => {
+            alert('Code copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy code: ', err);
+            alert('Failed to copy code to clipboard');
+        });
+    };
+});
+
+function updatePreview(code) {
+    formatterPreview.innerHTML = '';
+    const pre = document.createElement('pre');
+    pre.style.whiteSpace = 'pre-wrap';
+    pre.textContent = code;
+    formatterPreview.appendChild(pre);
+}
+
+function formatCode(code, language, indent) {
+    // Simple formatting logic (expand with a library like Prettier for better results)
+    const lines = code.split('\n');
+    let formatted = '';
+    let indentLevel = 0;
+    
+    lines.forEach(line => {
+        line = line.trim();
+        if (line.match(/^\s*{/) || line.match(/:\s*$/)) indentLevel++;
+        if (line.match(/^\s*}/) || line.match(/^\s*else\s*$/)) indentLevel = Math.max(0, indentLevel - 1);
+        formatted += indent.repeat(indentLevel) + line + '\n';
+    });
+    
+    return formatted.trim();
+}
+</script>
+    <!-- Image Compressor Modal -->
+    <div id="compressor-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Image Compressor</h3>
+                    <button onclick="closeModal('compressor-modal')" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                            <div id="compressor-upload-area" class="cursor-pointer">
+                                <lord-icon
+                                    src="https://cdn.lordicon.com/lyrrgrsl.json"
+                                    trigger="hover"
+                                    colors="primary:#7c3aed,secondary:#2563eb"
+                                    style="width:100px;height:100px">
+                                </lord-icon>
+                                <p class="text-gray-600 mt-4">Drag & drop your image here or click to browse</p>
+                                <p class="text-sm text-gray-500 mt-2">Supports JPG, PNG, WEBP (Max 10MB)</p>
+                            </div>
+                            <input type="file" id="compressor-file-input" class="hidden" accept="image/*">
+                        </div>
+                        
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h4 class="font-medium mb-3">Compression Options</h4>
+                            <div class="mb-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Quality</label>
+                                <input type="range" id="compression-quality" min="0" max="100" value="80" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>Low</span>
+                                    <span>Medium</span>
+                                    <span>High</span>
+                                </div>
+                                <div class="text-center mt-1">
+                                    <span id="quality-value" class="text-sm font-medium">80%</span>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Output Format</label>
+                                <select id="compression-format" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                    <option value="original">Original</option>
+                                    <option value="jpeg">JPEG</option>
+                                    <option value="png">PNG</option>
+                                    <option value="webp">WEBP</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button id="compress-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Compress Image
+                        </button>
+                    </div>
+                    
+                    <div>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                            <h4 class="font-medium mb-3">Preview</h4>
+                            <div id="compressor-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64">
+                                <p class="text-gray-500 text-center">Your compressed image will appear here</p>
+                            </div>
+                        </div>
+                        
+                        <div id="compressor-result" class="hidden">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-medium">Result</h4>
+                                <div class="text-sm text-gray-600">
+                                    <span id="compressed-dimensions"></span> • <span id="compressed-size"></span>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>Original Size</span>
+                                    <span id="original-size"></span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div id="compression-bar" class="bg-green-600 h-2.5 rounded-full" style="width: 0%"></div>
+                                </div>
+                                <div class="flex justify-between text-sm mt-1">
+                                    <span>Compressed Size</span>
+                                    <span id="savings"></span>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button id="download-compressed" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                                    <i class="fas fa-download mr-2"></i> Download
+                                </button>
+                                <button id="copy-compressed" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                    <i class="fas fa-copy mr-2"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UploadCare Integration -->
+    <script type="module">
+        import * as UC from 'https://cdn.jsdelivr.net/npm/@uploadcare/file-uploader@1/web/uc-file-uploader-regular.min.js';
+        UC.defineComponents(UC);
+        const ctxProvider = document.querySelector("uc-upload-ctx-provider");
+        ctxProvider.addEventListener("common-upload-success", (e) => {
+            console.log(
+                "Uploaded files URL list",
+                e.detail.successEntries.map((entry) => entry.cdnUrl)
+            );
+        });
+    </script>
+    <uc-config 
+        ctx-name="my-uploader" 
+        source-list="local, camera, facebook, gdrive" 
+        files-view-mode="grid" 
+        grid-show-file-names="true" 
+        pubkey="56035b8dde3db9831f0e"
+    ></uc-config>
+    <uc-file-uploader-regular ctx-name="my-uploader"></uc-file-uploader-regular>
+    <uc-upload-ctx-provider ctx-name="my-uploader"></uc-upload-ctx-provider>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
+
+    <script>
+        // Tool Modals
+        function openTool(tool) {
+            document.getElementById(`${tool}-modal`).classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+        
+        // Close modals when clicking outside
+        document.querySelectorAll('[id$="-modal"]').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+        
+        // Image Resizer
+        const resizerUploadArea = document.getElementById('resizer-upload-area');
+        const resizerFileInput = document.getElementById('resizer-file-input');
+        const resizeButton = document.getElementById('resize-button');
+        const resizerPreview = document.getElementById('resizer-preview');
+        const resizerResult = document.getElementById('resizer-result');
+        const resizedDimensions = document.getElementById('resized-dimensions');
+        const resizedSize = document.getElementById('resized-size');
+        const downloadResized = document.getElementById('download-resized');
+        const copyResized = document.getElementById('copy-resized');
+        
+        let originalImage = null;
+        let resizedImageUrl = null;
+        
+        resizerUploadArea.addEventListener('click', () => resizerFileInput.click());
+        resizerUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            resizerUploadArea.classList.add('border-primary', 'bg-blue-50');
+        });
+        resizerUploadArea.addEventListener('dragleave', () => {
+            resizerUploadArea.classList.remove('border-primary', 'bg-blue-50');
+        });
+        resizerUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            resizerUploadArea.classList.remove('border-primary', 'bg-blue-50');
+            if (e.dataTransfer.files.length) {
+                handleImageUpload(e.dataTransfer.files[0], 'resizer');
+            }
+        });
+        
+        resizerFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleImageUpload(e.target.files[0], 'resizer');
+            }
+        });
+        
+        // Maintain aspect ratio
+        const maintainAspect = document.getElementById('maintain-aspect');
+        const resizeWidth = document.getElementById('resize-width');
+        const resizeHeight = document.getElementById('resize-height');
+        
+        let aspectRatio = 1;
+        
+        resizeWidth.addEventListener('input', () => {
+            if (maintainAspect.checked && originalImage) {
+                resizeHeight.value = Math.round(resizeWidth.value / aspectRatio);
+            }
+        });
+        
+        resizeHeight.addEventListener('input', () => {
+            if (maintainAspect.checked && originalImage) {
+                resizeWidth.value = Math.round(resizeHeight.value * aspectRatio);
+            }
+        });
+        
+        maintainAspect.addEventListener('change', () => {
+            if (maintainAspect.checked && originalImage) {
+                resizeHeight.value = Math.round(resizeWidth.value / aspectRatio);
+            }
+        });
+        
+        resizeButton.addEventListener('click', () => {
+            if (!originalImage) return;
+            
+            const width = parseInt(resizeWidth.value) || originalImage.width;
+            const height = parseInt(resizeHeight.value) || originalImage.height;
+            const format = document.getElementById('resize-format').value;
+            
+            resizeImage(originalImage, width, height, format);
+        });
+        
+        function handleImageUpload(file, tool) {
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+            
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size should be less than 10MB');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    originalImage = img;
+                    aspectRatio = img.width / img.height;
+                    
+                    if (tool === 'resizer') {
+                        resizeWidth.value = img.width;
+                        resizeHeight.value = img.height;
+                        resizeButton.disabled = false;
+                        
+                        resizerPreview.innerHTML = '';
+                        const previewImg = document.createElement('img');
+                        previewImg.src = e.target.result;
+                        previewImg.classList.add('max-w-full', 'max-h-64');
+                        resizerPreview.appendChild(previewImg);
+                    } else if (tool === 'compressor') {
+                        document.getElementById('compress-button').disabled = false;
+                        
+                        const preview = document.getElementById('compressor-preview');
+                        preview.innerHTML = '';
+                        const previewImg = document.createElement('img');
+                        previewImg.src = e.target.result;
+                        previewImg.classList.add('max-w-full', 'max-h-64');
+                        preview.appendChild(previewImg);
+                        
+                        document.getElementById('original-size').textContent = formatFileSize(file.size);
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function resizeImage(img, width, height, format) {
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            let mimeType = 'image/jpeg';
+            if (format === 'png') mimeType = 'image/png';
+            else if (format === 'webp') mimeType = 'image/webp';
+            else if (img.src.match(/png/)) mimeType = 'image/png';
+            else if (img.src.match(/webp/)) mimeType = 'image/webp';
+            
+            canvas.toBlob((blob) => {
+                resizedImageUrl = URL.createObjectURL(blob);
+                
+                resizerResult.classList.remove('hidden');
+                resizedDimensions.textContent = `${width} × ${height} px`;
+                resizedSize.textContent = formatFileSize(blob.size);
+                
+                const resultImg = document.createElement('img');
+                resultImg.src = resizedImageUrl;
+                resultImg.classList.add('max-w-full', 'max-h-64');
+                resizerPreview.innerHTML = '';
+                resizerPreview.appendChild(resultImg);
+                
+                downloadResized.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = resizedImageUrl;
+                    a.download = `resized-image.${format === 'original' ? (mimeType.split('/')[1]) : format}`;
+                    a.click();
+                };
+                
+                copyResized.onclick = () => {
+                    fetch(resizedImageUrl)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            navigator.clipboard.write([
+                                new ClipboardItem({
+                                    [blob.type]: blob
+                                })
+                            ]).then(() => {
+                                alert('Image copied to clipboard!');
+                            }).catch(err => {
+                                console.error('Failed to copy image: ', err);
+                                alert('Failed to copy image to clipboard');
+                            });
+                        });
+                };
+            }, mimeType, 0.9);
+        }
+        
+        // Image Compressor
+        const compressorUploadArea = document.getElementById('compressor-upload-area');
+        const compressorFileInput = document.getElementById('compressor-file-input');
+        const compressButton = document.getElementById('compress-button');
+        const compressorPreview = document.getElementById('compressor-preview');
+        const compressorResult = document.getElementById('compressor-result');
+        const compressedDimensions = document.getElementById('compressed-dimensions');
+        const compressedSize = document.getElementById('compressed-size');
+        const compressionBar = document.getElementById('compression-bar');
+        const savings = document.getElementById('savings');
+        const downloadCompressed = document.getElementById('download-compressed');
+        const copyCompressed = document.getElementById('copy-compressed');
+        const compressionQuality = document.getElementById('compression-quality');
+        const qualityValue = document.getElementById('quality-value');
+        
+        let compressedImageUrl = null;
+        let originalFileSize = 0;
+        
+        compressorUploadArea.addEventListener('click', () => compressorFileInput.click());
+        compressorUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            compressorUploadArea.classList.add('border-primary', 'bg-purple-50');
+        });
+        compressorUploadArea.addEventListener('dragleave', () => {
+            compressorUploadArea.classList.remove('border-primary', 'bg-purple-50');
+        });
+        compressorUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            compressorUploadArea.classList.remove('border-primary', 'bg-purple-50');
+            if (e.dataTransfer.files.length) {
+                handleImageUpload(e.dataTransfer.files[0], 'compressor');
+                originalFileSize = e.dataTransfer.files[0].size;
+            }
+        });
+        
+        compressorFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                handleImageUpload(e.target.files[0], 'compressor');
+                originalFileSize = e.target.files[0].size;
+            }
+        });
+        
+        compressionQuality.addEventListener('input', () => {
+            qualityValue.textContent = `${compressionQuality.value}%`;
+        });
+        
+        compressButton.addEventListener('click', () => {
+            if (!originalImage) return;
+            
+            const quality = parseInt(compressionQuality.value) / 100;
+            const format = document.getElementById('compression-format').value;
+            
+            compressImage(originalImage, quality, format);
+        });
+        
+        function compressImage(img, quality, format) {
+            let mimeType = 'image/jpeg';
+            if (format === 'png') mimeType = 'image/png';
+            else if (format === 'webp') mimeType = 'image/webp';
+            else if (img.src.match(/png/)) mimeType = 'image/png';
+            else if (img.src.match(/webp/)) mimeType = 'image/webp';
+            
+            new Compressor(img, {
+                quality: quality,
+                mimeType: mimeType,
+                success(result) {
+                    compressedImageUrl = URL.createObjectURL(result);
+                    
+                    compressorResult.classList.remove('hidden');
+                    compressedDimensions.textContent = `${result.width} × ${result.height} px`;
+                    compressedSize.textContent = formatFileSize(result.size);
+                    
+                    const savingsPercent = Math.round((1 - (result.size / originalFileSize)) * 100;
+                    savings.textContent = `${savingsPercent}% smaller`;
+                    compressionBar.style.width = `${100 - savingsPercent}%`;
+                    
+                    const resultImg = document.createElement('img');
+                    resultImg.src = compressedImageUrl;
+                    resultImg.classList.add('max-w-full', 'max-h-64');
+                    compressorPreview.innerHTML = '';
+                    compressorPreview.appendChild(resultImg);
+                    
+                    downloadCompressed.onclick = () => {
+                        const a = document.createElement('a');
+                        a.href = compressedImageUrl;
+                        a.download = `compressed-image.${format === 'original' ? (mimeType.split('/')[1]) : format}`;
+                        a.click();
+                    };
+                    
+                    copyCompressed.onclick = () => {
+                        fetch(compressedImageUrl)
+                            .then(res => res.blob())
+                            .then(blob => {
+                                navigator.clipboard.write([
+                                    new ClipboardItem({
+                                        [blob.type]: blob
+                                    })
+                                ]).then(() => {
+                                    alert('Image copied to clipboard!');
+                                }).catch(err => {
+                                    console.error('Failed to copy image: ', err);
+                                    alert('Failed to copy image to clipboard');
+                                });
+                            });
+                    };
+                },
+                error(err) {
+                    console.error('Compression error:', err);
+                    alert('Error compressing image');
+                }
+            });
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+        }
+        
+        // Mobile menu toggle
+        document.querySelector('.md\\:hidden').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('hidden');
+        });
+    </script>
+   <!-- <script>
+    // Tool Modals (move these functions to global scope)
+    function openTool(tool) {
+        document.getElementById(`${tool}-modal`).classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('[id$="-modal"]').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
+            }
+        });
+    });
+
+    // Rest of your existing script code (e.g., image resizer, compressor logic) can stay as is
+    // ...
+</script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
+<script>
+    // Tool Modals
+    function openTool(tool) {
+        document.getElementById(tool).classList.remove('hidden');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    // Close modals when clicking outside
+    document.querySelectorAll('[id$="-modal"]').forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal(this.id);
+            }
+        });
+    });
+
+    // Image Resizer
+    const resizerUploadArea = document.getElementById('resizer-upload-area');
+    const resizerFileInput = document.getElementById('resizer-file-input');
+    const resizeButton = document.getElementById('resize-button');
+    const resizerPreview = document.getElementById('resizer-preview');
+    const resizerResult = document.getElementById('resizer-result');
+    const resizedDimensions = document.getElementById('resized-dimensions');
+    const resizedSize = document.getElementById('resized-size');
+    const downloadResized = document.getElementById('download-resized');
+    const copyResized = document.getElementById('copy-resized');
+
+    let originalImage = null;
+    let resizedImageUrl = null;
+
+    resizerUploadArea.addEventListener('click', () => resizerFileInput.click());
+    resizerUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        resizerUploadArea.classList.add('border-primary', 'bg-blue-50');
+    });
+    resizerUploadArea.addEventListener('dragleave', () => {
+        resizerUploadArea.classList.remove('border-primary', 'bg-blue-50');
+    });
+    resizerUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        resizerUploadArea.classList.remove('border-primary', 'bg-blue-50');
+        if (e.dataTransfer.files.length) {
+            handleImageUpload(e.dataTransfer.files[0], 'resizer');
+        }
+    });
+
+    resizerFileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            handleImageUpload(e.target.files[0], 'resizer');
+        }
+    });
+
+    // Maintain aspect ratio
+    const maintainAspect = document.getElementById('maintain-aspect');
+    const resizeWidth = document.getElementById('resize-width');
+    const resizeHeight = document.getElementById('resize-height');
+
+    let aspectRatio = 1;
+
+    resizeWidth.addEventListener('input', () => {
+        if (maintainAspect.checked && originalImage) {
+            resizeHeight.value = Math.round(resizeWidth.value / aspectRatio);
+        }
+    });
+
+    resizeHeight.addEventListener('input', () => {
+        if (maintainAspect.checked && originalImage) {
+            resizeWidth.value = Math.round(resizeHeight.value * aspectRatio);
+        }
+    });
+
+    maintainAspect.addEventListener('change', () => {
+        if (maintainAspect.checked && originalImage) {
+            resizeHeight.value = Math.round(resizeWidth.value / aspectRatio);
+        }
+    });
+
+    resizeButton.addEventListener('click', () => {
+        if (!originalImage) return;
+
+        const width = parseInt(resizeWidth.value) || originalImage.width;
+        const height = parseInt(resizeHeight.value) || originalImage.height;
+        const format = document.getElementById('resize-format').value;
+
+        resizeImage(originalImage, width, height, format);
+    });
+
+    function handleImageUpload(file, tool) {
+        if (!file.type.match('image.*')) {
+            alert('Please select an image file');
+            return;
+        }
+
+        if (file.size > 10 * 1024 * 1024) {
+            alert('File size should be less than 10MB');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = new Image();
+            img.onload = function() {
+                originalImage = img;
+                aspectRatio = img.width / img.height;
+
+                if (tool === 'resizer') {
+                    resizeWidth.value = img.width;
+                    resizeHeight.value = img.height;
+                    resizeButton.disabled = false;
+
+                    resizerPreview.innerHTML = '';
+                    const previewImg = document.createElement('img');
+                    previewImg.src = e.target.result;
+                    previewImg.classList.add('max-w-full', 'max-h-64');
+                    resizerPreview.appendChild(previewImg);
+                } else if (tool === 'compressor') {
+                    document.getElementById('compress-button').disabled = false;
+
+                    const preview = document.getElementById('compressor-preview');
+                    preview.innerHTML = '';
+                    const previewImg = document.createElement('img');
+                    previewImg.src = e.target.result;
+                    previewImg.classList.add('max-w-full', 'max-h-64');
+                    preview.appendChild(previewImg);
+
+                    document.getElementById('original-size').textContent = formatFileSize(file.size);
+                }
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function resizeImage(img, width, height, format) {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        let mimeType = 'image/jpeg';
+        if (format === 'png') mimeType = 'image/png';
+        else if (format === 'webp') mimeType = 'image/webp';
+        else if (img.src.match(/png/)) mimeType = 'image/png';
+        else if (img.src.match(/webp/)) mimeType = 'image/webp';
+
+        canvas.toBlob((blob) => {
+            resizedImageUrl = URL.createObjectURL(blob);
+
+            resizerResult.classList.remove('hidden');
+            resizedDimensions.textContent = `${width} × ${height} px`;
+            resizedSize.textContent = formatFileSize(blob.size);
+
+            const resultImg = document.createElement('img');
+            resultImg.src = resizedImageUrl;
+            resultImg.classList.add('max-w-full', 'max-h-64');
+            resizerPreview.innerHTML = '';
+            resizerPreview.appendChild(resultImg);
+
+            downloadResized.onclick = () => {
+                const a = document.createElement('a');
+                a.href = resizedImageUrl;
+                a.download = `resized-image.${format === 'original' ? (mimeType.split('/')[1]) : format}`;
+                a.click();
+            };
+
+            copyResized.onclick = () => {
+                fetch(resizedImageUrl)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        navigator.clipboard.write([
+                            new ClipboardItem({
+                                [blob.type]: blob
+                            })
+                        ]).then(() => {
+                            alert('Image copied to clipboard!');
+                        }).catch(err => {
+                            console.error('Failed to copy image: ', err);
+                            alert('Failed to copy image to clipboard');
+                        });
+                    });
+            };
+        }, mimeType, 0.9);
+    }
+
+    // Image Compressor
+    const compressorUploadArea = document.getElementById('compressor-upload-area');
+    const compressorFileInput = document.getElementById('compressor-file-input');
+    const compressButton = document.getElementById('compress-button');
+    const compressorPreview = document.getElementById('compressor-preview');
+    const compressorResult = document.getElementById('compressor-result');
+    const compressedDimensions = document.getElementById('compressed-dimensions');
+    const compressedSize = document.getElementById('compressed-size');
+    const compressionBar = document.getElementById('compression-bar');
+    const savings = document.getElementById('savings');
+    const downloadCompressed = document.getElementById('download-compressed');
+    const copyCompressed = document.getElementById('copy-compressed');
+    const compressionQuality = document.getElementById('compression-quality');
+    const qualityValue = document.getElementById('quality-value');
+
+    let compressedImageUrl = null;
+    let originalFileSize = 0;
+
+    compressorUploadArea.addEventListener('click', () => compressorFileInput.click());
+    compressorUploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        compressorUploadArea.classList.add('border-primary', 'bg-purple-50');
+    });
+    compressorUploadArea.addEventListener('dragleave', () => {
+        compressorUploadArea.classList.remove('border-primary', 'bg-purple-50');
+    });
+    compressorUploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        compressorUploadArea.classList.remove('border-primary', 'bg-purple-50');
+        if (e.dataTransfer.files.length) {
+            handleImageUpload(e.dataTransfer.files[0], 'compressor');
+            originalFileSize = e.dataTransfer.files[0].size;
+        }
+    });
+
+    compressorFileInput.addEventListener('change', (e) => {
+        if (e.target.files.length) {
+            handleImageUpload(e.target.files[0], 'compressor');
+            originalFileSize = e.target.files[0].size;
+        }
+    });
+
+    compressionQuality.addEventListener('input', () => {
+        qualityValue.textContent = `${compressionQuality.value}%`;
+    });
+
+    compressButton.addEventListener('click', () => {
+        if (!originalImage) return;
+
+        const quality = parseInt(compressionQuality.value) / 100;
+        const format = document.getElementById('compression-format').value;
+
+        compressImage(originalImage, quality, format);
+    });
+
+    function compressImage(img, quality, format) {
+        let mimeType = 'image/jpeg';
+        if (format === 'png') mimeType = 'image/png';
+        else if (format === 'webp') mimeType = 'image/webp';
+        else if (img.src.match(/png/)) mimeType = 'image/png';
+        else if (img.src.match(/webp/)) mimeType = 'image/webp';
+
+        new Compressor(img, {
+            quality: quality,
+            mimeType: mimeType,
+            success(result) {
+                compressedImageUrl = URL.createObjectURL(result);
+
+                compressorResult.classList.remove('hidden');
+                compressedDimensions.textContent = `${result.width} × ${result.height} px`;
+                compressedSize.textContent = formatFileSize(result.size);
+
+                const savingsPercent = Math.round((1 - (result.size / originalFileSize)) * 100);
+                savings.textContent = `${savingsPercent}% smaller`;
+                compressionBar.style.width = `${100 - savingsPercent}%`;
+
+                const resultImg = document.createElement('img');
+                resultImg.src = compressedImageUrl;
+                resultImg.classList.add('max-w-full', 'max-h-64');
+                compressorPreview.innerHTML = '';
+                compressorPreview.appendChild(resultImg);
+
+                downloadCompressed.onclick = () => {
+                    const a = document.createElement('a');
+                    a.href = compressedImageUrl;
+                    a.download = `compressed-image.${format === 'original' ? (mimeType.split('/')[1]) : format}`;
+                    a.click();
+                };
+
+                copyCompressed.onclick = () => {
+                    fetch(compressedImageUrl)
+                        .then(res => res.blob())
+                        .then(blob => {
+                            navigator.clipboard.write([
+                                new ClipboardItem({
+                                    [blob.type]: blob
+                                })
+                            ]).then(() => {
+                                alert('Image copied to clipboard!');
+                            }).catch(err => {
+                                console.error('Failed to copy image: ', err);
+                                alert('Failed to copy image to clipboard');
+                            });
+                        });
+                };
+            },
+            error(err) {
+                console.error('Compression error:', err);
+                alert('Error compressing image');
+            }
+        });
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Mobile menu toggle
+    document.querySelector('.md\\:hidden').addEventListener('click', function() {
+        document.querySelector('nav').classList.toggle('hidden');
+    });
+</script>
+<!-- Color Picker Modal -->
+<div id="color-picker-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Color Picker</h3>
+                <button onclick="closeModal('color-picker-modal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                        <div id="color-picker-area" class="cursor-pointer">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ncxoehra.json"
+                                trigger="hover"
+                                colors="primary:#ef4444,secondary:#2563eb"
+                                style="width:100px;height:100px">
+                            </lord-icon>
+                            <p class="text-gray-600 mt-4">Click to pick a color</p>
+                        </div>
+                        <input type="color" id="color-input" class="w-full h-12 border border-gray-300 rounded-lg mt-4 hidden" value="#ff0000">
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-medium mb-3">Color Options</h4>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Format</label>
+                            <select id="color-format" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                <option value="hex">HEX</option>
+                                <option value="rgb">RGB</option>
+                                <option value="hsl">HSL</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="pick-color-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition">
+                        Pick Color
+                    </button>
+                </div>
+
+                <div>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium mb-3">Preview</h4>
+                        <div id="color-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64">
+                            <div id="color-sample" class="w-32 h-32 rounded-lg mx-auto" style="background-color: #ff0000;"></div>
+                            <p id="color-value" class="text-center mt-4 text-gray-700">Selected Color: #ff0000</p>
+                        </div>
+                    </div>
+
+                    <div id="color-result" class="hidden">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-medium">Result</h4>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="copy-color" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    // Color Picker
+const colorPickerArea = document.getElementById('color-picker-area');
+const colorInput = document.getElementById('color-input');
+const pickColorButton = document.getElementById('pick-color-button');
+const colorPreview = document.getElementById('color-preview');
+colorSample = document.getElementById('color-sample');
+const colorValue = document.getElementById('color-value');
+const colorResult = document.getElementById('color-result');
+const copyColor = document.getElementById('copy-color');
+const colorFormat = document.getElementById('color-format');
+
+let selectedColor = '#ff0000';
+
+colorPickerArea.addEventListener('click', () => {
+    colorInput.classList.remove('hidden');
+    colorInput.click();
+});
+
+colorInput.addEventListener('change', (e) => {
+    selectedColor = e.target.value;
+    updateColorPreview(selectedColor);
+    pickColorButton.disabled = false;
+});
+
+pickColorButton.addEventListener('click', () => {
+    updateColorPreview(selectedColor);
+    colorResult.classList.remove('hidden');
+});
+
+colorFormat.addEventListener('change', () => {
+    updateColorPreview(selectedColor);
+});
+
+copyColor.addEventListener('click', () => {
+    const colorString = getColorString(selectedColor, colorFormat.value);
+    navigator.clipboard.writeText(colorString).then(() => {
+        alert('Color value copied to clipboard!');
+    }).catch(err => {
+        console.error('Failed to copy color: ', err);
+        alert('Failed to copy color to clipboard');
+    });
+});
+
+function updateColorPreview(color) {
+    colorSample.style.backgroundColor = color;
+    colorValue.textContent = `Selected Color: ${getColorString(color, colorFormat.value)}`;
+}
+
+function getColorString(color, format) {
+    if (format === 'rgb') {
+        const r = parseInt(color.substr(1, 2), 16);
+        const g = parseInt(color.substr(3, 2), 16);
+        const b = parseInt(color.substr(5, 2), 16);
+        return `rgb(${r}, ${g}, ${b})`;
+    } else if (format === 'hsl') {
+        // Simple HEX to HSL conversion (approximate)
+        const r = parseInt(color.substr(1, 2), 16) / 255;
+        const g = parseInt(color.substr(3, 2), 16) / 255;
+        const b = parseInt(color.substr(5, 2), 16) / 255;
+        const max = Math.max(r, g, b), min = Math.min(r, g, b);
+        let h, s, l = (max + min) / 2;
+
+        if (max === min) {
+            h = s = 0;
+        } else {
+            const d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            switch (max) {
+                case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                case g: h = (b - r) / d + 2; break;
+                case b: h = (r - g) / d + 4; break;
+            }
+            h /= 6;
+        }
+        h = Math.round(h * 360);
+        s = Math.round(s * 100);
+        l = Math.round(l * 100);
+        return `hsl(${h}, ${s}%, ${l}%)`;
+    }
+    return color; // Default to HEX
+}
+</script>
+<!-- JSON Formatter Modal -->
+<div id="json-formatter-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">JSON Formatter</h3>
+                <button onclick="closeModal('json-formatter-modal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                        <div id="json-formatter-upload-area" class="cursor-pointer">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/dxjqoygy.json"
+                                trigger="hover"
+                                colors="primary:#f59e0b,secondary:#2563eb"
+                                style="width:100px;height:100px">
+                            </lord-icon>
+                            <p class="text-gray-600 mt-4">Paste your JSON here or click to upload a file</p>
+                            <p class="text-sm text-gray-500 mt-2">Supports .json (Max 1MB)</p>
+                        </div>
+                        <textarea id="json-input" class="w-full h-40 border border-gray-300 rounded-lg p-3 mt-4 focus:ring-primary focus:border-primary hidden" placeholder="Paste your JSON here..."></textarea>
+                        <input type="file" id="json-file-input" class="hidden" accept=".json">
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-medium mb-3">Formatting Options</h4>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Indentation</label>
+                            <select id="json-indent" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                <option value="2">2 Spaces</option>
+                                <option value="4">4 Spaces</option>
+                                <option value="tab">Tab</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="format-json-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Format JSON
+                    </button>
+                </div>
+
+                <div>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium mb-3">Preview</h4>
+                        <div id="json-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64 overflow-auto">
+                            <p class="text-gray-500 text-center">Your formatted JSON will appear here</p>
+                        </div>
+                    </div>
+
+                    <div id="json-result" class="hidden">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-medium">Result</h4>
+                            <div class="text-sm text-gray-600">
+                                <span id="json-size"></span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="download-json" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </button>
+                            <button id="copy-json" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    // JSON Formatter
+const jsonFormatterUploadArea = document.getElementById('json-formatter-upload-area');
+const jsonFileInput = document.getElementById('json-file-input');
+const jsonInput = document.getElementById('json-input');
+const formatJsonButton = document.getElementById('format-json-button');
+const jsonPreview = document.getElementById('json-preview');
+const jsonResult = document.getElementById('json-result');
+const jsonSize = document.getElementById('json-size');
+const downloadJson = document.getElementById('download-json');
+const copyJson = document.getElementById('copy-json');
+const jsonIndent = document.getElementById('json-indent');
+
+let originalJson = '';
+
+jsonFormatterUploadArea.addEventListener('click', () => {
+    jsonInput.classList.remove('hidden');
+    jsonInput.focus();
+    jsonFileInput.click();
+});
+
+jsonFileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+        const file = e.target.files[0];
+        if (!file.name.match(/\.json$/)) {
+            alert('Please select a valid JSON file (.json)');
+            return;
+        }
+        if (file.size > 1 * 1024 * 1024) {
+            alert('File size should be less than 1MB');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalJson = e.target.result;
+            jsonInput.value = originalJson;
+            formatJsonButton.disabled = !isValidJson(originalJson);
+            updateJsonPreview(originalJson);
+        };
+        reader.readAsText(file);
+    }
+});
+
+jsonInput.addEventListener('input', (e) => {
+    originalJson = e.target.value;
+    formatJsonButton.disabled = !isValidJson(originalJson);
+    updateJsonPreview(originalJson);
+});
+
+formatJsonButton.addEventListener('click', () => {
+    if (!originalJson || !isValidJson(originalJson)) return;
+
+    const indent = jsonIndent.value === 'tab' ? '\t' : ' '.repeat(parseInt(jsonIndent.value));
+    const formattedJson = JSON.stringify(JSON.parse(originalJson), null, indent);
+
+    jsonResult.classList.remove('hidden');
+    jsonSize.textContent = `${formatFileSize(new Blob([formattedJson]).size)}`;
+    updateJsonPreview(formattedJson);
+
+    downloadJson.onclick = () => {
+        const blob = new Blob([formattedJson], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'formatted-json.json';
+        a.click();
+    };
+
+    copyJson.onclick = () => {
+        navigator.clipboard.writeText(formattedJson).then(() => {
+            alert('JSON copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy JSON: ', err);
+            alert('Failed to copy JSON to clipboard');
+        });
+    };
+});
+
+function updateJsonPreview(json) {
+    jsonPreview.innerHTML = '';
+    const pre = document.createElement('pre');
+    pre.style.whiteSpace = 'pre-wrap';
+    pre.textContent = json;
+    jsonPreview.appendChild(pre);
+}
+
+function isValidJson(jsonString) {
+    try {
+        JSON.parse(jsonString);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+</script>
+<!-- Base64 Converter Modal -->
+<div id="base64-converter-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Base64 Converter</h3>
+                <button onclick="closeModal('base64-converter-modal')" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-6 text-center mb-6">
+                        <div id="base64-upload-area" class="cursor-pointer">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/oclwxpmm.json"
+                                trigger="hover"
+                                colors="primary:#6366f1,secondary:#2563eb"
+                                style="width:100px;height:100px">
+                            </lord-icon>
+                            <p class="text-gray-600 mt-4">Paste text or click to upload a file</p>
+                            <p class="text-sm text-gray-500 mt-2">Supports text, images (Max 10MB)</p>
+                        </div>
+                        <textarea id="base64-input" class="w-full h-40 border border-gray-300 rounded-lg p-3 mt-4 focus:ring-primary focus:border-primary hidden" placeholder="Paste text or Base64 string here..."></textarea>
+                        <input type="file" id="base64-file-input" class="hidden" accept="text/*,image/*">
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                        <h4 class="font-medium mb-3">Conversion Options</h4>
+                        <div class="mb-3">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mode</label>
+                            <select id="base64-mode" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-primary focus:border-primary">
+                                <option value="encode">Encode to Base64</option>
+                                <option value="decode">Decode from Base64</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="convert-base64-button" class="w-full bg-primary hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Convert
+                    </button>
+                </div>
+
+                <div>
+                    <div class="bg-gray-50 p-4 rounded-lg mb-4">
+                        <h4 class="font-medium mb-3">Preview</h4>
+                        <div id="base64-preview" class="flex items-center justify-center bg-white border border-gray-200 rounded-lg p-4 min-h-64 overflow-auto">
+                            <p class="text-gray-500 text-center">Your converted result will appear here</p>
+                        </div>
+                    </div>
+
+                    <div id="base64-result" class="hidden">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-medium">Result</h4>
+                            <div class="text-sm text-gray-600">
+                                <span id="base64-size"></span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button id="download-base64" class="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-download mr-2"></i> Download
+                            </button>
+                            <button id="copy-base64" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-copy mr-2"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" charset="utf-8">
+    // Base64 Converter
+const base64UploadArea = document.getElementById('base64-upload-area');
+const base64FileInput = document.getElementById('base64-file-input');
+const base64Input = document.getElementById('base64-input');
+const convertBase64Button = document.getElementById('convert-base64-button');
+const base64Preview = document.getElementById('base64-preview');
+const base64Result = document.getElementById('base64-result');
+const base64Size = document.getElementById('base64-size');
+const downloadBase64 = document.getElementById('download-base64');
+const copyBase64 = document.getElementById('copy-base64');
+const base64Mode = document.getElementById('base64-mode');
+
+let originalContent = '';
+
+base64UploadArea.addEventListener('click', () => {
+    base64Input.classList.remove('hidden');
+    base64Input.focus();
+    base64FileInput.click();
+});
+
+base64FileInput.addEventListener('change', (e) => {
+    if (e.target.files.length) {
+        const file = e.target.files[0];
+        if (file.size > 10 * 1024 * 1024) {
+            alert('File size should be less than 10MB');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalContent = e.target.result;
+            base64Input.value = originalContent;
+            convertBase64Button.disabled = !originalContent.trim();
+            updateBase64Preview(originalContent);
+        };
+        reader.readAsDataURL(file); // For files (images), use Data URL; for text, use readAsText if needed
+    }
+});
+
+base64Input.addEventListener('input', (e) => {
+    originalContent = e.target.value;
+    convertBase64Button.disabled = !originalContent.trim();
+    updateBase64Preview(originalContent);
+});
+
+convertBase64Button.addEventListener('click', () => {
+    if (!originalContent) return;
+    
+    const mode = base64Mode.value;
+    let result;
+    
+    if (mode === 'encode') {
+        // Encode to Base64
+        const byteCharacters = new TextEncoder().encode(originalContent);
+        result = btoa(String.fromCharCode(...byteCharacters));
+    } else {
+        // Decode from Base64
+        try {
+            const binaryString = atob(originalContent);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            result = new TextDecoder().decode(bytes);
+        } catch (e) {
+            alert('Invalid Base64 string');
+            return;
+        }
+    }
+    
+    base64Result.classList.remove('hidden');
+    base64Size.textContent = `${formatFileSize(new Blob([result]).size)}`;
+    updateBase64Preview(result);
+    
+    downloadBase64.onclick = () => {
+        const blob = new Blob([result], { type: base64Mode === 'encode' ? 'text/plain' : 'application/octet-stream' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `base64-${mode === 'encode' ? 'encoded' : 'decoded'}.txt`;
+        a.click();
+    };
+    
+    copyBase64.onclick = () => {
+        navigator.clipboard.writeText(result).then(() => {
+            alert('Base64 result copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy Base64: ', err);
+            alert('Failed to copy Base64 to clipboard');
+        });
+    };
+});
+
+function updateBase64Preview(content) {
+    base64Preview.innerHTML = '';
+    const pre = document.createElement('pre');
+    pre.style.whiteSpace = 'pre-wrap';
+    pre.textContent = content;
+    base64Preview.appendChild(pre);
+}
+</script>
+</body>
+</html>
