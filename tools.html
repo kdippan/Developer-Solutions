@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tools | Developer Solutions</title>
+    <meta name="description" content="Complete collection of developer tools to streamline your workflow">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://iili.io/Fr4AkZu.png" type="image/png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f172a',
+                            800: '#1e293b',
+                            700: '#334155',
+                            600: '#475569',
+                            500: '#64748b',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .tool-card:hover .tool-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #0ea5e9, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .category-pill {
+            transition: all 0.2s ease;
+        }
+        
+        .category-pill:hover, .category-pill.active {
+            background-color: #0ea5e9;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="/" class="flex items-center">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" 
+                         class="h-10 w-10 transition-transform duration-500 hover:rotate-12">
+                    <span class="ml-2 text-xl font-bold gradient-text">Developer Solutions</span>
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-slate-600 hover:text-primary-600 font-medium transition">Home</a>
+                <a href="/tools" class="text-primary-600 font-medium transition">Tools</a>
+                <a href="#" class="text-slate-600 hover:text-primary-600 font-medium transition">Docs</a>
+                <a href="#" class="text-slate-600 hover:text-primary-600 font-medium transition">Blog</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <button class="md:hidden text-slate-600 hover:text-primary-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <a href="https://github.com/kdippan/Developer-Solutions" target="_blank" 
+                   class="hidden md:flex items-center space-x-1 text-slate-600 hover:text-primary-600">
+                    <i class="fab fa-github text-xl"></i>
+                    <span class="text-sm font-medium">GitHub</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tools Header -->
+    <section class="bg-white py-12 border-b border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4">
+                    <span class="gradient-text">Developer Tools</span> Collection
+                </h1>
+                <p class="text-lg text-slate-600 mb-8">
+                    Browse our complete collection of tools designed to make development easier
+                </p>
+                
+                <div class="relative max-w-2xl mx-auto mb-8">
+                    <input type="text" id="search-tools" placeholder="Search tools..." 
+                           class="w-full px-5 py-3 rounded-lg border border-slate-300 focus:border-primary-400 focus:outline-none search-input transition shadow-sm">
+                    <button class="absolute right-3 top-1/2 -translate-y-1/2 bg-primary-500 text-white p-2 rounded-md hover:bg-primary-600 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-2 mb-6">
+                    <button class="category-pill active px-4 py-1 bg-primary-100 text-primary-800 rounded-full text-sm font-medium">
+                        All Tools
+                    </button>
+                    <button class="category-pill px-4 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
+                        CSS
+                    </button>
+                    <button class="category-pill px-4 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
+                        Generators
+                    </button>
+                    <button class="category-pill px-4 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
+                        Converters
+                    </button>
+                    <button class="category-pill px-4 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
+                        Code
+                    </button>
+                    <button class="category-pill px-4 py-1 bg-slate-100 text-slate-800 rounded-full text-sm font-medium">
+                        Design
+                    </button>
+                </div>
+                
+                <div class="text-sm text-slate-500">
+                    <span id="tool-count">32</span> tools available
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Grid -->
+    <section class="py-12 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- 3D CSS Transform Playground -->
+                <a href="/3D-CSS-Transform-Playground" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/wfadduyp.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">3D CSS Transform Playground</h3>
+                        <p class="text-slate-600 text-sm mb-3">Experiment with 3D CSS transforms in real-time</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">3D</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Playground</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Animation Maker -->
+                <a href="/Animation-Maker-using-Tanwind" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ivhjpjsw.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Animation Maker (Tailwind)</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create beautiful animations using Tailwind CSS</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Tailwind</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Animation</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Button Collections -->
+                <a href="/Button-Collections" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <i class="fas fa-square text-primary-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Button Collections</h3>
+                        <p class="text-slate-600 text-sm mb-3">Beautiful, ready-to-use button styles</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">UI</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Components</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- CSS Animation Generator -->
+                <a href="/CSS-Animation-Generator" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/abwrkdvl.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">CSS Animation Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create custom CSS animations visually</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Animation</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- CSV-JSON Converter -->
+                <a href="/CSV-JSON-Converter" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/hbvgknxo.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">CSV-JSON Converter</h3>
+                        <p class="text-slate-600 text-sm mb-3">Convert between CSV and JSON formats</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Converter</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Data</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">JSON</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Glassmorphism Generator -->
+                <a href="/Glassmorphism-CSS-Generator" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/elkhjhci.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Glassmorphism Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create frosted glass effects with CSS</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- HTML Compiler -->
+                <a href="/HTML-Compiler" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <i class="fab fa-html5 text-primary-500 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">HTML Compiler</h3>
+                        <p class="text-slate-600 text-sm mb-3">Write and test HTML code in real-time</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Code</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">HTML</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Playground</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Lorem Ipsum Generator -->
+                <a href="/LOREM-IPSUM-GENERATOR" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/iiixgoqp.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Lorem Ipsum Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Generate placeholder text for your projects</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Text</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Content</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- QR & Barcode Generator -->
+                <a href="/QR-BarCode-Generator" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ezvqznkx.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">QR & Barcode Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create QR codes and barcodes instantly</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">QR</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Barcode</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- SVG Path Animator -->
+                <a href="/SVG-Path-Animator" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/nobciafz.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">SVG Path Animator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Animate SVG paths with custom parameters</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">SVG</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Animation</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Base64 Encoder -->
+                <a href="/base-64-encoder" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/wkvacbiw.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Base64 Encoder</h3>
+                        <p class="text-slate-600 text-sm mb-3">Encode and decode Base64 strings</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Converter</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Encoding</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Data</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Box Shadow Generator -->
+                <a href="/box-shadow-generator" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/qqnbdlul.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Box Shadow Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create custom CSS box shadows visually</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Color Picker -->
+                <a href="/colour-picker" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/msoeawqm.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Color Picker</h3>
+                        <p class="text-slate-600 text-sm mb-3">Advanced color selection and conversion</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Color</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Picker</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- CSS Gradient Generator -->
+                <a href="/css-gradient-generator-v1" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/nkmsrxys.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">CSS Gradient Generator</h3>
+                        <p class="text-slate-600 text-sm mb-3">Create beautiful CSS gradients</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">CSS</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Generator</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Currency Converter -->
+                <a href="/currency-convertor" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/qpkuqjrs.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Currency Converter</h3>
+                        <p class="text-slate-600 text-sm mb-3">Convert between world currencies</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Converter</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Finance</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Currency</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Image to Base64 -->
+                <a href="/image-base64" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/medpmcfr.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Image to Base64</h3>
+                        <p class="text-slate-600 text-sm mb-3">Convert images to Base64 encoding</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Converter</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Image</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Encoding</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Image to SVG Converter -->
+                <a href="/image-to-SVG-Converter" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/ajfxxpnr.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Image to SVG Converter</h3>
+                        <p class="text-slate-600 text-sm mb-3">Convert raster images to SVG format</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Converter</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Image</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">SVG</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Whiteboard Tools -->
+                <a href="/whiteboard-tools" class="tool-card bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition group">
+                    <div class="p-5">
+                        <div class="h-16 w-16 bg-primary-100 rounded-lg flex items-center justify-center mb-4 transition-all duration-300 tool-icon">
+                            <lord-icon
+                                src="https://cdn.lordicon.com/oclwxpmm.json"
+                                trigger="hover"
+                                colors="primary:#0ea5e9"
+                                style="width:40px;height:40px">
+                            </lord-icon>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2 group-hover:text-primary-600 transition">Whiteboard Tools</h3>
+                        <p class="text-slate-600 text-sm mb-3">Collaborative whiteboard for developers</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Collaboration</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Design</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-700 rounded text-xs">Whiteboard</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="px-6 py-3 bg-white text-slate-800 font-medium rounded-lg border border-slate-300 hover:bg-slate-50 transition shadow-sm">
+                    <i class="fas fa-sync-alt mr-2"></i> Load More Tools
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-8 w-8">
+                        <span class="ml-2 text-xl font-bold text-white">Developer Solutions</span>
+                    </div>
+                    <p class="mb-4">
+                        A collection of powerful tools designed to make developers' lives easier.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/kdippan/Developer-Solutions" target="_blank" class="text-slate-400 hover:text-white transition">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/tools" class="hover:text-white transition">All Tools</a></li>
+                        <li><a href="#" class="hover:text-white transition">Documentation</a></li>
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">API</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition">Contribute</a></li>
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-10 pt-6 text-sm text-center">
+                <p>&copy; 2023 Developer Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-primary-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Mobile menu toggle (placeholder - implement as needed)
+        document.querySelector('.md\\:hidden').addEventListener('click', () => {
+            alert('Mobile menu would open here');
+        });
+        
+        // Category filter
+        const categoryPills = document.querySelectorAll('.category-pill');
+        categoryPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                categoryPills.forEach(p => p.classList.remove('active', 'bg-primary-100', 'text-primary-800'));
+                pill.classList.add('active', 'bg-primary-100', 'text-primary-800');
+                // Implement actual filtering here
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('search-tools');
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            // Implement actual search filtering here
+        });
+        
+        // Update tool count
+        const toolCards = document.querySelectorAll('.tool-card');
+        document.getElementById('tool-count').textContent = toolCards.length;
+        
+        // Animate elements when they come into view
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.tool-card');
+            
+            elements.forEach((element, index) => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.transitionDelay = `${index * 0.05}s`;
+                    element.classList.add('animate-fadeInUp');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
