@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions | Box Shadow Generator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f43f5e;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .logo {
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+        }
+        
+        .preview-box {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .shadow-layer {
+            transition: all 0.2s ease;
+        }
+        
+        .shadow-layer:hover {
+            transform: translateY(-2px);
+        }
+        
+        .shadow-layer.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        .toast {
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        
+        .tab-button {
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="#" class="flex items-center">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo h-10 w-auto">
+                    <span class="ml-2 text-xl font-bold text-indigo-600">Developer Solutions</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Tools</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Docs</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Community</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <button class="hidden md:flex items-center space-x-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/wloilxuq.json"
+                        trigger="hover"
+                        colors="primary:#ffffff"
+                        style="width:20px;height:20px">
+                    </lord-icon>
+                    <span>Login</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <!-- Tool Header -->
+            <div class="bg-gray-50 px-6 py-4 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Box Shadow Generator</h2>
+                <p class="text-sm text-gray-600 mt-1">Create beautiful CSS box shadows with this visual tool</p>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="flex border-b">
+                <button data-tab="generator" class="tab-button active px-6 py-3 text-gray-600">Generator</button>
+                <button data-tab="css-output" class="tab-button px-6 py-3 text-gray-600">CSS Code</button>
+                <button data-tab="presets" class="tab-button px-6 py-3 text-gray-600">Presets</button>
+            </div>
+            
+            <!-- Generator Content -->
+            <div class="p-6">
+                <!-- Generator Tab -->
+                <div id="generator-tab" class="space-y-6">
+                    <!-- Preview Area -->
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <!-- Preview Box -->
+                        <div class="flex-1">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">Preview</label>
+                                <div class="flex items-center space-x-2">
+                                    <label class="text-sm text-gray-600">Background:</label>
+                                    <input type="color" id="previewBgColor" value="#ffffff" class="h-6 w-6 cursor-pointer">
+                                </div>
+                            </div>
+                            <div class="preview-box h-64 rounded-lg bg-white flex items-center justify-center" id="previewBox">
+                                <span class="text-gray-400">Your shadow will appear here</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Layers List -->
+                        <div class="w-full md:w-64">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">Shadow Layers</label>
+                                <button id="addLayerBtn" class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                                    <i class="fas fa-plus mr-1"></i> Add Layer
+                                </button>
+                            </div>
+                            <div class="space-y-2" id="layersList">
+                                <!-- Layers will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Shadow Controls -->
+                    <div id="shadowControls" class="space-y-6">
+                        <!-- Controls will be added here dynamically -->
+                        <div class="text-center text-gray-400 py-4">
+                            Select a shadow layer to edit
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CSS Output Tab -->
+                <div id="css-output-tab" class="hidden space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-800">Generated CSS</h3>
+                        <div class="flex space-x-2">
+                            <button id="copyCssBtn" class="flex items-center space-x-1 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition">
+                                <i class="far fa-copy"></i>
+                                <span>Copy</span>
+                            </button>
+                            <button id="copyAllBtn" class="flex items-center space-x-1 bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300 transition">
+                                <i class="far fa-copy"></i>
+                                <span>Copy All</span>
+                            </button>
+                        </div>
+                    </div>
+                    <pre id="cssOutput" class="code-font bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm"></pre>
+                    <div id="fullCssOutput" class="hidden">
+                        <h4 class="text-md font-medium text-gray-800 mt-4">Complete CSS</h4>
+                        <pre class="code-font bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm"></pre>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mt-4">How to use</h3>
+                        <p class="text-sm text-gray-600 mt-1">Add the CSS code above to your stylesheet. For multiple shadows, separate them with commas.</p>
+                        <p class="text-sm text-gray-600">Example: <code class="bg-gray-100 px-1 rounded">box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 4px 8px rgba(0,0,0,0.1);</code></p>
+                    </div>
+                </div>
+                
+                <!-- Presets Tab -->
+                <div id="presets-tab" class="hidden">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Shadow Presets</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Presets will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-8 w-auto">
+                    <span class="text-lg font-semibold text-gray-700">Developer Solutions</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4 text-center md:text-left text-sm text-gray-500">
+                &copy; 2023 Developer Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg hidden">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+            <span id="toast-message">CSS copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const previewBox = document.getElementById('previewBox');
+            const previewBgColor = document.getElementById('previewBgColor');
+            const layersList = document.getElementById('layersList');
+            const shadowControls = document.getElementById('shadowControls');
+            const cssOutput = document.getElementById('cssOutput');
+            const fullCssOutput = document.getElementById('fullCssOutput');
+            const copyCssBtn = document.getElementById('copyCssBtn');
+            const copyAllBtn = document.getElementById('copyAllBtn');
+            const addLayerBtn = document.getElementById('addLayerBtn');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Tab elements
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabs = {
+                generator: document.getElementById('generator-tab'),
+                cssOutput: document.getElementById('css-output-tab'),
+                presets: document.getElementById('presets-tab')
+            };
+            
+            // Current shadow state
+            let shadows = [];
+            let activeLayerIndex = -1;
+            
+            // Initialize the generator
+            function initShadowGenerator() {
+                // Set up event listeners
+                previewBgColor.addEventListener('input', function() {
+                    previewBox.style.backgroundColor = this.value;
+                });
+                
+                addLayerBtn.addEventListener('click', addShadowLayer);
+                copyCssBtn.addEventListener('click', copyCssToClipboard);
+                copyAllBtn.addEventListener('click', copyAllCssToClipboard);
+                
+                // Tab switching
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const tab = this.getAttribute('data-tab');
+                        
+                        // Update active tab
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show corresponding tab
+                        Object.values(tabs).forEach(tab => tab.classList.add('hidden'));
+                        tabs[tab].classList.remove('hidden');
+                    });
+                });
+                
+                // Load presets
+                loadPresets();
+                
+                // Add initial layer if empty
+                if (shadows.length === 0) {
+                    addShadowLayer();
+                }
+            }
+            
+            // Add a new shadow layer
+            function addShadowLayer() {
+                const newShadow = {
+                    id: Date.now(),
+                    hOffset: 0,
+                    vOffset: 5,
+                    blur: 10,
+                    spread: 0,
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    inset: false
+                };
+                
+                shadows.push(newShadow);
+                renderLayersList();
+                renderShadowControls(shadows.length - 1);
+                updatePreview();
+            }
+            
+            // Remove a shadow layer
+            function removeShadowLayer(index) {
+                if (shadows.length > 1) {
+                    shadows.splice(index, 1);
+                    renderLayersList();
+                    
+                    // If we removed the active layer, select the previous one
+                    if (activeLayerIndex >= index) {
+                        const newIndex = Math.min(index, shadows.length - 1);
+                        renderShadowControls(newIndex);
+                    }
+                    
+                    updatePreview();
+                } else {
+                    showToast('You need at least one shadow layer', true);
+                }
+            }
+            
+            // Render the layers list
+            function renderLayersList() {
+                layersList.innerHTML = '';
+                
+                shadows.forEach((shadow, index) => {
+                    const layerElement = document.createElement('div');
+                    layerElement.className = `shadow-layer p-3 rounded-lg border bg-white cursor-pointer flex items-center justify-between ${activeLayerIndex === index ? 'active' : ''}`;
+                    layerElement.innerHTML = `
+                        <div class="flex items-center">
+                            <div class="w-4 h-4 rounded-full mr-2" style="background: ${shadow.color}"></div>
+                            <span class="text-sm">Layer ${index + 1}</span>
+                        </div>
+                        <button class="text-red-500 hover:text-red-700 remove-layer">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    layerElement.addEventListener('click', () => {
+                        renderShadowControls(index);
+                    });
+                    
+                    layerElement.querySelector('.remove-layer').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeShadowLayer(index);
+                    });
+                    
+                    layersList.appendChild(layerElement);
+                });
+            }
+            
+            // Render the controls for a specific shadow layer
+            function renderShadowControls(index) {
+                if (index < 0 || index >= shadows.length) return;
+                
+                activeLayerIndex = index;
+                const shadow = shadows[index];
+                
+                shadowControls.innerHTML = `
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Horizontal Offset</label>
+                            <div class="flex items-center">
+                                <input type="range" min="-50" max="50" value="${shadow.hOffset}" class="w-full mr-2" id="hOffset">
+                                <input type="number" min="-50" max="50" value="${shadow.hOffset}" class="w-16 text-sm border rounded px-2 py-1" id="hOffsetInput">px
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Vertical Offset</label>
+                            <div class="flex items-center">
+                                <input type="range" min="-50" max="50" value="${shadow.vOffset}" class="w-full mr-2" id="vOffset">
+                                <input type="number" min="-50" max="50" value="${shadow.vOffset}" class="w-16 text-sm border rounded px-2 py-1" id="vOffsetInput">px
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Blur Radius</label>
+                            <div class="flex items-center">
+                                <input type="range" min="0" max="50" value="${shadow.blur}" class="w-full mr-2" id="blur">
+                                <input type="number" min="0" max="50" value="${shadow.blur}" class="w-16 text-sm border rounded px-2 py-1" id="blurInput">px
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Spread</label>
+                            <div class="flex items-center">
+                                <input type="range" min="-20" max="20" value="${shadow.spread}" class="w-full mr-2" id="spread">
+                                <input type="number" min="-20" max="20" value="${shadow.spread}" class="w-16 text-sm border rounded px-2 py-1" id="spreadInput">px
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                            <div class="flex items-center">
+                                <input type="color" id="colorPicker" value="${hexToRgb(shadow.color)}" class="h-10 w-10 mr-2 cursor-pointer">
+                                <input type="text" id="colorInput" value="${shadow.color}" class="flex-1 text-sm border rounded px-2 py-1">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Options</label>
+                            <div class="flex items-center">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="insetCheckbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" ${shadow.inset ? 'checked' : ''}>
+                                    <span class="ml-2">Inset</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners to controls
+                const hOffsetSlider = document.getElementById('hOffset');
+                const hOffsetInput = document.getElementById('hOffsetInput');
+                const vOffsetSlider = document.getElementById('vOffset');
+                const vOffsetInput = document.getElementById('vOffsetInput');
+                const blurSlider = document.getElementById('blur');
+                const blurInput = document.getElementById('blurInput');
+                const spreadSlider = document.getElementById('spread');
+                const spreadInput = document.getElementById('spreadInput');
+                const colorPicker = document.getElementById('colorPicker');
+                const colorInput = document.getElementById('colorInput');
+                const insetCheckbox = document.getElementById('insetCheckbox');
+                
+                const updateShadow = () => {
+                    shadows[index] = {
+                        ...shadows[index],
+                        hOffset: parseInt(hOffsetInput.value),
+                        vOffset: parseInt(vOffsetInput.value),
+                        blur: parseInt(blurInput.value),
+                        spread: parseInt(spreadInput.value),
+                        color: colorInput.value,
+                        inset: insetCheckbox.checked
+                    };
+                    
+                    updatePreview();
+                    renderLayersList();
+                };
+                
+                hOffsetSlider.addEventListener('input', () => {
+                    hOffsetInput.value = hOffsetSlider.value;
+                    updateShadow();
+                });
+                
+                hOffsetInput.addEventListener('input', () => {
+                    hOffsetSlider.value = hOffsetInput.value;
+                    updateShadow();
+                });
+                
+                vOffsetSlider.addEventListener('input', () => {
+                    vOffsetInput.value = vOffsetSlider.value;
+                    updateShadow();
+                });
+                
+                vOffsetInput.addEventListener('input', () => {
+                    vOffsetSlider.value = vOffsetInput.value;
+                    updateShadow();
+                });
+                
+                blurSlider.addEventListener('input', () => {
+                    blurInput.value = blurSlider.value;
+                    updateShadow();
+                });
+                
+                blurInput.addEventListener('input', () => {
+                    blurSlider.value = blurInput.value;
+                    updateShadow();
+                });
+                
+                spreadSlider.addEventListener('input', () => {
+                    spreadInput.value = spreadSlider.value;
+                    updateShadow();
+                });
+                
+                spreadInput.addEventListener('input', () => {
+                    spreadSlider.value = spreadInput.value;
+                    updateShadow();
+                });
+                
+                colorPicker.addEventListener('input', () => {
+                    const rgba = hexToRgba(colorPicker.value, getAlphaFromRgba(colorInput.value));
+                    colorInput.value = rgba;
+                    updateShadow();
+                });
+                
+                colorInput.addEventListener('input', () => {
+                    if (colorInput.value.match(/^#([0-9a-f]{3}){1,2}$/i)) {
+                        colorPicker.value = colorInput.value;
+                    }
+                    updateShadow();
+                });
+                
+                insetCheckbox.addEventListener('change', updateShadow);
+            }
+            
+            // Update the preview box with current shadows
+            function updatePreview() {
+                const shadowString = shadows.map(shadow => {
+                    return `${shadow.inset ? 'inset ' : ''}${shadow.hOffset}px ${shadow.vOffset}px ${shadow.blur}px ${shadow.spread}px ${shadow.color}`;
+                }).join(', ');
+                
+                previewBox.style.boxShadow = shadowString;
+                updateCssOutput();
+            }
+            
+            // Update the CSS output
+            function updateCssOutput() {
+                if (activeLayerIndex >= 0 && activeLayerIndex < shadows.length) {
+                    const shadow = shadows[activeLayerIndex];
+                    const shadowString = `${shadow.inset ? 'inset ' : ''}${shadow.hOffset}px ${shadow.vOffset}px ${shadow.blur}px ${shadow.spread}px ${shadow.color}`;
+                    cssOutput.textContent = `box-shadow: ${shadowString};`;
+                }
+                
+                // Update full CSS output
+                const fullShadowString = shadows.map(shadow => {
+                    return `${shadow.inset ? 'inset ' : ''}${shadow.hOffset}px ${shadow.vOffset}px ${shadow.blur}px ${shadow.spread}px ${shadow.color}`;
+                }).join(', ');
+                
+                const fullCssPre = fullCssOutput.querySelector('pre');
+                fullCssPre.textContent = `box-shadow: ${fullShadowString};`;
+                
+                if (shadows.length > 1) {
+                    fullCssOutput.classList.remove('hidden');
+                } else {
+                    fullCssOutput.classList.add('hidden');
+                }
+            }
+            
+            // Load preset shadows
+            function loadPresets() {
+                const presetsContainer = document.querySelector('#presets-tab .grid');
+                const shadowPresets = [
+                    {
+                        name: 'Soft Elevation',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 2,
+                            blur: 4,
+                            spread: 0,
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            inset: false
+                        }]
+                    },
+                    {
+                        name: 'Medium Depth',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 4,
+                            blur: 6,
+                            spread: -2,
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            inset: false
+                        }]
+                    },
+                    {
+                        name: 'Floating Card',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 8,
+                            blur: 15,
+                            spread: 0,
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            inset: false
+                        }]
+                    },
+                    {
+                        name: 'Neon Glow',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 0,
+                            blur: 20,
+                            spread: 0,
+                            color: 'rgba(100, 200, 255, 0.7)',
+                            inset: false
+                        }]
+                    },
+                    {
+                        name: 'Inset Control',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 2,
+                            blur: 4,
+                            spread: 0,
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            inset: true
+                        }]
+                    },
+                    {
+                        name: 'Layered Depth',
+                        shadows: [
+                            {
+                                hOffset: 0,
+                                vOffset: 1,
+                                blur: 2,
+                                spread: 0,
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                inset: false
+                            },
+                            {
+                                hOffset: 0,
+                                vOffset: 4,
+                                blur: 6,
+                                spread: 0,
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                inset: false
+                            },
+                            {
+                                hOffset: 0,
+                                vOffset: 10,
+                                blur: 15,
+                                spread: 0,
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                inset: false
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Colorful Layers',
+                        shadows: [
+                            {
+                                hOffset: 5,
+                                vOffset: 5,
+                                blur: 0,
+                                spread: 0,
+                                color: 'rgba(255, 0, 0, 0.5)',
+                                inset: false
+                            },
+                            {
+                                hOffset: -5,
+                                vOffset: -5,
+                                blur: 0,
+                                spread: 0,
+                                color: 'rgba(0, 0, 255, 0.5)',
+                                inset: false
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Sharp Border',
+                        shadows: [{
+                            hOffset: 0,
+                            vOffset: 0,
+                            blur: 0,
+                            spread: 2,
+                            color: 'rgba(0, 0, 0, 0.2)',
+                            inset: false
+                        }]
+                    }
+                ];
+                
+                shadowPresets.forEach(preset => {
+                    const presetElement = document.createElement('div');
+                    presetElement.className = 'cursor-pointer rounded-lg overflow-hidden shadow-md hover:shadow-lg transition';
+                    
+                    // Create a preview box with the preset shadow
+                    const shadowString = preset.shadows.map(shadow => {
+                        return `${shadow.inset ? 'inset ' : ''}${shadow.hOffset}px ${shadow.vOffset}px ${shadow.blur}px ${shadow.spread}px ${shadow.color}`;
+                    }).join(', ');
+                    
+                    presetElement.innerHTML = `
+                        <div class="h-32 bg-white flex items-center justify-center" style="box-shadow: ${shadowString}">
+                            <span class="text-gray-400 text-sm">${preset.name}</span>
+                        </div>
+                        <div class="p-3 bg-white">
+                            <h4 class="font-medium text-gray-800">${preset.name}</h4>
+                            <p class="text-xs text-gray-500 mt-1">${preset.shadows.length} layer${preset.shadows.length > 1 ? 's' : ''}</p>
+                        </div>
+                    `;
+                    
+                    presetElement.addEventListener('click', function() {
+                        // Apply the preset
+                        shadows = JSON.parse(JSON.stringify(preset.shadows));
+                        
+                        // Update UI
+                        renderLayersList();
+                        if (shadows.length > 0) {
+                            renderShadowControls(0);
+                        }
+                        updatePreview();
+                        
+                        // Switch to generator tab
+                        document.querySelector('[data-tab="generator"]').click();
+                        
+                        showToast(`"${preset.name}" preset applied`);
+                    });
+                    
+                    presetsContainer.appendChild(presetElement);
+                });
+            }
+            
+            // Copy CSS to clipboard
+            function copyCssToClipboard() {
+                navigator.clipboard.writeText(cssOutput.textContent)
+                    .then(() => {
+                        showToast('CSS copied to clipboard!');
+                    })
+                    .catch(err => {
+                        showToast('Failed to copy CSS', true);
+                        console.error('Failed to copy CSS: ', err);
+                    });
+            }
+            
+            // Copy all CSS to clipboard
+            function copyAllCssToClipboard() {
+                const fullCssPre = fullCssOutput.querySelector('pre');
+                navigator.clipboard.writeText(fullCssPre.textContent)
+                    .then(() => {
+                        showToast('All CSS copied to clipboard!');
+                    })
+                    .catch(err => {
+                        showToast('Failed to copy CSS', true);
+                        console.error('Failed to copy CSS: ', err);
+                    });
+            }
+            
+            // Show toast notification
+            function showToast(message, isError = false) {
+                toastMessage.textContent = message;
+                if (isError) {
+                    toast.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                    toast.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i><span>${message}</span>`;
+                } else {
+                    toast.className = 'fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                    toast.innerHTML = `<i class="fas fa-check-circle text-green-400 mr-2"></i><span>${message}</span>`;
+                }
+                
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+            
+            // Helper function to convert hex to rgba
+            function hexToRgba(hex, alpha = 1) {
+                const r = parseInt(hex.slice(1, 3), 16);
+                const g = parseInt(hex.slice(3, 5), 16);
+                const b = parseInt(hex.slice(5, 7), 16);
+                
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            
+            // Helper function to get alpha from rgba string
+            function getAlphaFromRgba(rgba) {
+                const match = rgba.match(/rgba?\([\d\s,]+([\d.]+)\)/);
+                return match ? parseFloat(match[1]) : 1;
+            }
+            
+            // Helper function to convert rgba to hex (ignores alpha)
+            function hexToRgb(hexOrRgba) {
+                if (hexOrRgba.startsWith('#')) {
+                    return hexOrRgba;
+                }
+                
+                const match = hexOrRgba.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+                if (match) {
+                    const r = parseInt(match[1]);
+                    const g = parseInt(match[2]);
+                    const b = parseInt(match[3]);
+                    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+                }
+                
+                return '#000000';
+            }
+            
+            // Initialize the generator
+            initShadowGenerator();
+        });
+    </script>
+    <script>
+      
+    </script>
+    
+</body>
+</html>

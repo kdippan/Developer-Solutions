@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Gradient Generator - Developer Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .gradient-preview {
+            transition: all 0.3s ease;
+        }
+
+        .color-picker::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        .color-picker::-webkit-color-swatch {
+            border: none;
+            border-radius: 8px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        .copied-toast {
+            animation: fadeInOut 2s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="w-12 h-12 object-contain hover:scale-110 transition-transform">
+                <div>
+                    <h1 class="text-2xl font-semibold text-blue-600">CSS Gradient Generator</h1>
+                    <p class="text-sm text-gray-500">Developer Solutions</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="text-sm text-gray-600">
+                    <div id="currentDateTime"></div>
+                    <div id="currentUser"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-slide-up">
+            <!-- Controls Section -->
+            <div class="space-y-6">
+                <!-- Gradient Type -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Gradient Type</h2>
+                    <div class="flex flex-wrap gap-3">
+                        <button class="gradient-type-btn active px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition" data-type="linear">
+                            <i class="fas fa-arrow-right mr-2"></i>Linear
+                        </button>
+                        <button class="gradient-type-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition" data-type="radial">
+                            <i class="fas fa-circle mr-2"></i>Radial
+                        </button>
+                        <button class="gradient-type-btn px-4 py-2 rounded-lg bg-gray-200 text-gray-700 hover:bg-gray-300 transition" data-type="conic">
+                            <i class="fas fa-circle-notch mr-2"></i>Conic
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Color Stops -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Color Stops</h2>
+                    <div id="colorStops" class="space-y-4">
+                        <div class="color-stop flex items-center space-x-4">
+                            <input type="color" class="color-picker w-12 h-12 rounded-lg cursor-pointer" value="#3B82F6">
+                            <input type="number" class="w-20 px-3 py-2 border rounded-lg" value="0" min="0" max="100">
+                            <span class="text-gray-500">%</span>
+                            <button class="delete-stop text-red-500 hover:text-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                        <div class="color-stop flex items-center space-x-4">
+                            <input type="color" class="color-picker w-12 h-12 rounded-lg cursor-pointer" value="#EF4444">
+                            <input type="number" class="w-20 px-3 py-2 border rounded-lg" value="100" min="0" max="100">
+                            <span class="text-gray-500">%</span>
+                            <button class="delete-stop text-red-500 hover:text-red-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button id="addColorStop" class="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition">
+                        <i class="fas fa-plus mr-2"></i>Add Color Stop
+                    </button>
+                </div>
+
+                <!-- Gradient Direction -->
+                <div id="directionControls" class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Direction</h2>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to top left">↖</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to top">↑</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to top right">↗</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to left">←</button>
+                        <button class="direction-btn p-2 rounded bg-blue-500 text-white" data-direction="to right">→</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to bottom left">↙</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to bottom">↓</button>
+                        <button class="direction-btn p-2 rounded bg-gray-200 hover:bg-gray-300" data-direction="to bottom right">↘</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview Section -->
+            <div class="space-y-6">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h2 class="text-lg font-semibold mb-4">Preview</h2>
+                    <div id="gradientPreview" class="gradient-preview w-full h-64 rounded-lg shadow-inner"></div>
+                </div>
+
+                <!-- Code Output -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold">CSS Code</h2>
+                        <button id="copyCode" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <pre id="cssCode" class="bg-gray-800 text-green-400 p-4 rounded-lg overflow-x-auto"></pre>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg hidden">
+        Copied to clipboard!
+    </div>
+
+    <script>
+        class GradientGenerator {
+            constructor() {
+                this.type = 'linear';
+                this.direction = 'to right';
+                this.initializeElements();
+                this.initializeEventListeners();
+                this.updateDateTime();
+                this.updateGradient();
+            }
+
+            initializeElements() {
+                this.preview = document.getElementById('gradientPreview');
+                this.codeOutput = document.getElementById('cssCode');
+                this.colorStopsContainer = document.getElementById('colorStops');
+                this.directionControls = document.getElementById('directionControls');
+                this.toast = document.getElementById('toast');
+                
+                // Initialize date time display
+                this.dateTimeDisplay = document.getElementById('currentDateTime');
+                this.userDisplay = document.getElementById('currentUser');
+                this.userDisplay.textContent = 'User: kdippan';
+            }
+
+            initializeEventListeners() {
+                // Gradient type buttons
+                document.querySelectorAll('.gradient-type-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.gradient-type-btn').forEach(b => {
+                            b.classList.remove('bg-blue-500', 'text-white');
+                            b.classList.add('bg-gray-200', 'text-gray-700');
+                        });
+                        btn.classList.remove('bg-gray-200', 'text-gray-700');
+                        btn.classList.add('bg-blue-500', 'text-white');
+                        this.type = btn.dataset.type;
+                        this.directionControls.style.display = this.type === 'linear' ? 'block' : 'none';
+                        this.updateGradient();
+                    });
+                });
+
+                // Direction buttons
+                document.querySelectorAll('.direction-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.direction-btn').forEach(b => {
+                            b.classList.remove('bg-blue-500', 'text-white');
+                            b.classList.add('bg-gray-200');
+                        });
+                        btn.classList.remove('bg-gray-200');
+                        btn.classList.add('bg-blue-500', 'text-white');
+                        this.direction = btn.dataset.direction;
+                        this.updateGradient();
+                    });
+                });
+
+                // Add color stop button
+                document.getElementById('addColorStop').addEventListener('click', () => {
+                    this.addColorStop();
+                });
+
+                // Copy code button
+                document.getElementById('copyCode').addEventListener('click', () => {
+                    this.copyToClipboard();
+                });
+
+                // Color stop changes
+                this.colorStopsContainer.addEventListener('input', () => this.updateGradient());
+                this.colorStopsContainer.addEventListener('click', (e) => {
+                    if (e.target.closest('.delete-stop')) {
+                        const stop = e.target.closest('.color-stop');
+                        if (this.colorStopsContainer.children.length > 2) {
+                            stop.remove();
+                            this.updateGradient();
+                        }
+                    }
+                });
+
+                // Update date time every second
+                setInterval(() => this.updateDateTime(), 1000);
+            }
+
+            updateDateTime() {
+                const now = new Date();
+                const formattedDate = now.toISOString().replace('T', ' ').slice(0, 19);
+                this.dateTimeDisplay.textContent = formattedDate;
+            }
+
+            addColorStop() {
+                const stop = document.createElement('div');
+                stop.className = 'color-stop flex items-center space-x-4';
+                stop.innerHTML = `
+                    <input type="color" class="color-picker w-12 h-12 rounded-lg cursor-pointer" value="#4F46E5">
+                    <input type="number" class="w-20 px-3 py-2 border rounded-lg" value="50" min="0" max="100">
+                    <span class="text-gray-500">%</span>
+                    <button class="delete-stop text-red-500 hover:text-red-600">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                this.colorStopsContainer.appendChild(stop);
+                this.updateGradient();
+            }
+
+            getColorStops() {
+                const stops = [];
+                this.colorStopsContainer.querySelectorAll('.color-stop').forEach(stop => {
+                    const color = stop.querySelector('input[type="color"]').value;
+                    const position = stop.querySelector('input[type="number"]').value;
+                    stops.push(`${color} ${position}%`);
+                });
+                return stops.join(', ');
+            }
+
+            updateGradient() {
+                const colorStops = this.getColorStops();
+                let gradient = '';
+                let cssCode = '';
+
+                switch (this.type) {
+                    case 'linear':
+                        gradient = `linear-gradient(${this.direction}, ${colorStops})`;
+                        break;
+                    case 'radial':
+                        gradient = `radial-gradient(circle, ${colorStops})`;
+                        break;
+                    case 'conic':
+                        gradient = `conic-gradient(from 0deg at center, ${colorStops})`;
+                        break;
+                }
+
+                this.preview.style.background = gradient;
+                cssCode = `background: ${gradient};`;
+                this.codeOutput.textContent = cssCode;
+            }
+
+            copyToClipboard() {
+                navigator.clipboard.writeText(this.codeOutput.textContent)
+                    .then(() => {
+                        this.toast.classList.remove('hidden');
+                        this.toast.classList.add('copied-toast');
+                        setTimeout(() => {
+                            this.toast.classList.add('hidden');
+                            this.toast.classList.remove('copied-toast');
+                        }, 2000);
+                    })
+                    .catch(err => console.error('Failed to copy:', err));
+            }
+        }
+
+        // Initialize the gradient generator
+        const generator = new GradientGenerator();
+    </script>
+</body>
+</html>

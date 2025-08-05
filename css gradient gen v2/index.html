@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Solutions | CSS Gradient Generator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Lordicon -->
+    <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f43f5e;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+        }
+        
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .logo {
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: rotate(5deg) scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
+        }
+        
+        .gradient-preview {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .color-stop-handle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+        
+        .color-stop-handle:hover {
+            transform: scale(1.1);
+        }
+        
+        .gradient-slider {
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, #6366f1, #f43f5e);
+        }
+        
+        .gradient-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .toast {
+            animation: slideIn 0.3s ease, fadeOut 0.5s ease 2.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+        
+        .tab-button {
+            transition: all 0.2s ease;
+        }
+        
+        .tab-button.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <a href="#" class="flex items-center">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="logo h-10 w-auto">
+                    <span class="ml-2 text-xl font-bold text-indigo-600">Developer Solutions</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Home</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Tools</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Docs</a>
+                <a href="#" class="text-gray-700 hover:text-indigo-600 transition">Community</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <button class="hidden md:flex items-center space-x-1 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">
+                    <lord-icon
+                        src="https://cdn.lordicon.com/wloilxuq.json"
+                        trigger="hover"
+                        colors="primary:#ffffff"
+                        style="width:20px;height:20px">
+                    </lord-icon>
+                    <span>Login</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+        <div class="bg-white rounded-xl shadow-md overflow-hidden">
+            <!-- Tool Header -->
+            <div class="bg-gray-50 px-6 py-4 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">CSS Gradient Generator</h2>
+                <p class="text-sm text-gray-600 mt-1">Create beautiful CSS gradients with this visual tool</p>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="flex border-b">
+                <button data-tab="generator" class="tab-button active px-6 py-3 text-gray-600">Generator</button>
+                <button data-tab="css-output" class="tab-button px-6 py-3 text-gray-600">CSS Code</button>
+                <button data-tab="presets" class="tab-button px-6 py-3 text-gray-600">Presets</button>
+            </div>
+            
+            <!-- Generator Content -->
+            <div class="p-6">
+                <!-- Generator Tab -->
+                <div id="generator-tab" class="space-y-6">
+                    <!-- Gradient Preview -->
+                    <div class="gradient-preview h-64 rounded-lg overflow-hidden relative" id="gradientPreview">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="bg-white bg-opacity-80 px-3 py-1 rounded-full text-sm font-medium">Preview</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Gradient Controls -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Gradient Type -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-medium text-gray-700">Gradient Type</label>
+                            <div class="flex space-x-4">
+                                <button data-type="linear" class="gradient-type-btn active bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg">Linear</button>
+                                <button data-type="radial" class="gradient-type-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-lg">Radial</button>
+                                <button data-type="conic" class="gradient-type-btn bg-gray-100 text-gray-700 px-4 py-2 rounded-lg">Conic</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Direction/Angle -->
+                        <div class="space-y-3" id="directionControl">
+                            <label class="block text-sm font-medium text-gray-700">Direction</label>
+                            <select id="gradientDirection" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                <option value="to right">Left to Right</option>
+                                <option value="to bottom">Top to Bottom</option>
+                                <option value="to left">Right to Left</option>
+                                <option value="to top">Bottom to Top</option>
+                                <option value="to bottom right">Top Left to Bottom Right</option>
+                                <option value="to bottom left">Top Right to Bottom Left</option>
+                                <option value="to top right">Bottom Left to Top Right</option>
+                                <option value="to top left">Bottom Right to Top Left</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Angle Control (for custom angles) -->
+                        <div class="space-y-3 hidden" id="angleControl">
+                            <div class="flex justify-between">
+                                <label class="block text-sm font-medium text-gray-700">Angle</label>
+                                <span class="text-sm text-gray-500" id="angleValue">0deg</span>
+                            </div>
+                            <input type="range" id="gradientAngle" min="0" max="360" value="0" class="w-full gradient-slider">
+                        </div>
+                        
+                        <!-- Color Stops -->
+                        <div class="space-y-3 md:col-span-2">
+                            <div class="flex justify-between">
+                                <label class="block text-sm font-medium text-gray-700">Color Stops</label>
+                                <button id="addColorStop" class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center">
+                                    <i class="fas fa-plus mr-1"></i> Add Stop
+                                </button>
+                            </div>
+                            
+                            <div class="relative h-10 mb-4">
+                                <div id="gradientBar" class="absolute inset-0 rounded-lg overflow-hidden"></div>
+                                <div id="colorStopsContainer" class="absolute inset-0 flex items-center">
+                                    <!-- Color stops will be added here dynamically -->
+                                    <div class="color-stop-handle absolute" style="left: 0%; background-color: #6366f1;" data-position="0"></div>
+                                    <div class="color-stop-handle absolute" style="left: 100%; background-color: #f43f5e;" data-position="100"></div>
+                                </div>
+                            </div>
+                            
+                            <div id="colorStopControls" class="space-y-4">
+                                <!-- Color stop controls will be added here dynamically -->
+                                <div class="color-stop-control grid grid-cols-1 md:grid-cols-3 gap-4" data-index="0">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                                        <input type="color" class="color-picker w-full h-10 cursor-pointer" value="#6366f1">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+                                        <div class="flex items-center">
+                                            <input type="range" min="0" max="100" value="0" class="stop-position w-full mr-2">
+                                            <input type="number" min="0" max="100" value="0" class="stop-position-input w-16 text-sm border rounded px-2 py-1">%
+                                        </div>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <button class="remove-stop text-sm text-red-600 hover:text-red-800 flex items-center">
+                                            <i class="fas fa-trash-alt mr-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="color-stop-control grid grid-cols-1 md:grid-cols-3 gap-4" data-index="1">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                                        <input type="color" class="color-picker w-full h-10 cursor-pointer" value="#f43f5e">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+                                        <div class="flex items-center">
+                                            <input type="range" min="0" max="100" value="100" class="stop-position w-full mr-2">
+                                            <input type="number" min="0" max="100" value="100" class="stop-position-input w-16 text-sm border rounded px-2 py-1">%
+                                        </div>
+                                    </div>
+                                    <div class="flex items-end">
+                                        <button class="remove-stop text-sm text-red-600 hover:text-red-800 flex items-center">
+                                            <i class="fas fa-trash-alt mr-1"></i> Remove
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- CSS Output Tab -->
+                <div id="css-output-tab" class="hidden space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-medium text-gray-800">Generated CSS</h3>
+                        <button id="copyCssBtn" class="flex items-center space-x-1 bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition">
+                            <i class="far fa-copy"></i>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                    <pre id="cssOutput" class="code-font bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto text-sm"></pre>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mt-4">How to use</h3>
+                        <p class="text-sm text-gray-600 mt-1">Copy the CSS code above and paste it into your stylesheet.</p>
+                        <p class="text-sm text-gray-600">For background gradients, use with the <code class="bg-gray-100 px-1 rounded">background</code> or <code class="bg-gray-100 px-1 rounded">background-image</code> property.</p>
+                    </div>
+                </div>
+                
+                <!-- Presets Tab -->
+                <div id="presets-tab" class="hidden">
+                    <h3 class="text-lg font-medium text-gray-800 mb-4">Gradient Presets</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Presets will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                    <img src="https://iili.io/Fr4AkZu.png" alt="Developer Solutions Logo" class="h-8 w-auto">
+                    <span class="text-lg font-semibold text-gray-700">Developer Solutions</span>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-discord text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-4 text-center md:text-left text-sm text-gray-500">
+                &copy; 2023 Developer Solutions. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg hidden">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+            <span id="toast-message">CSS copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const gradientPreview = document.getElementById('gradientPreview');
+            const gradientBar = document.getElementById('gradientBar');
+            const colorStopsContainer = document.getElementById('colorStopsContainer');
+            const colorStopControls = document.getElementById('colorStopControls');
+            const cssOutput = document.getElementById('cssOutput');
+            const copyCssBtn = document.getElementById('copyCssBtn');
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            
+            // Tab elements
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabs = {
+                generator: document.getElementById('generator-tab'),
+                cssOutput: document.getElementById('css-output-tab'),
+                presets: document.getElementById('presets-tab')
+            };
+            
+            // Gradient controls
+            const gradientTypeButtons = document.querySelectorAll('.gradient-type-btn');
+            const gradientDirection = document.getElementById('gradientDirection');
+            const gradientAngle = document.getElementById('gradientAngle');
+            const angleValue = document.getElementById('angleValue');
+            const directionControl = document.getElementById('directionControl');
+            const angleControl = document.getElementById('angleControl');
+            const addColorStopBtn = document.getElementById('addColorStop');
+            
+            // Current gradient state
+            let currentGradient = {
+                type: 'linear',
+                angle: 0,
+                direction: 'to right',
+                stops: [
+                    { color: '#6366f1', position: 0 },
+                    { color: '#f43f5e', position: 100 }
+                ]
+            };
+            
+            // Preset gradients
+            const gradientPresets = [
+                {
+                    name: 'Sunset',
+                    type: 'linear',
+                    direction: 'to right',
+                    stops: [
+                        { color: '#ff7e5f', position: 0 },
+                        { color: '#feb47b', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Ocean',
+                    type: 'linear',
+                    direction: 'to right',
+                    stops: [
+                        { color: '#00c6ff', position: 0 },
+                        { color: '#0072ff', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Emerald',
+                    type: 'linear',
+                    direction: 'to right',
+                    stops: [
+                        { color: '#34e89e', position: 0 },
+                        { color: '#0f3443', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Purple Dream',
+                    type: 'linear',
+                    direction: 'to right',
+                    stops: [
+                        { color: '#c471f5', position: 0 },
+                        { color: '#fa71cd', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Radial Sunset',
+                    type: 'radial',
+                    stops: [
+                        { color: '#ff7e5f', position: 0 },
+                        { color: '#feb47b', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Conic Rainbow',
+                    type: 'conic',
+                    stops: [
+                        { color: '#ff0000', position: 0 },
+                        { color: '#ffff00', position: 25 },
+                        { color: '#00ff00', position: 50 },
+                        { color: '#00ffff', position: 75 },
+                        { color: '#ff0000', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Minty',
+                    type: 'linear',
+                    direction: 'to right',
+                    stops: [
+                        { color: '#a1ffce', position: 0 },
+                        { color: '#faffd1', position: 100 }
+                    ]
+                },
+                {
+                    name: 'Deep Space',
+                    type: 'radial',
+                    stops: [
+                        { color: '#000000', position: 0 },
+                        { color: '#434343', position: 100 }
+                    ]
+                }
+            ];
+            
+            // Initialize the gradient generator
+            function initGradientGenerator() {
+                // Set up event listeners for gradient type buttons
+                gradientTypeButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        gradientTypeButtons.forEach(btn => {
+                            btn.classList.remove('active', 'bg-indigo-100', 'text-indigo-700');
+                            btn.classList.add('bg-gray-100', 'text-gray-700');
+                        });
+                        
+                        this.classList.add('active', 'bg-indigo-100', 'text-indigo-700');
+                        this.classList.remove('bg-gray-100', 'text-gray-700');
+                        
+                        currentGradient.type = this.getAttribute('data-type');
+                        
+                        // Show/hide direction/angle controls based on gradient type
+                        if (currentGradient.type === 'linear') {
+                            directionControl.classList.remove('hidden');
+                            angleControl.classList.add('hidden');
+                        } else if (currentGradient.type === 'radial') {
+                            directionControl.classList.add('hidden');
+                            angleControl.classList.add('hidden');
+                        } else if (currentGradient.type === 'conic') {
+                            directionControl.classList.add('hidden');
+                            angleControl.classList.remove('hidden');
+                        }
+                        
+                        updateGradient();
+                    });
+                });
+                
+                // Direction select change
+                gradientDirection.addEventListener('change', function() {
+                    currentGradient.direction = this.value;
+                    updateGradient();
+                });
+                
+                // Angle slider change
+                gradientAngle.addEventListener('input', function() {
+                    currentGradient.angle = this.value;
+                    angleValue.textContent = `${this.value}deg`;
+                    updateGradient();
+                });
+                
+                // Add color stop button
+                addColorStopBtn.addEventListener('click', addColorStop);
+                
+                // Initialize color stops
+                initColorStops();
+                
+                // Load presets
+                loadPresets();
+                
+                // Tab switching
+                tabButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const tab = this.getAttribute('data-tab');
+                        
+                        // Update active tab
+                        tabButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show corresponding tab
+                        Object.values(tabs).forEach(tab => tab.classList.add('hidden'));
+                        tabs[tab].classList.remove('hidden');
+                    });
+                });
+                
+                // Copy CSS button
+                copyCssBtn.addEventListener('click', copyCssToClipboard);
+                
+                // Initial update
+                updateGradient();
+            }
+            
+            // Initialize color stops with event listeners
+            function initColorStops() {
+                // Add event listeners to existing controls
+                document.querySelectorAll('.color-stop-control').forEach((control, index) => {
+                    const colorPicker = control.querySelector('.color-picker');
+                    const positionSlider = control.querySelector('.stop-position');
+                    const positionInput = control.querySelector('.stop-position-input');
+                    const removeBtn = control.querySelector('.remove-stop');
+                    
+                    // Set initial values from currentGradient
+                    colorPicker.value = currentGradient.stops[index].color;
+                    positionSlider.value = currentGradient.stops[index].position;
+                    positionInput.value = currentGradient.stops[index].position;
+                    
+                    // Color picker change
+                    colorPicker.addEventListener('input', function() {
+                        currentGradient.stops[index].color = this.value;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    // Position slider change
+                    positionSlider.addEventListener('input', function() {
+                        const position = parseInt(this.value);
+                        currentGradient.stops[index].position = position;
+                        positionInput.value = position;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    // Position input change
+                    positionInput.addEventListener('input', function() {
+                        let position = parseInt(this.value);
+                        if (isNaN(position)) position = 0;
+                        if (position < 0) position = 0;
+                        if (position > 100) position = 100;
+                        
+                        currentGradient.stops[index].position = position;
+                        positionSlider.value = position;
+                        this.value = position;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    // Remove button click
+                    removeBtn.addEventListener('click', function() {
+                        if (currentGradient.stops.length > 2) {
+                            currentGradient.stops.splice(index, 1);
+                            renderColorStopControls();
+                            updateColorStopHandles();
+                            updateGradient();
+                        } else {
+                            showToast('You need at least 2 color stops', true);
+                        }
+                    });
+                });
+                
+                // Make color stops draggable
+                makeColorStopsDraggable();
+            }
+            
+            // Add a new color stop
+            function addColorStop() {
+                // Find a position between existing stops
+                let newPosition = 50;
+                if (currentGradient.stops.length > 0) {
+                    // Find the largest gap between stops
+                    let maxGap = 0;
+                    let gapStart = 0;
+                    
+                    // Sort stops by position
+                    const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+                    
+                    // Check gap before first stop
+                    if (sortedStops[0].position > 0) {
+                        maxGap = sortedStops[0].position;
+                        gapStart = 0;
+                    }
+                    
+                    // Check gaps between stops
+                    for (let i = 1; i < sortedStops.length; i++) {
+                        const gap = sortedStops[i].position - sortedStops[i-1].position;
+                        if (gap > maxGap) {
+                            maxGap = gap;
+                            gapStart = sortedStops[i-1].position;
+                        }
+                    }
+                    
+                    // Check gap after last stop
+                    if (sortedStops[sortedStops.length - 1].position < 100) {
+                        const gap = 100 - sortedStops[sortedStops.length - 1].position;
+                        if (gap > maxGap) {
+                            maxGap = gap;
+                            gapStart = sortedStops[sortedStops.length - 1].position;
+                        }
+                    }
+                    
+                    // Position new stop in the middle of the largest gap
+                    newPosition = gapStart + (maxGap / 2);
+                }
+                
+                // Generate a color between existing colors
+                let newColor = '#ffffff';
+                if (currentGradient.stops.length >= 2) {
+                    // Find the two stops the new position is between
+                    const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+                    let prevStop = sortedStops[0];
+                    let nextStop = sortedStops[sortedStops.length - 1];
+                    
+                    for (let i = 0; i < sortedStops.length - 1; i++) {
+                        if (newPosition >= sortedStops[i].position && newPosition <= sortedStops[i+1].position) {
+                            prevStop = sortedStops[i];
+                            nextStop = sortedStops[i+1];
+                            break;
+                        }
+                    }
+                    
+                    // Interpolate color
+                    const ratio = (newPosition - prevStop.position) / (nextStop.position - prevStop.position);
+                    newColor = interpolateColor(prevStop.color, nextStop.color, ratio);
+                }
+                
+                // Add the new stop
+                currentGradient.stops.push({
+                    color: newColor,
+                    position: newPosition
+                });
+                
+                // Sort stops by position
+                currentGradient.stops.sort((a, b) => a.position - b.position);
+                
+                // Update UI
+                renderColorStopControls();
+                updateColorStopHandles();
+                updateGradient();
+            }
+            
+            // Render color stop controls
+            function renderColorStopControls() {
+                colorStopControls.innerHTML = '';
+                
+                currentGradient.stops.forEach((stop, index) => {
+                    const control = document.createElement('div');
+                    control.className = 'color-stop-control grid grid-cols-1 md:grid-cols-3 gap-4';
+                    control.setAttribute('data-index', index);
+                    
+                    control.innerHTML = `
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Color</label>
+                            <input type="color" class="color-picker w-full h-10 cursor-pointer" value="${stop.color}">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Position</label>
+                            <div class="flex items-center">
+                                <input type="range" min="0" max="100" value="${stop.position}" class="stop-position w-full mr-2">
+                                <input type="number" min="0" max="100" value="${stop.position}" class="stop-position-input w-16 text-sm border rounded px-2 py-1">%
+                            </div>
+                        </div>
+                        <div class="flex items-end">
+                            <button class="remove-stop text-sm text-red-600 hover:text-red-800 flex items-center">
+                                <i class="fas fa-trash-alt mr-1"></i> Remove
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Add event listeners
+                    const colorPicker = control.querySelector('.color-picker');
+                    const positionSlider = control.querySelector('.stop-position');
+                    const positionInput = control.querySelector('.stop-position-input');
+                    const removeBtn = control.querySelector('.remove-stop');
+                    
+                    colorPicker.addEventListener('input', function() {
+                        currentGradient.stops[index].color = this.value;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    positionSlider.addEventListener('input', function() {
+                        const position = parseInt(this.value);
+                        currentGradient.stops[index].position = position;
+                        positionInput.value = position;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    positionInput.addEventListener('input', function() {
+                        let position = parseInt(this.value);
+                        if (isNaN(position)) position = 0;
+                        if (position < 0) position = 0;
+                        if (position > 100) position = 100;
+                        
+                        currentGradient.stops[index].position = position;
+                        positionSlider.value = position;
+                        this.value = position;
+                        updateColorStopHandles();
+                        updateGradient();
+                    });
+                    
+                    removeBtn.addEventListener('click', function() {
+                        if (currentGradient.stops.length > 2) {
+                            currentGradient.stops.splice(index, 1);
+                            renderColorStopControls();
+                            updateColorStopHandles();
+                            updateGradient();
+                        } else {
+                            showToast('You need at least 2 color stops', true);
+                        }
+                    });
+                    
+                    colorStopControls.appendChild(control);
+                });
+                
+                // Make color stops draggable again after re-render
+                makeColorStopsDraggable();
+            }
+            
+            // Make color stop handles draggable
+            function makeColorStopsDraggable() {
+                const handles = document.querySelectorAll('.color-stop-handle');
+                
+                handles.forEach(handle => {
+                    handle.addEventListener('mousedown', function(e) {
+                        e.preventDefault();
+                        
+                        const index = Array.from(colorStopsContainer.children).indexOf(this);
+                        if (index === -1) return;
+                        
+                        const containerRect = colorStopsContainer.getBoundingClientRect();
+                        const containerWidth = containerRect.width;
+                        
+                        function moveHandle(e) {
+                            let x = e.clientX - containerRect.left;
+                            x = Math.max(0, Math.min(x, containerWidth));
+                            const position = Math.round((x / containerWidth) * 100);
+                            
+                            // Update the position in currentGradient
+                            currentGradient.stops[index].position = position;
+                            
+                            // Update the handle position
+                            this.style.left = `${position}%`;
+                            
+                            // Update the gradient bar background
+                            updateGradientBar();
+                            
+                            // Update the corresponding control
+                            const controls = document.querySelectorAll('.color-stop-control');
+                            if (controls[index]) {
+                                const positionSlider = controls[index].querySelector('.stop-position');
+                                const positionInput = controls[index].querySelector('.stop-position-input');
+                                if (positionSlider && positionInput) {
+                                    positionSlider.value = position;
+                                    positionInput.value = position;
+                                }
+                            }
+                        }
+                        
+                        function stopDrag() {
+                            document.removeEventListener('mousemove', moveHandle);
+                            document.removeEventListener('mouseup', stopDrag);
+                            
+                            // After dragging, update the full gradient preview
+                            updateGradient();
+                        }
+                        
+                        document.addEventListener('mousemove', moveHandle.bind(handle));
+                        document.addEventListener('mouseup', stopDrag);
+                    });
+                });
+            }
+            
+            // Update the color stop handles' positions and colors
+            function updateColorStopHandles() {
+                // Clear existing handles
+                colorStopsContainer.innerHTML = '';
+                
+                // Add new handles
+                currentGradient.stops.forEach(stop => {
+                    const handle = document.createElement('div');
+                    handle.className = 'color-stop-handle absolute';
+                    handle.style.left = `${stop.position}%`;
+                    handle.style.backgroundColor = stop.color;
+                    handle.setAttribute('data-position', stop.position);
+                    colorStopsContainer.appendChild(handle);
+                });
+                
+                // Update the gradient bar background
+                updateGradientBar();
+                
+                // Make handles draggable
+                makeColorStopsDraggable();
+            }
+            
+            // Update the gradient bar background
+            function updateGradientBar() {
+                // Sort stops by position
+                const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+                
+                // Create gradient string
+                const gradientStops = sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+                gradientBar.style.background = `linear-gradient(to right, ${gradientStops})`;
+            }
+            
+            // Update the full gradient preview and CSS output
+            function updateGradient() {
+                // Sort stops by position
+                const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+                const gradientStops = sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+                
+                let gradientCss;
+                
+                switch (currentGradient.type) {
+                    case 'linear':
+                        gradientCss = `linear-gradient(${currentGradient.direction}, ${gradientStops})`;
+                        break;
+                    case 'radial':
+                        gradientCss = `radial-gradient(circle, ${gradientStops})`;
+                        break;
+                    case 'conic':
+                        gradientCss = `conic-gradient(from ${currentGradient.angle}deg, ${gradientStops})`;
+                        break;
+                    default:
+                        gradientCss = `linear-gradient(to right, ${gradientStops})`;
+                }
+                
+                // Update preview
+                gradientPreview.style.background = gradientCss;
+                
+                // Update CSS output
+                cssOutput.textContent = `background: ${gradientCss};\nbackground-image: ${gradientCss};`;
+                
+                // Update gradient bar
+                updateGradientBar();
+            }
+            
+            // Load gradient presets
+            function loadPresets() {
+                const presetsContainer = document.querySelector('#presets-tab .grid');
+                
+                gradientPresets.forEach(preset => {
+                    const presetElement = document.createElement('div');
+                    presetElement.className = 'cursor-pointer rounded-lg overflow-hidden shadow-md hover:shadow-lg transition';
+                    
+                    // Create gradient string for the preset
+                    const sortedStops = [...preset.stops].sort((a, b) => a.position - b.position);
+                    const gradientStops = sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+                    
+                    let gradientCss;
+                    if (preset.type === 'linear') {
+                        gradientCss = `linear-gradient(${preset.direction || 'to right'}, ${gradientStops})`;
+                    } else if (preset.type === 'radial') {
+                        gradientCss = `radial-gradient(circle, ${gradientStops})`;
+                    } else if (preset.type === 'conic') {
+                        gradientCss = `conic-gradient(from 0deg, ${gradientStops})`;
+                    }
+                    
+                    presetElement.innerHTML = `
+                        <div class="h-32" style="background: ${gradientCss}"></div>
+                        <div class="p-3 bg-white">
+                            <h4 class="font-medium text-gray-800">${preset.name}</h4>
+                            <p class="text-xs text-gray-500 mt-1">${preset.type} gradient</p>
+                        </div>
+                    `;
+                    
+                    presetElement.addEventListener('click', function() {
+                        // Apply the preset
+                        currentGradient = JSON.parse(JSON.stringify(preset));
+                        
+                        // Update UI
+                        if (currentGradient.type === 'linear') {
+                            document.querySelector('[data-type="linear"]').click();
+                            gradientDirection.value = currentGradient.direction || 'to right';
+                        } else if (currentGradient.type === 'radial') {
+                            document.querySelector('[data-type="radial"]').click();
+                        } else if (currentGradient.type === 'conic') {
+                            document.querySelector('[data-type="conic"]').click();
+                            gradientAngle.value = currentGradient.angle || 0;
+                            angleValue.textContent = `${currentGradient.angle || 0}deg`;
+                        }
+                        
+                        renderColorStopControls();
+                        updateColorStopHandles();
+                        updateGradient();
+                        
+                        // Switch to generator tab
+                        document.querySelector('[data-tab="generator"]').click();
+                        
+                        showToast(`"${preset.name}" preset applied`);
+                    });
+                    
+                    presetsContainer.appendChild(presetElement);
+                });
+            }
+            
+            // Copy CSS to clipboard
+            function copyCssToClipboard() {
+                navigator.clipboard.writeText(cssOutput.textContent)
+                    .then(() => {
+                        showToast('CSS copied to clipboard!');
+                    })
+                    .catch(err => {
+                        showToast('Failed to copy CSS', true);
+                        console.error('Failed to copy CSS: ', err);
+                    });
+            }
+            
+            // Show toast notification
+            function showToast(message, isError = false) {
+                toastMessage.textContent = message;
+                if (isError) {
+                    toast.className = 'fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                    toast.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i><span>${message}</span>`;
+                } else {
+                    toast.className = 'fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                    toast.innerHTML = `<i class="fas fa-check-circle text-green-400 mr-2"></i><span>${message}</span>`;
+                }
+                
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+            
+            // Helper function to interpolate between two colors
+            function interpolateColor(color1, color2, factor) {
+                if (factor <= 0) return color1;
+                if (factor >= 1) return color2;
+                
+                // Convert hex to RGB
+                const r1 = parseInt(color1.substring(1, 3), 16);
+                const g1 = parseInt(color1.substring(3, 5), 16);
+                const b1 = parseInt(color1.substring(5, 7), 16);
+                
+                const r2 = parseInt(color2.substring(1, 3), 16);
+                const g2 = parseInt(color2.substring(3, 5), 16);
+                const b2 = parseInt(color2.substring(5, 7), 16);
+                
+                // Interpolate
+                const r = Math.round(r1 + (r2 - r1) * factor);
+                const g = Math.round(g1 + (g2 - g1) * factor);
+                const b = Math.round(b1 + (b2 - b1) * factor);
+                
+                // Convert back to hex
+                return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+            }
+            
+            // Initialize the generator
+            initGradientGenerator();
+        });
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      document.addEventListener('DOMContentLoaded', function() {
+    // Global variables
+    let colorStopsContainer;
+    let currentGradient;
+    let dateTimeInterval;
+
+    // Initialize date/time update
+    function initDateTime() {
+        const updateDateTime = () => {
+            const now = new Date();
+            const formatted = now.toISOString().replace('T', ' ').slice(0, 19);
+            document.getElementById('currentDateTime').textContent = formatted;
+        };
+        updateDateTime();
+        dateTimeInterval = setInterval(updateDateTime, 1000);
+    }
+
+    // Initialize user display
+    function initUserDisplay() {
+        document.getElementById('currentUser').textContent = 'kdippan';
+    }
+
+    // Initialize global variables
+    function initGlobalVariables() {
+        colorStopsContainer = document.getElementById('colorStopsContainer');
+        currentGradient = {
+            type: 'linear',
+            angle: 0,
+            direction: 'to right',
+            stops: [
+                { color: '#6366f1', position: 0 },
+                { color: '#f43f5e', position: 100 }
+            ]
+        };
+    }
+
+    // Debounce function for performance optimization
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Create debounced version of updateGradient
+    const debouncedUpdateGradient = debounce(updateGradient, 16);
+
+    // DOM Elements
+    const gradientPreview = document.getElementById('gradientPreview');
+    const gradientBar = document.getElementById('gradientBar');
+    const cssOutput = document.getElementById('cssOutput');
+    const copyCssBtn = document.getElementById('copyCssBtn');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toast-message');
+
+    // Tab elements
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabs = {
+        generator: document.getElementById('generator-tab'),
+        cssOutput: document.getElementById('css-output-tab'),
+        presets: document.getElementById('presets-tab')
+    };
+
+    // Gradient controls
+    const gradientTypeButtons = document.querySelectorAll('.gradient-type-btn');
+    const gradientDirection = document.getElementById('gradientDirection');
+    const gradientAngle = document.getElementById('gradientAngle');
+    const angleValue = document.getElementById('angleValue');
+    const directionControl = document.getElementById('directionControl');
+    const angleControl = document.getElementById('angleControl');
+    const addColorStopBtn = document.getElementById('addColorStop');
+
+    // Initialize everything
+    function init() {
+        initGlobalVariables();
+        initDateTime();
+        initUserDisplay();
+        initGradientGenerator();
+        initEventListeners();
+    }
+
+    // Initialize event listeners
+    function initEventListeners() {
+        // Tab switching
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tab = this.getAttribute('data-tab');
+                switchTab(tab);
+            });
+        });
+
+        // Gradient type buttons
+        gradientTypeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                handleGradientTypeChange(this);
+            });
+        });
+
+        // Direction and angle controls
+        gradientDirection.addEventListener('change', handleDirectionChange);
+        gradientAngle.addEventListener('input', handleAngleChange);
+
+        // Add color stop button
+        addColorStopBtn.addEventListener('click', addColorStop);
+
+        // Copy CSS button
+        copyCssBtn.addEventListener('click', copyCssToClipboard);
+    }
+
+    // Switch tab function
+    function switchTab(tabName) {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+        Object.values(tabs).forEach(tab => tab.classList.add('hidden'));
+        tabs[tabName].classList.remove('hidden');
+    }
+
+    // Handle gradient type change
+    function handleGradientTypeChange(button) {
+        gradientTypeButtons.forEach(btn => {
+            btn.classList.remove('active', 'bg-indigo-100', 'text-indigo-700');
+            btn.classList.add('bg-gray-100', 'text-gray-700');
+        });
+
+        button.classList.add('active', 'bg-indigo-100', 'text-indigo-700');
+        button.classList.remove('bg-gray-100', 'text-gray-700');
+
+        currentGradient.type = button.getAttribute('data-type');
+
+        // Show/hide controls based on type
+        if (currentGradient.type === 'linear') {
+            directionControl.classList.remove('hidden');
+            angleControl.classList.add('hidden');
+        } else if (currentGradient.type === 'radial') {
+            directionControl.classList.add('hidden');
+            angleControl.classList.add('hidden');
+        } else if (currentGradient.type === 'conic') {
+            directionControl.classList.add('hidden');
+            angleControl.classList.remove('hidden');
+        }
+
+        updateGradient();
+    }
+
+    // Handle direction change
+    function handleDirectionChange() {
+        currentGradient.direction = this.value;
+        updateGradient();
+    }
+
+    // Handle angle change
+    function handleAngleChange() {
+        currentGradient.angle = this.value;
+        angleValue.textContent = `${this.value}deg`;
+        updateGradient();
+    }
+
+    // Make color stops draggable
+    function makeColorStopsDraggable() {
+        const handles = document.querySelectorAll('.color-stop-handle');
+
+        handles.forEach(handle => {
+            const index = Array.from(colorStopsContainer.children).indexOf(handle);
+            if (index === -1) return;
+
+            function handleDrag(e) {
+                e.preventDefault();
+                const containerRect = colorStopsContainer.getBoundingClientRect();
+                const containerWidth = containerRect.width;
+
+                let x;
+                if (e.type === 'touchmove') {
+                    x = e.touches[0].clientX - containerRect.left;
+                } else {
+                    x = e.clientX - containerRect.left;
+                }
+
+                x = Math.max(0, Math.min(x, containerWidth));
+                const position = Math.round((x / containerWidth) * 100);
+
+                currentGradient.stops[index].position = position;
+                handle.style.left = `${position}%`;
+                updateGradientBar();
+
+                const controls = document.querySelectorAll('.color-stop-control');
+                if (controls[index]) {
+                    const positionSlider = controls[index].querySelector('.stop-position');
+                    const positionInput = controls[index].querySelector('.stop-position-input');
+                    if (positionSlider && positionInput) {
+                        positionSlider.value = position;
+                        positionInput.value = position;
+                    }
+                }
+
+                debouncedUpdateGradient();
+            }
+
+            function stopDrag() {
+                document.removeEventListener('mousemove', handleDrag);
+                document.removeEventListener('touchmove', handleDrag);
+                document.removeEventListener('mouseup', stopDrag);
+                document.removeEventListener('touchend', stopDrag);
+                updateGradient();
+            }
+
+            // Mouse events
+            handle.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                document.addEventListener('mousemove', handleDrag);
+                document.addEventListener('mouseup', stopDrag);
+            });
+
+            // Touch events
+            handle.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                document.addEventListener('touchmove', handleDrag, { passive: false });
+                document.addEventListener('touchend', stopDrag);
+            });
+        });
+    }
+
+    // Update gradient bar
+    function updateGradientBar() {
+        const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+        const gradientStops = sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+        gradientBar.style.background = `linear-gradient(to right, ${gradientStops})`;
+    }
+
+    // Update gradient
+    function updateGradient() {
+        const sortedStops = [...currentGradient.stops].sort((a, b) => a.position - b.position);
+        const gradientStops = sortedStops.map(stop => `${stop.color} ${stop.position}%`).join(', ');
+
+        let gradientCss;
+        switch (currentGradient.type) {
+            case 'linear':
+                gradientCss = `linear-gradient(${currentGradient.direction}, ${gradientStops})`;
+                break;
+            case 'radial':
+                gradientCss = `radial-gradient(circle, ${gradientStops})`;
+                break;
+            case 'conic':
+                gradientCss = `conic-gradient(from ${currentGradient.angle}deg, ${gradientStops})`;
+                break;
+            default:
+                gradientCss = `linear-gradient(to right, ${gradientStops})`;
+        }
+
+        gradientPreview.style.background = gradientCss;
+        cssOutput.textContent = `background: ${gradientCss};\nbackground-image: ${gradientCss};`;
+        updateGradientBar();
+    }
+
+    // Add color stop
+    function addColorStop() {
+        const newPosition = 50;
+        const newColor = interpolateColor(
+            currentGradient.stops[0].color,
+            currentGradient.stops[currentGradient.stops.length - 1].color,
+            0.5
+        );
+
+        currentGradient.stops.push({
+            color: newColor,
+            position: newPosition
+        });
+
+        currentGradient.stops.sort((a, b) => a.position - b.position);
+        renderColorStopControls();
+        updateColorStopHandles();
+        updateGradient();
+    }
+
+    // Interpolate between colors
+    function interpolateColor(color1, color2, factor) {
+        if (factor <= 0) return color1;
+        if (factor >= 1) return color2;
+
+        const r1 = parseInt(color1.substring(1, 3), 16);
+        const g1 = parseInt(color1.substring(3, 5), 16);
+        const b1 = parseInt(color1.substring(5, 7), 16);
+
+        const r2 = parseInt(color2.substring(1, 3), 16);
+        const g2 = parseInt(color2.substring(3, 5), 16);
+        const b2 = parseInt(color2.substring(5, 7), 16);
+
+        const r = Math.round(r1 + (r2 - r1) * factor);
+        const g = Math.round(g1 + (g2 - g1) * factor);
+        const b = Math.round(b1 + (b2 - b1) * factor);
+
+        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    // Copy CSS to clipboard
+    function copyCssToClipboard() {
+        navigator.clipboard.writeText(cssOutput.textContent)
+            .then(() => showToast('CSS copied to clipboard!'))
+            .catch(err => {
+                console.error('Failed to copy CSS:', err);
+                showToast('Failed to copy CSS', true);
+            });
+    }
+
+    // Show toast notification
+    function showToast(message, isError = false) {
+        toast.className = isError 
+            ? 'fixed bottom-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center'
+            : 'fixed bottom-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+        
+        toast.innerHTML = isError
+            ? `<i class="fas fa-exclamation-circle mr-2"></i><span>${message}</span>`
+            : `<i class="fas fa-check-circle text-green-400 mr-2"></i><span>${message}</span>`;
+
+        toast.classList.remove('hidden');
+        setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    // Clean up function
+    function cleanup() {
+        clearInterval(dateTimeInterval);
+    }
+
+    // Initialize
+    init();
+
+    // Clean up on page unload
+    window.addEventListener('unload', cleanup);
+});
+    </script>
+</body>
+</html>
